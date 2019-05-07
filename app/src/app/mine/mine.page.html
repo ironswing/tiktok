@@ -1,0 +1,224 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>mine</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" size="large">
+      <ion-thumbnail>
+        <img src="assets/icon/center.svg">
+      </ion-thumbnail>
+      <ion-label style="margin-left: 2rem">会员中心</ion-label>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" size="large">
+      <ion-thumbnail>
+        <img src="assets/icon/order.svg">
+      </ion-thumbnail>
+      <ion-label style="margin-left: 2rem">订单记录</ion-label>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" size="large">
+      <ion-thumbnail>
+        <img src="assets/icon/call.svg">
+      </ion-thumbnail>
+      <ion-label style="margin-left: 2rem">客服电话</ion-label>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" size="large">
+      <ion-thumbnail>
+        <img src="assets/icon/gift.svg">
+      </ion-thumbnail>
+      <ion-label style="margin-left: 2rem">新手礼包</ion-label>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" size="large">
+      <ion-thumbnail>
+        <img src="assets/icon/share.svg">
+      </ion-thumbnail>
+      <ion-label style="margin-left: 2rem">
+        分享APP给好友
+      </ion-label>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" size="large">
+      <ion-thumbnail>
+        <img src="assets/icon/share.svg">
+      </ion-thumbnail>
+
+      <button (click)="testPay()">
+        <ion-label style="margin-left: 2rem">
+          testPay
+        </ion-label>
+      </button>
+
+      <button (click)="testQr()">
+        ttt
+      </button>
+
+    </ion-button>
+  </ion-toolbar>
+
+  <!---->
+  <!--<ion-list>-->
+
+    <!--<ion-item>-->
+      <!--<ion-toolbar>-->
+        <!--<ion-button expand="full" fill="clear" size="large">新手礼包</ion-button>-->
+      <!--</ion-toolbar>-->
+    <!--</ion-item>-->
+
+    <!--<ion-item>-->
+      <!--<ion-toolbar>-->
+        <!--<ion-button expand="full" fill="clear" size="large">分享APP给好友</ion-button>-->
+      <!--</ion-toolbar>-->
+    <!--</ion-item>-->
+
+    <!--<ion-item>-->
+      <!--<ion-toolbar>-->
+        <!--<ion-button expand="full" fill="clear" size="large">clear + Full</ion-button>-->
+      <!--</ion-toolbar>-->
+    <!--</ion-item>-->
+
+    <!--<ion-item>-->
+      <!--<ion-toolbar>-->
+        <!--<ion-button expand="full" fill="clear" size="large">clear + Full</ion-button>-->
+      <!--</ion-toolbar>-->
+    <!--</ion-item>-->
+    <!--<ion-list-header>-->
+      <!--<ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>-->
+    <!--</ion-list-header>-->
+    <!--<ion-item>-->
+      <!--<ion-button expand="block" fill="outline">Outline + Block</ion-button>-->
+    <!--</ion-item>-->
+
+    <!--<ion-item>-->
+      <!--<ion-button expand="block">Outline + Block</ion-button>-->
+    <!--</ion-item>-->
+
+    <!--<ion-item>-->
+      <!--<ion-button expand="full" fill="clear">clear + Full</ion-button>-->
+    <!--</ion-item>-->
+
+  <!--</ion-list>-->
+
+  <!--<ion-toolbar>-->
+    <!--<ion-buttons slot="primary">-->
+      <!--<ion-button color="secondary">-->
+        <!--<ion-icon slot="icon-only" name="more"></ion-icon>-->
+      <!--</ion-button>-->
+    <!--</ion-buttons>-->
+  <!--</ion-toolbar>-->
+
+  <!--<ion-toolbar>-->
+    <!--<ion-buttons slot="primary">-->
+      <!--<ion-button color="secondary">-->
+        <!--<ion-icon slot="icon-only" name="more"></ion-icon>-->
+      <!--</ion-button>-->
+    <!--</ion-buttons>-->
+  <!--</ion-toolbar>-->
+
+
+  <!--<ion-toolbar>-->
+      <!--<ion-button expand="full" fill="clear">clear + Full</ion-button>-->
+  <!--</ion-toolbar>-->
+
+
+  <!--<ion-toolbar>-->
+    <!--<ion-button expand="block" fill="outline">Outline + Block</ion-button>-->
+  <!--</ion-toolbar>-->
+
+
+  <!--<ion-toolbar>-->
+    <!--<ion-buttons slot="primary">-->
+      <!--<ion-button color="secondary">-->
+        <!--<ion-icon slot="icon-only" name="more"></ion-icon>-->
+      <!--</ion-button>-->
+    <!--</ion-buttons>-->
+  <!--</ion-toolbar>-->
+  <!--&lt;!&ndash; Default &ndash;&gt;-->
+  <!--<ion-button>Default</ion-button>-->
+
+  <!--&lt;!&ndash; Anchor &ndash;&gt;-->
+  <!--<ion-button href="#">Anchor</ion-button>-->
+
+  <!--&lt;!&ndash; Colors &ndash;&gt;-->
+  <!--<ion-button color="primary">Primary</ion-button>-->
+  <!--<ion-button color="secondary">Secondary</ion-button>-->
+  <!--<ion-button color="tertiary">Tertiary</ion-button>-->
+  <!--<ion-button color="success">Success</ion-button>-->
+  <!--<ion-button color="warning">Warning</ion-button>-->
+  <!--<ion-button color="danger">Danger</ion-button>-->
+  <!--<ion-button color="light">Light</ion-button>-->
+  <!--<ion-button color="medium">Medium</ion-button>-->
+  <!--<ion-button color="dark">Dark</ion-button>-->
+
+  <!--&lt;!&ndash; Expand &ndash;&gt;-->
+  <!--<ion-button expand="full">Full Button</ion-button>-->
+  <!--<ion-button expand="block">Block Button</ion-button>-->
+
+  <!--&lt;!&ndash; Round &ndash;&gt;-->
+  <!--<ion-button shape="round">Round Button</ion-button>-->
+
+  <!--&lt;!&ndash; Fill &ndash;&gt;-->
+  <!--<ion-button expand="full" >Outline + Full</ion-button>-->
+  <!--<ion-button expand="block" fill="outline">Outline + Block</ion-button>-->
+  <!--<ion-button shape="round" fill="outline">Outline + Round</ion-button>-->
+
+  <!--&lt;!&ndash; Icons &ndash;&gt;-->
+  <!--<ion-button>-->
+    <!--<ion-icon slot="start" name="star"></ion-icon>-->
+    <!--Left Icon-->
+  <!--</ion-button>-->
+
+  <!--<ion-button>-->
+    <!--Right Icon-->
+    <!--<ion-icon slot="end" name="star"></ion-icon>-->
+  <!--</ion-button>-->
+
+  <!--<ion-button>-->
+    <!--<ion-icon slot="icon-only" name="star"></ion-icon>-->
+  <!--</ion-button>-->
+
+  <!--&lt;!&ndash; Sizes &ndash;&gt;-->
+  <!--<ion-button size="large">Large</ion-button>-->
+  <!--<ion-button>Default</ion-button>-->
+  <!--<ion-button size="small">Small</ion-button>-->
+
+
+
+  <!--<ion-list>-->
+    <!--<ion-item>-->
+      <!--<ion-thumbnail slot="start">-->
+        <!--<ion-img [src]="'../../assets/icon/light-active.svg'"></ion-img>-->
+      <!--</ion-thumbnail>-->
+      <!--<ion-label>Pokémon Yellow</ion-label>-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<ion-label>Mega Man X</ion-label>-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<ion-label>The Legend of Zelda</ion-label>-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<ion-label>Pac-Man</ion-label>-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<ion-label>Super Mario World</ion-label>-->
+    <!--</ion-item>-->
+  <!--</ion-list>-->
+
+</ion-content>

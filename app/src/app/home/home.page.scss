@@ -1,0 +1,25 @@
+.swiper{
+  height: 15rem;
+  width: 100%;
+}
+.sw-tab{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  img{
+    height:80%;
+    width:80%;
+    object-fit: cover;
+  }
+}
+//@include mdc-ripple-surface;
+//@include mdc-ripple-radius-bounded;
+//@include mdc-states;

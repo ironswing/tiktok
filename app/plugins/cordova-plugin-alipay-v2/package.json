@@ -1,0 +1,55 @@
+{
+  "_from": "git+https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git",
+  "_id": "cordova-plugin-alipay-v2@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-alipay-v2",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git",
+    "rawSpec": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git",
+    "saveSpec": "git+https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git",
+    "fetchSpec": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git#382fb0b3fcdf3bc09bc9838a3fd83acb08b12d67",
+  "_spec": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git",
+  "_where": "/Users/anshi/Desktop/resource/golden/golden-pig-ionic4",
+  "author": {
+    "name": "hhjjj1010"
+  },
+  "bugs": {
+    "url": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-alipay-v2",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "a cordova plugin, a JS version of Alipay SDK(20170725)",
+  "homepage": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "alipay",
+    "cordova-plugin-alipay",
+    "cordova-plugin-alipay-v2"
+  ],
+  "license": "ISC",
+  "name": "cordova-plugin-alipay-v2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git"
+  },
+  "version": "1.0.0"
+}

@@ -1,0 +1,201 @@
+<!--<ion-header>-->
+
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <!--<ion-toolbar>-->
+    <!--<ion-title>home</ion-title>-->
+  <!--</ion-toolbar>-->
+<!--</ion-header>-->
+
+<ion-content>
+
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide>
+      <img style="height:15rem;width:100%;object-fit: cover" src="http://fotolook.cn//uploads/20190125/15484083444176.png">
+    </ion-slide>
+    <ion-slide>
+      <img style="height:15rem;width:100%;object-fit: cover" src="https://fotolook.cn//uploads/20190129/15487645123452.png">
+    </ion-slide>
+    <ion-slide>
+      <img style="height:15rem;width:100%;object-fit: cover" src="https://fotolook.cn//uploads/20190125/15483923904840.png">
+    </ion-slide>
+  </ion-slides>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3>
+        <div class="sw-tab mdc-ripple-surface mdc-ripple-radius-bounded mdc-states">
+          <ion-ripple-effect></ion-ripple-effect>
+          <div>
+            <img src="assets/icon/book-active-v2.svg">
+          </div>
+          <div>天天好书</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-3>
+        <div class="sw-tab mdc-ripple-surface mdc-ripple-radius-bounded mdc-states">
+          <div>
+            <img src="assets/icon/light-active.svg">
+          </div>
+          <div>雷区</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-3>
+
+        <div class="sw-tab mdc-ripple-surface mdc-ripple-radius-bounded mdc-states">
+          <div>
+            <img src="assets/icon/piggy-active.svg">
+          </div>
+          <div>金猪</div>
+        </div>
+      </ion-col>
+
+      <ion-col col-3>
+        <div class="sw-tab mdc-ripple-surface mdc-ripple-radius-bounded mdc-states">
+          <div>
+            <img src="assets/icon/update-active.svg">
+          </div>
+          <div>步步高升</div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card style="width: 100%;height: 5rem;display: flex;flex-direction: column">
+    <ion-label style="margin: 0.5rem">商师桃李科技挂牌创业板</ion-label>
+    <ion-label style="margin: 0.5rem">昨日金猪资讯涨停</ion-label>
+  </ion-card>
+
+
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>
+        Section A
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item><ion-label>A1</ion-label></ion-item>
+    <ion-item><ion-label>A2</ion-label></ion-item>
+    <ion-item><ion-label>A3</ion-label></ion-item>
+    <ion-item><ion-label>A4</ion-label></ion-item>
+    <ion-item><ion-label>A5</ion-label></ion-item>
+
+    <ion-item-divider>
+      <ion-label>
+        Section B
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item><ion-label>B1</ion-label></ion-item>
+    <ion-item><ion-label>B2</ion-label></ion-item>
+    <ion-item><ion-label>B3</ion-label></ion-item>
+    <ion-item><ion-label>B4</ion-label></ion-item>
+    <ion-item><ion-label>B5</ion-label></ion-item>
+  </ion-list>
+
+  <!--<ion-button><div (click)="addripper()">test</div></ion-button>-->
+
+  <div class="test-ripple" style="width: 5rem;height: 5rem">
+    test
+  </div>
+
+  <div class="mdc-ripple-surface mdc-ripple-radius-bounded mdc-states" style="height: 10rem;width: 10rem">
+    <img style="width: 2rem;height: 2rem" src="assets/icon/book-active-v2.svg">
+    <ion-label>天天好书</ion-label>
+  </div>
+
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="secondary">
+      <ion-button>
+        <ion-icon slot="icon-only" name="contact"></ion-icon>
+      </ion-button>
+      <ion-button style="flex-direction: column;
+display: flex;">
+        <img style="width: 2rem;height: 2rem" src="assets/icon/book-active-v2.svg">
+        <ion-label>天天好书</ion-label>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button color="primary">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Secondary Toolbar</ion-title>
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-toolbar>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Input</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Toggle</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Radio</ion-label>
+      <ion-radio slot="end"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Checkbox</ion-label>
+      <ion-checkbox slot="start"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <!--<ion-item-sliding>-->
+      <!--<ion-item>-->
+        <!--<ion-label>Item</ion-label>-->
+      <!--</ion-item>-->
+      <!--<ion-item-options side="end">-->
+        <!--<ion-item-option (click)="unread(item)">Unread</ion-item-option>-->
+      <!--</ion-item-options>-->
+      <!--<ion-item-options side="start">-->
+        <!--<ion-item-option (click)="unread(item)">Unread</ion-item-option>-->
+        <!--<ion-item-option (click)="unread(item)">read</ion-item-option>-->
+      <!--</ion-item-options>-->
+    <!--</ion-item-sliding>-->
+
+    <!--<ion-item-sliding>-->
+      <!--<ion-item>-->
+        <!--<ion-label>Item</ion-label>-->
+      <!--</ion-item>-->
+      <!--<ion-item-options side="end">-->
+        <!--<ion-item-option (click)="unread()">Unread</ion-item-option>-->
+      <!--</ion-item-options>-->
+    <!--</ion-item-sliding>-->
+  </ion-list>
+
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>
+        Section A
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item><ion-label>A1</ion-label></ion-item>
+    <ion-item><ion-label>A2</ion-label></ion-item>
+    <ion-item><ion-label>A3</ion-label></ion-item>
+    <ion-item><ion-label>A4</ion-label></ion-item>
+    <ion-item><ion-label>A5</ion-label></ion-item>
+
+    <ion-item-divider>
+      <ion-label>
+        Section B
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item><ion-label>B1</ion-label></ion-item>
+    <ion-item><ion-label>B2</ion-label></ion-item>
+    <ion-item><ion-label>B3</ion-label></ion-item>
+    <ion-item><ion-label>B4</ion-label></ion-item>
+    <ion-item><ion-label>B5</ion-label></ion-item>
+  </ion-list>
+
+</ion-content>
