@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Tab Three
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide style="width: 100vw;height: 100px">
+      <h1>Slide 1</h1>
+    </ion-slide>
+    <ion-slide style="width: 100vw;height: 100px">
+      <video id="vidioID" preload="auto" autoplay="autoplay">
+        <source [src]="strUrl" type="video/mp4"/>
+      </video>
+    </ion-slide>
+    <!--<ion-slide style="width: 100vw;height: 100px">-->
+      <!--<video style="height: 100vh;width: 100vw;" preload="auto" autoplay="autoplay" src="assets/video/fb8736e3432fb86610874b358e9603dd.mp4"></video>-->
+    <!--</ion-slide>-->
+  </ion-slides>
+</ion-content>
