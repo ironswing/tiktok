@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {StreamingMedia} from '@ionic-native/streaming-media';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +16,6 @@ import {StreamingMedia} from '@ionic-native/streaming-media';
   providers: [
     StatusBar,
     SplashScreen,
-      StreamingMedia,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

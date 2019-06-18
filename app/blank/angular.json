@@ -40,6 +40,8 @@
               },
               {
                 "input": "src/app/app.scss"
+              },{
+                "input": "./node_modules/videogular2/fonts/videogular.css"
               }
             ],
             "scripts": [],
