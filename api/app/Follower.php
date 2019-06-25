@@ -33,6 +33,7 @@ class Follower extends Model
 
             $item['following_id'] = $item['user_id'];
             $item['follow_time'] = date("Y-m-d H:i:s", strtotime($item['created_at']));
+            unset($item['follower_id']);
             return $item;
         });
     }

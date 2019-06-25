@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Follower;
 use App\User;
+use App\Video;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -59,6 +60,20 @@ class UserController extends Controller
         $followings = (new Follower())->getFollowings($id);
 
         return response()->customization($followings);
+    }
+
+    /**
+     * 获取用户主页的Feed
+     * @param $id
+     * @return array
+     */
+    public function getFeeds($id){
+
+        $id = intval($id);
+
+        $feeds = (new Video())->getThisUserAllVideos($id);
+
+        return response()->customization($feeds);
     }
 
     /**

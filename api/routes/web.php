@@ -42,7 +42,7 @@ Route::get('/user/{id}/profile', 'UserController@getProfile');
 Route::get('/user/{id}/followers', 'UserController@getFollowers');
 Route::get('/user/{id}/followings', 'UserController@getFollowings');
 
-
-
+// 获取用户的Feed流
+Route::get('/user/{id}/feeds', 'UserController@getFeeds');
 
 

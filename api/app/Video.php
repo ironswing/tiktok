@@ -16,8 +16,18 @@ class Video extends Model
 {
     protected $table = 'videos';
 
-    public function getThisUserAllVideos()
+    protected $hidden = ["id", "user_id", "status", "created_at", "updated_at"];
+
+    public function getThisUserAllVideos($id)
     {
-        return $this->belongsTo('App\User');
+        $followers = $this->newQuery()->where(['user_id' => $id, 'status' => 1])
+            ->get();
+
+        return $followers->map(function ($item) {
+
+            $item['shoot_time'] = date("Y-m-d H:i:s", strtotime($item['created_at']));
+            return $item;
+        });
+
     }
 }
