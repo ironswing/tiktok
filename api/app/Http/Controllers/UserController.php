@@ -7,6 +7,9 @@ use App\Follower;
 use App\User;
 use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Array_;
+
 
 class UserController extends Controller
 {
@@ -61,7 +64,8 @@ class UserController extends Controller
      * @param $id
      * @return array
      */
-    public function getFeeds($id){
+    public function getFeeds($id)
+    {
 
         $id = intval($id);
 
@@ -75,13 +79,33 @@ class UserController extends Controller
      * @param $id
      * @return array
      */
-    public function getComments($id){
+    public function getComments($id)
+    {
 
         $id = intval($id);
 
         $comments = (new Comment())->getThisUserComments($id);
 
         return response()->customization($comments);
+    }
+
+    /**
+     * (取)关注用户
+     * @param $id
+     * @return Array
+     */
+    public function follow($id)
+    {
+        $id = intval($id);
+
+        if (!Auth::check()) {
+
+            return response()->customization([], "请先登录~", 400);
+        }
+
+        $status = (new User())->followUser($id);
+
+        return response()->customization([], $status === 1 ? "已关注" : "已取消关注");
     }
 
     /**

@@ -26,6 +26,13 @@ Route::redirect('/', '/feeds');
 Route::redirect('/home', '/feeds');
 Route::get('/feeds', 'FeedController@getFeeds');
 
+// 注册接口
+Route::post('/register', 'HomeController@register');
+
+// 登录接口
+Route::post('/login', 'HomeController@login');
+
+
 
 /*----------------------------------------------------------------
 | 打开某一个视频 | 视频相关接口
@@ -57,6 +64,9 @@ Route::get('/user/{id}/feeds', 'UserController@getFeeds');
 
 // 获取用户发布过的历史评论
 Route::get('/user/{id}/comments', 'UserController@getComments');
+
+// (取)关注接口
+Route::get('/user/{id}/follow', 'UserController@follow');
 
 
 
