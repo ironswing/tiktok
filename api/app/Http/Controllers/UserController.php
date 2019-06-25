@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Follower;
 use App\User;
 use App\Video;
@@ -23,13 +24,6 @@ class UserController extends Controller
 
             return response()->customization([], "用户不存在~", 400);
         }
-
-        $user = [
-
-            'name' => $user['name'],
-            'signature' => $user['signature'],
-            'avatar' => $user['avatar'],
-        ];
 
         return response()->customization($user);
     }
@@ -74,6 +68,20 @@ class UserController extends Controller
         $feeds = (new Video())->getThisUserAllVideos($id);
 
         return response()->customization($feeds);
+    }
+
+    /**
+     * 获取用户的所有评论
+     * @param $id
+     * @return array
+     */
+    public function getComments($id){
+
+        $id = intval($id);
+
+        $comments = (new Comment())->getThisUserComments($id);
+
+        return response()->customization($comments);
     }
 
     /**

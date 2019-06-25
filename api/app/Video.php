@@ -16,7 +16,7 @@ class Video extends Model
 {
     protected $table = 'videos';
 
-    protected $hidden = ["id", "user_id", "status", "created_at", "updated_at"];
+    protected $hidden = ["id", "user_id", "status", "updated_at"];
 
     public function getThisUserAllVideos($id)
     {
@@ -25,9 +25,20 @@ class Video extends Model
 
         return $followers->map(function ($item) {
 
-            $item['shoot_time'] = date("Y-m-d H:i:s", strtotime($item['created_at']));
-            return $item;
+            return field_replace_created_at($item,"shoot_time");
+        });
+    }
+
+    public function getFeeds(){
+
+        $feeds = collect($this->newQuery()->where(['status' => 1])->orderByDesc('id')->paginate(10));
+
+        $feeds['data'] = collect($feeds['data'])->map(function ($item) {
+
+            return field_replace_created_at($item,"shoot_time");
         });
 
+        return $feeds;
     }
+
 }
