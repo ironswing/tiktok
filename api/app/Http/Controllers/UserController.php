@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Follower;
+use App\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+
+    /**
+     * 获取用户的基本资料信息
+     * @param $id
+     * @return mixed
+     */
+    public function getProfile($id)
+    {
+        $id = intval($id);
+        $user = (User::where("id", $id)->first());
+        if (!$this->isUserExist($user)) {
+
+            return response()->customization([], "用户不存在~", 400);
+        }
+
+        $user = [
+
+            'name' => $user['name'],
+            'signature' => $user['signature'],
+            'avatar' => $user['avatar'],
+        ];
+
+        return response()->customization($user);
+    }
+
+    /**
+     * 获取用户的粉丝列表
+     * @param $id
+     * @return array
+     */
+    public function getFollowers($id)
+    {
+        $id = intval($id);
+
+        $followers = (new Follower())->getFollowers($id);
+
+        return response()->customization($followers);
+    }
+
+    /**
+     * 获取用户的关注列表
+     * @param $id
+     * @return array
+     */
+    public function getFollowings($id)
+    {
+        $id = intval($id);
+
+        $followings = (new Follower())->getFollowings($id);
+
+        return response()->customization($followings);
+    }
+
+    /**
+     * 用户是否存在
+     * @param $user
+     * @return bool
+     */
+    public function isUserExist($user)
+    {
+
+        if (is_null($user) || empty($user)) {
+
+            return false;
+        }
+
+        // 还需要判断用户是否被封禁之类的
+
+        return true;
+    }
+}

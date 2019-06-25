@@ -11,6 +11,9 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});
@@ -30,6 +33,15 @@ Route::get('user/{id}', function ($id) {
 
 // comment 路由
 Route::resource('comment', 'API\CommentController');
+
+// 用户资料
+// 别加前缀 : API\UserController@getProfile, 这样是错误的 !
+Route::get('/user/{id}/profile', 'UserController@getProfile');
+
+// 获取粉丝列表和关注列表
+Route::get('/user/{id}/followers', 'UserController@getFollowers');
+Route::get('/user/{id}/followings', 'UserController@getFollowings');
+
 
 
 
