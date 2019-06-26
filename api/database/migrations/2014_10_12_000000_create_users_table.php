@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
 
             $table->increments('id');
             $table->string('name');
+            $table->string('signature')->default("")->comment("个性签名");
+            $table->string('avatar')->default("")->comment("头像");
+            $table->unsignedTinyInteger('status')->comment("状态,1:正常,0:删除,2:封禁");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
