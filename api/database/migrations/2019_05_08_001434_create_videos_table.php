@@ -19,9 +19,10 @@ class CreateVideosTable extends Migration
             Schema::create('videos', function (Blueprint $table) {
 
                 $table->increments('id');
-                $table->unsignedInteger('user_id')->comment("视频的用户id");
-                $table->string('title', 250)->default("")->comment("视频的标题");
-                $table->string('path', 250)->default("")->comment("视频的路径");
+                $table->unsignedInteger('user_id')->nullable(false)->comment("视频的用户id");
+                $table->string('title', 250)->nullable(false)->default("")->comment("视频的标题");
+                $table->string('path', 250)->nullable(false)->default("")->comment("视频的路径");
+                $table->unsignedTinyInteger('status')->nullable(false)->default(1)->comment("状态,1:正常,0:删除");
                 $table->timestamps();
 
                 $table->index("user_id");
