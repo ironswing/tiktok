@@ -8,6 +8,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import {AndroidExoplayer} from '@ionic-native/android-exoplayer/ngx';
+import {Camera} from '@ionic-native/camera/ngx';
+import {VideoCapturePlus} from '@ionic-native/video-capture-plus/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +19,9 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [
     StatusBar,
     SplashScreen,
+      AndroidExoplayer,
+      Camera,
+      VideoCapturePlus,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

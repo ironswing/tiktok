@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {VgAPI} from 'videogular2/core';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+    public api; VgAPI
+    // public vm: vgMedia;
 
     slideOpts = {
         initialSlide: 1,
@@ -22,5 +25,34 @@ export class HomePage {
       //
       // this.streamingMedia.playVideo('https://ttq.tiantianquan.xyz/sqnu/assets/test.mp4', options);
   }
+
+    onPlayerReady(api: VgAPI) {
+      console.log('ready!!!');
+
+      // api.play();
+        this.api = api;
+
+        this.api.getDefaultMedia().subscriptions.ended.subscribe(
+            () => {
+                // Set the video to the beginning
+                this.api.getDefaultMedia().currentTime = 0;
+            }
+        );
+    }
+
+    startvideo(e){
+      e.stopPropagation();
+      console.log('start');
+      this.api.play();
+    }
+    tplay() {
+      console.log('test play');
+    }
+
+    sldnxt(e){
+      console.log(e);
+      console.log('sss');
+        this.api.play();
+    }
 
 }
