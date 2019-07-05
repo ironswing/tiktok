@@ -1,0 +1,83 @@
+<!--<ion-header>-->
+  <!--<ion-toolbar>-->
+    <!--<ion-title>player</ion-title>-->
+  <!--</ion-toolbar>-->
+<!--</ion-header>-->
+
+<ion-content>
+  <div style="position: fixed;top: 1rem;z-index: 99">
+    <div style="display: flex;justify-content: flex-end;width: 100vw;">
+      <ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>
+      <!--<button (click)="dismiss()" style="width: 2rem;height: 2rem;">x</button>-->
+    </div>
+  </div>
+
+  <ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="tplay($event)">
+
+    <ion-slide>
+      <vg-player *ngIf="cur == 1">
+        <vg-overlay-play></vg-overlay-play>
+        <vg-buffering></vg-buffering>
+        <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
+          <!--<vg-play-pause></vg-play-pause>-->
+          <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
+          <!--<vg-scrub-bar>-->
+            <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
+            <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
+          <!--</vg-scrub-bar>-->
+          <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
+          <!--&lt;!&ndash;<vg-fullscreen></vg-fullscreen>&ndash;&gt;-->
+        <!--</vg-controls>-->
+        <video #media  [vgMedia]="media" src="{{src}}" autoplay></video>
+      </vg-player>
+    </ion-slide>
+
+    <ion-slide>
+      <vg-player *ngIf="cur == 2">
+        <vg-overlay-play></vg-overlay-play>
+        <vg-buffering></vg-buffering>
+        <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
+        <!--<vg-play-pause></vg-play-pause>-->
+        <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
+        <!--<vg-scrub-bar>-->
+        <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
+        <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
+        <!--</vg-scrub-bar>-->
+        <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
+        <!--&lt;!&ndash;<vg-fullscreen></vg-fullscreen>&ndash;&gt;-->
+        <!--</vg-controls>-->
+        <video #media  [vgMedia]="media" src="{{src}}" autoplay></video>
+      </vg-player>
+    </ion-slide>
+  </ion-slides>
+  <div style="position: fixed;z-index: 99;right: 0;top: 25rem;">
+    <div style="display: flex;flex-direction: column;margin-right: 1rem">
+      <div>
+        <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
+        <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
+      </div>
+
+      <div style="margin-top: 0.5rem;">
+        <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
+      </div>
+    </div>
+  </div>
+  <!--<div style="height: 100vh">-->
+    <!--<vg-player>-->
+      <!--<vg-overlay-play></vg-overlay-play>-->
+      <!--<vg-buffering></vg-buffering>-->
+      <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
+        <!--<vg-play-pause></vg-play-pause>-->
+        <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
+        <!--<vg-scrub-bar>-->
+          <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
+          <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
+        <!--</vg-scrub-bar>-->
+        <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
+        <!--<vg-fullscreen></vg-fullscreen>-->
+      <!--</vg-controls>-->
+      <!--<video #media (play)="tplay()" [vgMedia]="media" src="{{src}}" autoplay></video>-->
+    <!--</vg-player>-->
+  <!--</div>-->
+
+</ion-content>
