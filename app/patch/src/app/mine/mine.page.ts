@@ -10,7 +10,7 @@ import {PlayerPage} from '../player/player.page';
 })
 export class MinePage implements OnInit {
 
-    videoArr: [] = [
+    videoArr = [
         {
             id: 1,
             src: 'assets/video/test1.mp4',
