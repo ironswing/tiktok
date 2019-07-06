@@ -22,46 +22,73 @@
     </div>
   </div>
 
-  <div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <img src="assets/poster.jpg" alt="" >
-        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-      </ion-row>
+  <!--<div>-->
+    <!--<ion-grid>-->
+      <!--<ion-row>-->
+        <!--<ion-col>-->
+          <!--<img src="assets/poster.jpg" alt="" >-->
+        <!--</ion-col>-->
+        <!--<ion-col>-->
+          <!--<img src="assets/shapes.svg" alt="" >        </ion-col>-->
+        <!--<ion-col>-->
+          <!--<img src="assets/shapes.svg" alt="" >        </ion-col>-->
+      <!--</ion-row>-->
 
-      <ion-row>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >
-        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-      </ion-row>
-    </ion-grid>
+      <!--<ion-row>-->
+        <!--<ion-col>-->
+          <!--<img src="assets/shapes.svg" alt="" >-->
+        <!--</ion-col>-->
+        <!--<ion-col>-->
+          <!--<img src="assets/shapes.svg" alt="" >        </ion-col>-->
+        <!--<ion-col>-->
+          <!--<img src="assets/shapes.svg" alt="" >        </ion-col>-->
+      <!--</ion-row>-->
+    <!--</ion-grid>-->
+  <!--</div>-->
+
+  <!--<ion-button (click)="toggleInfiniteScroll()" expand="block">-->
+    <!--Toggle Infinite Scroll-->
+  <!--</ion-button>-->
+
+  <div *ngFor="let item of videoArr" (click)="testParams(item)">
+    <div style="position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">
+      <ion-text style="color: white;">{{item.title}}</ion-text>
+    </div>
+    <img style="width: 100vw;height: 30vh;object-fit: cover" src="{{item.poster}}" alt="">
   </div>
 
-  <ion-button (click)="toggleInfiniteScroll()" expand="block">
-    Toggle Infinite Scroll
-  </ion-button>
+  <!--<ion-list>-->
 
-  <ion-list>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-  </ion-list>
+    <!--<ion-item *ngFor="let item of videoArr" (click)="testParams(item)">-->
+      <!--<div style="position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">-->
+        <!--<ion-text style="color: white;">{{item.title}}</ion-text>-->
+      <!--</div>-->
+      <!--<img style="width: 100vw;height: 40vh;object-fit: cover" src="{{item.poster}}" alt="">-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<div>-->
+
+      <!--</div>-->
+      <!--<div>-->
+        <!--123-->
+      <!--</div>-->
+      <!--<img src="assets/poster.jpg" alt="" >-->
+    <!--</ion-item>-->
+    <!--<ion-item>-->
+      <!--<div>-->
+        <!--123-->
+      <!--</div>-->
+      <!--<img src="assets/shapes.svg" alt="" >-->
+    <!--</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+    <!--<ion-item>123</ion-item>-->
+  <!--</ion-list>-->
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
@@ -69,5 +96,17 @@
             loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <div style="position: fixed; bottom: 0;z-index: 99">
+
+    <div style="display: flex;justify-content: space-around;width: 100vw;background-color:#fff;">
+
+      <div (click)="goIndex()">首页</div>
+      <ion-button  [routerLink]="['/create']">添加</ion-button>
+      <ion-button  [routerLink]="['/mine']">我的</ion-button>
+
+    </div>
+
+  </div>
 
 </ion-content>

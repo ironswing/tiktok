@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {VgAPI} from 'videogular2/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomePage {
         pagination: {},
         direction: 'vertical'
     };
-  constructor() {}
+  constructor(private router: Router) {}
   player() {
       // let options: StreamingVideoOptions = {
       //     successCallback: () => { console.log('Video played') },
@@ -50,7 +51,7 @@ export class HomePage {
         );
     }
 
-    startvideo(e){
+    startvideo(e) {
       e.stopPropagation();
       console.log('start');
       this.api.play();
@@ -85,5 +86,12 @@ export class HomePage {
 
     hiddenComment() {
       this.isComment = false;
+    }
+
+    goIndex() {
+      this.api.pause();
+      this.router.navigate(['/mine']).then(res => {
+          console.log(res);
+      });
     }
 }
