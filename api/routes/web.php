@@ -32,6 +32,8 @@ Route::post('/register', 'HomeController@register');
 // 登录接口
 Route::post('/login', 'HomeController@login');
 
+// 视频点赞接口
+Route::get('/video/{$id}/like', 'VideoController@like');
 
 
 /*----------------------------------------------------------------
@@ -69,8 +71,18 @@ Route::get('/user/{id}/comments', 'UserController@getComments');
 Route::get('/user/{id}/follow', 'UserController@follow');
 
 
+/*----------------------------------------------------------------
+| 个人的操作 | 上传发布相关接口
+|----------------------------------------------------------------*/
 
+// 发布接口
+Route::post('/post', 'PostController@post');
 
+// 视频删除接口
+Route::get('/video/{id}/delete', 'VideoController@delete');
+
+// 视频上传接口
+Route::get('/video/upload', 'VideoController@upload');
 
 
 
