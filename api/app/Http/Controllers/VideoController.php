@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Services\UploadService;
 use App\Video;
+use \Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VideoController extends Controller
 {
-    public function getComments($id){
+    public function getComments($id)
+    {
 
         $id = intval($id);
 
@@ -18,16 +22,46 @@ class VideoController extends Controller
     }
 
     /**
-     * 添加一个个人视频
+     * 上传视频接口
+     * @return mixed
      */
-    public function add(){
+    public function upload()
+    {
+        $uploadService = new UploadService("video");
 
+        try {
+
+            $data = $uploadService->handle();
+        } catch (Exception $e) {
+
+            return response()->customization([], $e->getMessage(), 400);
+        }
+
+        return response()->customization($data);
     }
 
     /**
-     * 删除一个视频
+     * 为视频点赞
+     * @param $id
+     * @return mixed
      */
-    public function delete(){
+    public function like($id)
+    {
+
+        if (!Auth::check()) {
+
+
+            return response()->customization([], "请先登录", 400);
+        }
+
+        (new Video())->likeThisVideo($id, Auth::id());
+    }
+
+    /**
+     * 删除视频接口
+     */
+    public function delete()
+    {
 
     }
 }
