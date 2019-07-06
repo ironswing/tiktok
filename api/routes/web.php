@@ -82,7 +82,7 @@ Route::post('/post', 'PostController@post');
 Route::get('/video/{id}/delete', 'VideoController@delete');
 
 // 视频上传接口
-Route::get('/video/upload', 'VideoController@upload');
+Route::post('/video/upload', 'VideoController@upload');
 
 
 
