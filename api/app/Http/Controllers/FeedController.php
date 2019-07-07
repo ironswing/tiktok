@@ -12,8 +12,6 @@ class FeedController extends Controller
     {
         $feeds = (new Video())->getFeeds();
 
-        $feeds = array_merge($feeds, ['csrf_token' => csrf_token()]);
-
         return response()->customization($feeds);
     }
 }

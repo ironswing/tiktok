@@ -146,6 +146,11 @@ class UserController extends Controller
         return response()->customization([], "用户未登录", 400);
     }
 
+    /**
+     * 登录
+     * @param Request $request
+     * @return mixed
+     */
     public function login(Request $request)
     {
         $name = $request->input("name");
