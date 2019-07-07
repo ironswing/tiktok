@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Follower;
+use App\Services\CertificateService;
 use App\User;
 use App\Video;
 use Illuminate\Http\Request;
@@ -128,13 +129,19 @@ class UserController extends Controller
 
     /**
      * 判断用户是否登录
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @return mixed
      */
-    public function isLogin()
+    public function isLogin(Request $request, CertificateService $certificateService)
     {
+        $cookie = $request->input("cookie");
 
-        if (Auth::check()) {
+        $is_login = $certificateService->isSessionExist($cookie);
 
-            return response()->customization(["id" => Auth::id()]);
+        if (false !== $is_login) {
+
+            return response()->customization(["id" => $is_login]);
         }
 
         return response()->customization([], "用户未登录", 400);
