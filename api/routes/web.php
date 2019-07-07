@@ -64,6 +64,8 @@ Route::get('/user/{id}/comments', 'UserController@getComments');
 // (取)关注接口
 Route::get('/user/{id}/follow', 'UserController@follow');
 
+// 用户是否已登录
+Route::get('/user/is_login','UserController@isLogin');
 
 /*----------------------------------------------------------------
 | 个人的操作 | 上传发布相关接口

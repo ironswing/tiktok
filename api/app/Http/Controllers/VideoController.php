@@ -57,9 +57,15 @@ class VideoController extends Controller
         (new Video())->likeThisVideo($id, Auth::id());
     }
 
-    public function getDetail($id){
+    public function getDetail($id)
+    {
 
-        $data = (new Video())->getThisVideoDetail($id);
+        $data = (new Video())->getThisVideoDetail($id)->toArray();
+
+        if (empty($data)) {
+
+            return response()->customization([], "视频不存在", 400);
+        }
 
         return response()->customization($data);
     }

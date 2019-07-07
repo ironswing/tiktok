@@ -125,4 +125,18 @@ class UserController extends Controller
 
         return true;
     }
+
+    /**
+     * 判断用户是否登录
+     */
+    public function isLogin()
+    {
+
+        if (Auth::check()) {
+
+            return response()->customization(["id" => Auth::id()]);
+        }
+
+        return response()->customization([], "用户未登录", 400);
+    }
 }
