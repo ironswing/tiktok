@@ -9,7 +9,6 @@ use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Expr\Array_;
 
 
 class UserController extends Controller
@@ -167,9 +166,14 @@ class UserController extends Controller
         $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
         $_SESSION[$cookie] = $user_id;
 
-        return response()->customization(['id' => $user_id, 'cookie' => $cookie], "登录成功", 400);
+        return response()->customization(['id' => $user_id, 'cookie' => $cookie]);
     }
 
+    /**
+     * 注册
+     * @param Request $request
+     * @return mixed
+     */
     public function register(Request $request)
     {
         $name = $request->input("name");
@@ -197,6 +201,32 @@ class UserController extends Controller
         ];
         $user_id = (new User())->newQuery()->insertGetId($user);
 
-        return response()->customization(['id' => $user_id], "注册成功", 400);
+        return response()->customization(['id' => $user_id]);
+    }
+
+    /**
+     * 忘记密码接口
+     * @param Request $request
+     */
+    public function forgetPassword(Request $request)
+    {
+
+    }
+
+    public function resetPassword(Request $request)
+    {
+
+        $email = $request->input("email");
+        $password = $request->input("password");
+        $confirm_password = $request->input("confirm_password");
+
+        if ($confirm_password !== $password) {
+
+            return response()->customization([], "两次密码不一致", 400);
+        }
+
+        (new User())->newQuery()->where(["email" => $email])->update(["password" => $password]);
+
+        return response()->customization([]);
     }
 }
