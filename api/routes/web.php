@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Auth::routes();
+// Auth::routes();
 
 
 /*----------------------------------------------------------------
@@ -82,7 +82,6 @@ Route::get('/user/{id}/follow', 'UserController@follow');
 
 // 用户是否已登录
 Route::get('/user/is_login','UserController@isLogin');
-
 
 // 用户是否已登录
 Route::get('/user/is_login','UserController@isLogin');
