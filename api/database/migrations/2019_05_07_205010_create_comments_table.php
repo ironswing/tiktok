@@ -30,9 +30,9 @@ class CreateCommentsTable extends Migration
                 $table->index("user_id");
                 $table->index("reply_comment_id");
             });
-
-            DB::statement("ALTER TABLE comments AUTO_INCREMENT = 1;");
         }
+
+        DB::statement("ALTER TABLE comments AUTO_INCREMENT = 1;");
     }
 
     /**

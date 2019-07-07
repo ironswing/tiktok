@@ -22,7 +22,7 @@ class UserController extends Controller
     public function getProfile($id)
     {
         $id = intval($id);
-        $user = (User::where("id", $id)->first());
+        $user = (new User())->newQuery()->where("id", $id)->first();
         if (!$this->isUserExist($user)) {
 
             return response()->customization([], "用户不存在~", 400);
@@ -103,7 +103,7 @@ class UserController extends Controller
             return response()->customization([], "请先登录~", 400);
         }
 
-        $status = (new User())->followUser($id);
+        $status = (new User())->newQuery()->followUser($id);
 
         return response()->customization([], $status === 1 ? "已关注" : "已取消关注");
     }
@@ -138,5 +138,59 @@ class UserController extends Controller
         }
 
         return response()->customization([], "用户未登录", 400);
+    }
+
+
+    public function login(Request $request)
+    {
+        $name = $request->input("name");
+        $password = $request->input("password");
+
+        // 匹配是否存在这个用户
+        $user = (new User())->newQuery()->where(["name" => $name, "password" => $password])->get()->toArray();
+        if (empty($user)) {
+
+            return response()->customization([], "用户名或密码错误", 400);
+        }
+        if (isset($user[0])) {
+
+            $user = $user[0];
+        }
+
+        $user_id = $user['id'];
+        $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
+        $_SESSION[$cookie] = $user_id;
+
+        return response()->customization(['id' => $user_id, 'cookie' => $cookie], "登录成功", 400);
+    }
+
+    public function register(Request $request)
+    {
+        $name = $request->input("name");
+        $email = $request->input("email");
+        $password = $request->input("password");
+        $confirm_password = $request->input("confirm_password");
+
+        if ($confirm_password !== $password) {
+
+            return response()->customization([], "两次密码不一致", 400);
+        }
+
+        // 判断邮箱是否已存在
+        $user = (new User())->newQuery()->where(["email" => $email])->get()->toArray();
+        if (!empty($user)) {
+
+            return response()->customization([], "邮箱已存在", 400);
+        }
+
+        $user = [
+
+            "name" => $name,
+            "email" => $email,
+            "password" => $password,
+        ];
+        $user_id = (new User())->newQuery()->insertGetId($user);
+
+        return response()->customization(['id' => $user_id], "注册成功", 400);
     }
 }
