@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: 'create', loadChildren: './create/create.module#CreatePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'player', loadChildren: './player/player.module#PlayerPageModule' },
+  { path: 'nav-bar', loadChildren: './nav-bar/nav-bar.module#NavBarPageModule' },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
 ];
 
 @NgModule({

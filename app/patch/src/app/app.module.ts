@@ -14,11 +14,17 @@ import {PlayerPageModule} from './player/player.module';
 import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, PlayerPageModule],
+  imports: [      HttpClientModule,
+      HttpClientJsonpModule,
+      BrowserModule,
+      IonicModule.forRoot(),
+      AppRoutingModule,
+      PlayerPageModule],
   providers: [
     StatusBar,
     SplashScreen,

@@ -1,104 +1,243 @@
-<!--<ion-header>-->
-  <!--<ion-toolbar>-->
-    <!--<ion-title>-->
-      <!--Ionic Blank-->
-    <!--</ion-title>-->
-  <!--</ion-toolbar>-->
-<!--</ion-header>-->
+<ion-menu side="start" menuId="first">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Start Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-<ion-content>
+<ion-menu side="start" menuId="custom" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>Custom Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-  <ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
+<ion-menu side="end" type="push">
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>End Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-    <ion-slide *ngFor="let item of sourceArr">
+<ion-router-outlet main>
 
-      <div *ngIf="cur == item.id">
-        <div style="width: 100vw;height: 100vh;">
-          <vg-player (onPlayerReady)="onPlayerReady($event)" >
-            <vg-overlay-play></vg-overlay-play>
-            <vg-buffering></vg-buffering>
-            <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
+  <ion-content>
+
+    <ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
+
+      <ion-slide *ngFor="let item of sourceArr">
+
+        <div *ngIf="cur == item.id">
+          <div style="width: 100vw;height: 100vh;">
+            <vg-player (onPlayerReady)="onPlayerReady($event)" >
+              <vg-overlay-play></vg-overlay-play>
+              <vg-buffering></vg-buffering>
+              <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
               <!--<vg-play-pause></vg-play-pause>-->
               <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
               <!--<vg-scrub-bar>-->
-                <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
-                <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
+              <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
+              <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
               <!--</vg-scrub-bar>-->
               <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
               <!--<vg-fullscreen></vg-fullscreen>-->
-            <!--</vg-controls>-->
-            <video #media (play)="tplay()" [vgMedia]="media" src="{{item.src}}" poster="{{item.poster}}" autoplay></video>
-          </vg-player>
-        </div>
+              <!--</vg-controls>-->
+              <video #media (play)="tplay()" [vgMedia]="media" src="{{item.src}}" poster="{{item.poster}}" autoplay></video>
+            </vg-player>
+          </div>
 
-        <div style="position: absolute;z-index: 999;top: 25rem;right: 0">
-          <div style="display: flex;flex-direction: column;margin-right: 1rem">
-            <div>
-              <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
-              <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
-            </div>
+          <div style="position: absolute;z-index: 999;top: 25rem;right: 0">
+            <div style="display: flex;flex-direction: column;margin-right: 1rem">
+              <div>
+                <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
+                <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
+              </div>
 
-            <div style="margin-top: 0.5rem;">
-              <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
+              <div style="margin-top: 0.5rem;">
+                <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
+              </div>
             </div>
           </div>
         </div>
+
+      </ion-slide>
+    </ion-slides>
+
+    <div *ngIf="isComment" style="position: absolute;bottom: 0;z-index: 300;height: 75vh;width: 100vw;background-color:#fff;transition: height 2s linear 0">
+      <!--<button (click)="hiddenComment()">x</button>-->
+      <!--<ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>-->
+      <div style="width: 100vw;display: flex;justify-content: flex-end">
+        <ion-icon name="close" style="color: black;font-size: 1.5rem;margin: 1rem" (click)="hiddenComment()" ></ion-icon>
       </div>
-
-    </ion-slide>
-  </ion-slides>
-
-  <div *ngIf="isComment" style="position: absolute;bottom: 0;z-index: 300;height: 75vh;width: 100vw;background-color:#fff;transition: height 2s linear 0">
-    <button (click)="hiddenComment()">x</button>
-    <ion-list style="height: 70vh;overflow: scroll">
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-    </ion-list>
-  </div>
-
-
-  <!--<div style="position: fixed;z-index: 99;right: 0;top: 25rem;">-->
-    <!--<div style="display: flex;flex-direction: column;margin-right: 1rem">-->
-      <!--<div>-->
-        <!--<ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>-->
-        <!--<ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>-->
-      <!--</div>-->
-
-      <!--<div style="margin-top: 0.5rem;">-->
-        <!--<ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <!--<button  style="position: fixed; bottom: 100px;z-index: 99" (click)="startvideo($event)">last</button>-->
-
-  <div style="position: fixed; bottom: 5px;z-index: 99">
-
-    <div style="display: flex;justify-content: space-around;width: 100vw;">
-
-      <div (click)="goIndex()">首页</div>
-      <ion-button style="opacity: 0.5"  [routerLink]="['/home']">首页</ion-button>
-      <ion-button  [routerLink]="['/create']">添加</ion-button>
-      <ion-button  [routerLink]="['/mine']">我的</ion-button>
-      <!--<ion-button  [routerLink]="['/video-demo']">demo</ion-button>-->
-      <!--<button (click)="appendSlide()">append</button>-->
+      <ion-list style="height: 65vh;overflow: scroll">
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+        <ion-item>123</ion-item>
+      </ion-list>
     </div>
 
-  </div>
+
+    <!--<div style="position: fixed;z-index: 99;right: 0;top: 25rem;">-->
+    <!--<div style="display: flex;flex-direction: column;margin-right: 1rem">-->
+    <!--<div>-->
+    <!--<ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>-->
+    <!--<ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>-->
+    <!--</div>-->
+
+    <!--<div style="margin-top: 0.5rem;">-->
+    <!--<ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<button  style="position: fixed; bottom: 100px;z-index: 99" (click)="startvideo($event)">last</button>-->
+
+    <div style="position: fixed; bottom: 5px;z-index: 99">
+
+      <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;">
+
+        <div (click)="goIndex()" style="color: white">首页</div>
+
+        <ion-icon name="add-circle-outline" (click)="goPublish()" style="color: white;font-size: 3rem;"></ion-icon>
+
+        <div (click)="goMine()" style="color: white">我的</div>
+
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-router-outlet>
 
 
-  <!--<ion-button style="position: fixed; bottom: 5px;z-index: 10">mine</ion-button>-->
+<!--<ion-content>-->
 
-  <!--<div class="ion-padding">-->
-    <!--The world is your oyster.-->
-    <!--<p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>-->
+  <!--<ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">-->
+
+    <!--<ion-slide *ngFor="let item of sourceArr">-->
+
+      <!--<div *ngIf="cur == item.id">-->
+        <!--<div style="width: 100vw;height: 100vh;">-->
+          <!--<vg-player (onPlayerReady)="onPlayerReady($event)" >-->
+            <!--<vg-overlay-play></vg-overlay-play>-->
+            <!--<vg-buffering></vg-buffering>-->
+            <!--&lt;!&ndash;<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">&ndash;&gt;-->
+              <!--&lt;!&ndash;<vg-play-pause></vg-play-pause>&ndash;&gt;-->
+              <!--&lt;!&ndash;<vg-time-display [vgProperty]="'current'"></vg-time-display>&ndash;&gt;-->
+              <!--&lt;!&ndash;<vg-scrub-bar>&ndash;&gt;-->
+                <!--&lt;!&ndash;<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>&ndash;&gt;-->
+                <!--&lt;!&ndash;<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>&ndash;&gt;-->
+              <!--&lt;!&ndash;</vg-scrub-bar>&ndash;&gt;-->
+              <!--&lt;!&ndash;<vg-time-display [vgProperty]="'total'"></vg-time-display>&ndash;&gt;-->
+              <!--&lt;!&ndash;<vg-fullscreen></vg-fullscreen>&ndash;&gt;-->
+            <!--&lt;!&ndash;</vg-controls>&ndash;&gt;-->
+            <!--<video #media (play)="tplay()" [vgMedia]="media" src="{{item.src}}" poster="{{item.poster}}" autoplay></video>-->
+          <!--</vg-player>-->
+        <!--</div>-->
+
+        <!--<div style="position: absolute;z-index: 999;top: 25rem;right: 0">-->
+          <!--<div style="display: flex;flex-direction: column;margin-right: 1rem">-->
+            <!--<div>-->
+              <!--<ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>-->
+              <!--<ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>-->
+            <!--</div>-->
+
+            <!--<div style="margin-top: 0.5rem;">-->
+              <!--<ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+    <!--</ion-slide>-->
+  <!--</ion-slides>-->
+
+  <!--<div *ngIf="isComment" style="position: absolute;bottom: 0;z-index: 300;height: 75vh;width: 100vw;background-color:#fff;transition: height 2s linear 0">-->
+    <!--&lt;!&ndash;<button (click)="hiddenComment()">x</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>&ndash;&gt;-->
+    <!--<div style="width: 100vw;display: flex;justify-content: flex-end">-->
+      <!--<ion-icon name="close" style="color: black;font-size: 1.5rem;margin: 1rem" (click)="hiddenComment()" ></ion-icon>-->
+    <!--</div>-->
+    <!--<ion-list style="height: 65vh;overflow: scroll">-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+      <!--<ion-item>123</ion-item>-->
+    <!--</ion-list>-->
   <!--</div>-->
-</ion-content>
+
+
+  <!--&lt;!&ndash;<div style="position: fixed;z-index: 99;right: 0;top: 25rem;">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div style="display: flex;flex-direction: column;margin-right: 1rem">&ndash;&gt;-->
+      <!--&lt;!&ndash;<div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;<div style="margin-top: 0.5rem;">&ndash;&gt;-->
+        <!--&lt;!&ndash;<ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;<button  style="position: fixed; bottom: 100px;z-index: 99" (click)="startvideo($event)">last</button>&ndash;&gt;-->
+
+  <!--<div style="position: fixed; bottom: 5px;z-index: 99">-->
+
+    <!--<div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;">-->
+
+      <!--<div (click)="goIndex()" style="color: white">首页</div>-->
+
+      <!--<ion-icon name="add-circle-outline" (click)="goPublish()" style="color: white;font-size: 3rem;"></ion-icon>-->
+
+      <!--<div (click)="goMine()" style="color: white">我的</div>-->
+
+    <!--</div>-->
+
+  <!--</div>-->
+
+<!--</ion-content>-->
+

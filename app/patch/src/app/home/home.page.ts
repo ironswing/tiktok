@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {VgAPI} from 'videogular2/core';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,14 @@ export class HomePage {
         pagination: {},
         direction: 'vertical'
     };
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {
+      this.http.get(ROOT_URL + 'feeds').subscribe(res => {
+          console.log(res);
+          if (res['code'] === 200) {
+              console.log(res['data']);
+          }
+      });
+  }
   player() {
       // let options: StreamingVideoOptions = {
       //     successCallback: () => { console.log('Video played') },
@@ -40,7 +48,7 @@ export class HomePage {
     onPlayerReady(api: VgAPI) {
       console.log('ready!!!');
 
-      // api.play();
+      api.play();
         this.api = api;
 
         this.api.getDefaultMedia().subscriptions.ended.subscribe(
@@ -89,9 +97,23 @@ export class HomePage {
     }
 
     goIndex() {
-      this.api.pause();
-      this.router.navigate(['/mine']).then(res => {
+      // this.api.pause();
+      this.router.navigate(['/home']).then(res => {
           console.log(res);
       });
+    }
+
+    goPublish() {
+        this.api.pause();
+        this.router.navigate(['/create']).then(res => {
+            console.log(res);
+        });
+    }
+
+    goMine() {
+        this.api.pause();
+        this.router.navigate(['/mine']).then(res => {
+            console.log(res);
+        });
     }
 }

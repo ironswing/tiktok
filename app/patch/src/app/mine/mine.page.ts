@@ -63,6 +63,18 @@ export class MinePage implements OnInit {
         });
     }
 
+    goPublish() {
+        this.router.navigate(['/create']).then(res => {
+            console.log(res);
+        });
+    }
+
+    goMine() {
+        this.router.navigate(['/mine']).then(res => {
+            console.log(res);
+        });
+    }
+
     testParams(e) {
         console.log(e);
         // this.router.navigate(['/player']);
@@ -78,6 +90,10 @@ export class MinePage implements OnInit {
         const { data } = await modal.onDidDismiss();
         console.log(data);
         // return await modal.present();
+    }
+
+    segmentChanged(ev: any) {
+        console.log('Segment changed', ev);
     }
 
 }
