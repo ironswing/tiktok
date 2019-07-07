@@ -43,6 +43,12 @@ class Video extends Model
         return $feeds;
     }
 
+    public function getThisVideoDetail($id)
+    {
+
+        return $this->newQuery()->where(['id' => $id, 'status' => 1])->get();
+    }
+
     public function likeThisVideo($id, $user_id)
     {
 
