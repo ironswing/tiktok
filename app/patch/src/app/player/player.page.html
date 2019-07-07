@@ -12,72 +12,72 @@
     </div>
   </div>
 
-  <ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="tplay($event)">
+  <ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
 
-    <ion-slide>
-      <vg-player *ngIf="cur == 1">
-        <vg-overlay-play></vg-overlay-play>
-        <vg-buffering></vg-buffering>
-        <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
-          <!--<vg-play-pause></vg-play-pause>-->
-          <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
-          <!--<vg-scrub-bar>-->
+    <!--<ion-slide>-->
+      <!--<vg-player *ngIf="cur == 1">-->
+        <!--<vg-overlay-play></vg-overlay-play>-->
+        <!--<vg-buffering></vg-buffering>-->
+        <!--<video #media  [vgMedia]="media" src="{{src}}" autoplay></video>-->
+      <!--</vg-player>-->
+    <!--</ion-slide>-->
+
+    <ion-slide *ngFor="let item of sourceArr">
+
+      <div *ngIf="cur == item.id">
+        <div style="width: 100vw;height: 100vh;">
+          <vg-player (onPlayerReady)="onPlayerReady($event)" >
+            <vg-overlay-play></vg-overlay-play>
+            <vg-buffering></vg-buffering>
+            <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
+            <!--<vg-play-pause></vg-play-pause>-->
+            <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
+            <!--<vg-scrub-bar>-->
             <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
             <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
-          <!--</vg-scrub-bar>-->
-          <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
-          <!--&lt;!&ndash;<vg-fullscreen></vg-fullscreen>&ndash;&gt;-->
-        <!--</vg-controls>-->
-        <video #media  [vgMedia]="media" src="{{src}}" autoplay></video>
-      </vg-player>
-    </ion-slide>
+            <!--</vg-scrub-bar>-->
+            <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
+            <!--<vg-fullscreen></vg-fullscreen>-->
+            <!--</vg-controls>-->
+            <video #media (play)="tplay()" [vgMedia]="media" src="{{item.src}}" poster="{{item.poster}}" autoplay></video>
+          </vg-player>
+        </div>
 
-    <ion-slide>
-      <vg-player *ngIf="cur == 2">
-        <vg-overlay-play></vg-overlay-play>
-        <vg-buffering></vg-buffering>
-        <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
-        <!--<vg-play-pause></vg-play-pause>-->
-        <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
-        <!--<vg-scrub-bar>-->
-        <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
-        <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
-        <!--</vg-scrub-bar>-->
-        <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
-        <!--&lt;!&ndash;<vg-fullscreen></vg-fullscreen>&ndash;&gt;-->
-        <!--</vg-controls>-->
-        <video #media  [vgMedia]="media" src="{{src}}" autoplay></video>
-      </vg-player>
+        <div style="position: absolute;z-index: 999;top: 25rem;right: 0">
+          <div style="display: flex;flex-direction: column;margin-right: 1rem">
+            <div>
+              <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
+              <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
+            </div>
+
+            <div style="margin-top: 0.5rem;">
+              <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </ion-slide>
   </ion-slides>
-  <div style="position: fixed;z-index: 99;right: 0;top: 25rem;">
-    <div style="display: flex;flex-direction: column;margin-right: 1rem">
-      <div>
-        <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
-        <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
-      </div>
 
-      <div style="margin-top: 0.5rem;">
-        <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
-      </div>
+  <div *ngIf="isComment" style="position: absolute;bottom: 0;z-index: 300;height: 75vh;width: 100vw;background-color:#fff;transition: height 2s linear 0">
+    <!--<button (click)="hiddenComment()">x</button>-->
+    <!--<ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>-->
+    <div style="width: 100vw;display: flex;justify-content: flex-end">
+      <ion-icon name="close" style="color: black;font-size: 1.5rem;margin: 1rem" (click)="hiddenComment()" ></ion-icon>
     </div>
+    <ion-list style="height: 65vh;overflow: scroll">
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+      <ion-item>123</ion-item>
+    </ion-list>
   </div>
-  <!--<div style="height: 100vh">-->
-    <!--<vg-player>-->
-      <!--<vg-overlay-play></vg-overlay-play>-->
-      <!--<vg-buffering></vg-buffering>-->
-      <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
-        <!--<vg-play-pause></vg-play-pause>-->
-        <!--<vg-time-display [vgProperty]="'current'"></vg-time-display>-->
-        <!--<vg-scrub-bar>-->
-          <!--<vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>-->
-          <!--<vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>-->
-        <!--</vg-scrub-bar>-->
-        <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
-        <!--<vg-fullscreen></vg-fullscreen>-->
-      <!--</vg-controls>-->
-      <!--<video #media (play)="tplay()" [vgMedia]="media" src="{{src}}" autoplay></video>-->
-    <!--</vg-player>-->
-  <!--</div>-->
 
 </ion-content>

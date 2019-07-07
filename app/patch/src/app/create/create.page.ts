@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import {FilePath} from '@ionic-native/file-path/ngx';
 
 @Component({
   selector: 'app-create',
@@ -10,7 +13,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 export class CreatePage implements OnInit {
   public path;
 
-  constructor( private camera: Camera, private imagePicker: ImagePicker) { }
+  constructor( private camera: Camera, private imagePicker: ImagePicker, private transfer: FileTransfer,
+               private file: File,
+               private filePath: FilePath) { }
 
   ngOnInit() {
   }
@@ -43,11 +48,6 @@ export class CreatePage implements OnInit {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
             this.path = base64Image;
 
-            //If it's file URI
-            // this.path = imageData;
-
-            // this.upload();
-
         }, (err) => {
 
           console.log(err);
@@ -64,8 +64,46 @@ export class CreatePage implements OnInit {
     }
 
     selectVideo() {
-        this.camera.getPicture({destinationType: this.camera.DestinationType.DATA_URL, mediaType: this.camera.MediaType.VIDEO, sourceType: this.camera.PictureSourceType.PHOTOLIBRARY }).then(res => {
+        this.camera.getPicture({destinationType: this.camera.DestinationType.DATA_URL, mediaType:
+            this.camera.MediaType.VIDEO, sourceType:
+            this.camera.PictureSourceType.PHOTOLIBRARY }).then(res => {
             console.log(res);
+
+            this.file.checkFile('/storage/emulated/0/tencent/MicroMsg/WeiXin/', 'wx_camera_1561900960842.mp4').then(res => {
+                console.log(res);
+            }, err => {
+                console.log(err);
+            });
+
+            this.file.checkDir('/storage/emulated/0/tencent/MicroMsg/WeiXin/', 'wx_camera_1561900960842.mp4').then(res => {
+                console.log(res);
+            }, err => {
+                console.log(err);
+            });
+
+            // this.filePath.resolveNativePath(res)
+            //     .then(filePath => console.log(filePath))
+            //     .catch(err => console.log(err));
+            this.upload(res);
         });
+    }
+    upload(path) {
+        const fileTransfer: FileTransferObject = this.transfer.create();
+
+        let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: 'name.jpg',
+            headers: {}
+        }
+
+        fileTransfer.upload(path, 'http://tiktok.tiantianquan.xyz/video/upload', options)
+            .then((data) => {
+                console.log(data);
+                // success
+            }, (err) => {
+                console.log(err);
+                console.log(err.body);
+                // error
+            });
     }
 }

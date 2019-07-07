@@ -1,73 +1,78 @@
 <ion-content>
-  <img src="assets/shapes.svg" alt="" style="width: 100vw;height: 20vh;">
 
-  <div>
-    <div style="display: flex;
+  <!--<div>-->
+    <img src="assets/shapes.svg" alt="" style="width: 100vw;height: 20vh;">
+  <!--</div>-->
+  <div style="background-color: grey;">
+
+    <div>
+      <div style="display: flex;
     height: 80px;
     align-items: center;">
-      <div>
-        <img src="assets/shapes.svg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+        <div>
+          <img src="assets/shapes.svg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+        </div>
+        <div>
+          <div>安石</div>
+          <div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>
+        </div>
       </div>
-      <div>
-        <div>安石</div>
-        <div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>
+      <!--<div style="display: flex;justify-content: space-around;color: white">-->
+        <!--&lt;!&ndash;<ion-button>粉丝</ion-button>&ndash;&gt;-->
+        <!--<ion-text>粉丝</ion-text>-->
+
+        <!--<ion-text>关注的人</ion-text>-->
+
+        <!--<ion-text>关注</ion-text>-->
+        <!---->
+      <!--</div>-->
+    </div>
+
+    <div>
+
+      <!-- Segment with secondary color -->
+      <ion-segment (ionChange)="segmentChanged($event)" color="secondary">
+        <ion-segment-button value="standard">
+          <ion-label>粉丝</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hybrid">
+          <ion-label>关注的人</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="sat">
+          <ion-label>关注</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+    </div>
+
+    <div *ngFor="let item of videoArr" (click)="testParams(item)">
+      <div style="position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">
+        <ion-text style="color: white;">{{item.title}}</ion-text>
       </div>
+      <img style="width: 100vw;height: 30vh;object-fit: cover" src="{{item.poster}}" alt="">
     </div>
-    <div style="display: flex;justify-content: space-around">
-      <ion-button>粉丝</ion-button>
 
-      <ion-button>关注的人</ion-button>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
-      <ion-button>关注</ion-button>
-    </div>
   </div>
 
-  <div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <img src="assets/poster.jpg" alt="" >
-        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-      </ion-row>
+  <div style="position: fixed; bottom: 0;z-index: 99">
 
-      <ion-row>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >
-        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-        <ion-col>
-          <img src="assets/shapes.svg" alt="" >        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;background-color:black;opacity: 0.9;">
+
+      <div (click)="goIndex()" style="color: white">首页</div>
+
+      <ion-icon name="add-circle-outline" (click)="goPublish()" style="color: white;font-size: 3rem;"></ion-icon>
+
+      <div (click)="goMine()" style="color: white">我的</div>
+
+    </div>
+
   </div>
-
-  <ion-button (click)="toggleInfiniteScroll()" expand="block">
-    Toggle Infinite Scroll
-  </ion-button>
-
-  <ion-list>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-    <ion-item>123</ion-item>
-  </ion-list>
-
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 
 </ion-content>

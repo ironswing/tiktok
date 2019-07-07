@@ -3,7 +3,7 @@
     <name>MyApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.43.99:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -90,5 +90,7 @@
     <plugin name="cordova-plugin-streaming-media" spec="2.2.0" />
     <plugin name="cordova-plugin-exoplayer" spec="2.5.4" />
     <allow-navigation href="http://192.168.43.99:8100" sessionid="665731ca" />
+    <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
+    <allow-navigation href="http://192.168.43.99:8101" sessionid="32df26e7" />
     <engine name="android" spec="7.1.4" />
 </widget>
