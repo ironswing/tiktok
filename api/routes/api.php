@@ -17,8 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/feeds', 'FeedController@getFeeds');
-
-// 视频上传接口
-Route::post('/video/upload', 'VideoController@upload');
 

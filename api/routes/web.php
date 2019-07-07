@@ -24,6 +24,8 @@ Auth::routes();
 // 获取APP的Feed流
 Route::redirect('/', '/feeds');
 Route::redirect('/home', '/feeds');
+Route::get('/feeds', 'FeedController@getFeeds');
+
 
 // 注册接口
 Route::post('/register', 'HomeController@register');
@@ -80,7 +82,8 @@ Route::post('/post', 'PostController@post');
 // 视频删除接口
 Route::get('/video/{id}/delete', 'VideoController@delete');
 
-
+// 视频上传接口
+Route::post('/video/upload', 'VideoController@upload');
 
 
 
