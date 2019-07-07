@@ -26,13 +26,6 @@ Route::redirect('/', '/feeds');
 Route::redirect('/home', '/feeds');
 Route::get('/feeds', 'FeedController@getFeeds');
 
-
-// 注册接口
-Route::post('/register', 'HomeController@register');
-
-// 登录接口
-Route::post('/login', 'HomeController@login');
-
 // 视频点赞接口
 Route::get('/video/{$id}/like', 'VideoController@like');
 
