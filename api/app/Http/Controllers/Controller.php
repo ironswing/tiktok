@@ -25,7 +25,7 @@ class Controller extends BaseController
             return response()->customization([], $exception->getMessage(), $code);
         }
 
-        if(is_null($data)){
+        if (is_null($data) || empty($data)) {
 
             $data = [];
         }
