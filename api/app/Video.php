@@ -95,9 +95,11 @@ class Video extends Model
         if (1 == $record['status']) {
 
             DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 0]);
+            DB::table("videos")->where(['id' => $record['id']])->decrement("thumbs");
         } else {
 
             DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 1]);
+            DB::table("videos")->where(['id' => $record['id']])->increment("thumbs");
         }
     }
 

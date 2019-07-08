@@ -23,6 +23,7 @@ class CreateVideosTable extends Migration
                 $table->string('title', 250)->nullable(false)->default("")->comment("视频的标题");
                 $table->string('path', 250)->nullable(false)->default("")->comment("视频的路径");
                 $table->string('poster', 250)->nullable(false)->default("default.poster.jpg")->comment("视频的封面");
+                $table->unsignedInteger('thumbs')->nullable(false)->default(0)->comment("点赞数");
                 $table->unsignedTinyInteger('status')->nullable(false)->default(1)->comment("状态,1:正常,0:删除");
                 $table->timestamps();
 

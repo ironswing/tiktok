@@ -22,7 +22,7 @@ class VerifyCsrfToken extends Middleware
 
         "/login",
         "/register",
-        "/video/upload",
+        "/video",
         "/post",
         "/comment/add"
     ];
