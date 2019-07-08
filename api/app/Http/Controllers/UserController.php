@@ -160,6 +160,10 @@ class UserController extends Controller
             $user = $user[0];
         }
 
+        if(!isset($_SESSION)){
+
+            session_start();
+        }
         $user_id = $user['id'];
         $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
         $_SESSION[$cookie] = $user_id;
