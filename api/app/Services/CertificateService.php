@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use \Exception;
+use Illuminate\Http\Request;
 
 /**
  * 用户凭证服务
@@ -11,13 +12,58 @@ use \Exception;
  */
 class CertificateService
 {
+    /**
+     * 是否存在Session
+     * @param $cookie
+     * @return bool
+     */
+    public function isSessionExist($cookie)
+    {
+        if (empty($cookie)) {
 
-    public function isSessionExist($cookie){
+            return false;
+        }
 
-        if(isset($_SESSION[$cookie])){
+        if (isset($_SESSION[$cookie])) {
 
+            // 存储的是这个用户的ID
             return $_SESSION[$cookie];
         }
         return false;
+    }
+
+    /**
+     * 用户是否存在
+     * @param $user
+     * @return bool
+     */
+    public function isUserExist($user)
+    {
+
+        if (is_null($user) || empty($user)) {
+
+            return false;
+        }
+
+        // 还需要判断用户是否被封禁之类的
+        if (1 !== intval($user['status'])) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 判断用户是否登录
+     * @param Request $request
+     * @return bool
+     */
+    public function isUserLogin(Request $request){
+
+        $cookie = $request->input("cookie");
+        $is_login = $this->isSessionExist($cookie);
+
+        return $is_login;
     }
 }

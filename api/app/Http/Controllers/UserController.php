@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $id = intval($id);
         $user = (new User())->newQuery()->where("id", $id)->first();
-        if (!$this->isUserExist($user)) {
+        if (!(new CertificateService())->isUserExist(($user))) {
 
             return response()->customization([], "用户不存在~", 400);
         }
@@ -109,24 +109,6 @@ class UserController extends Controller
     }
 
     /**
-     * 用户是否存在
-     * @param $user
-     * @return bool
-     */
-    public function isUserExist($user)
-    {
-
-        if (is_null($user) || empty($user)) {
-
-            return false;
-        }
-
-        // 还需要判断用户是否被封禁之类的
-
-        return true;
-    }
-
-    /**
      * 判断用户是否登录
      * @param Request $request
      * @param CertificateService $certificateService
@@ -134,9 +116,7 @@ class UserController extends Controller
      */
     public function isLogin(Request $request, CertificateService $certificateService)
     {
-        $cookie = $request->input("cookie");
-
-        $is_login = $certificateService->isSessionExist($cookie);
+        $is_login = $certificateService->isUserLogin($request);
 
         if (false !== $is_login) {
 
