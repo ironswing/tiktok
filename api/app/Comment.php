@@ -61,10 +61,21 @@ class Comment extends Model
     }
 
     /**
-     * 添加一条评论
+     * 添加一条我的评论
+     * @param $video_id
+     * @param $user_id
+     * @param $content
+     * @return int
      */
-    public function add(){
+    public function addMyComment($video_id, $user_id, $content){
 
+        $data = [
+            "video_id" => $video_id,
+            "user_id" => $user_id,
+            "content" => $content
+        ];
+
+        return $this->newQuery()->insertGetId($data);
     }
 
     /**

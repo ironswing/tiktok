@@ -12,12 +12,22 @@ use Illuminate\Support\Facades\Auth;
 
 class VideoController extends Controller
 {
+    /**
+     * 获取视频的下面评论
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
     public function getComments($id)
     {
         $id = intval($id);
 
-        $comments = (new Comment())->getThisVideoComments($id);
+        // 判断此视频是否存在
+        if( !(new Video())->isIdExist($id) ){
+            throw new Exception("视频不存在~");
+        }
 
+        $comments = (new Comment())->getThisVideoComments($id);
         return ["data" => $comments];
     }
 

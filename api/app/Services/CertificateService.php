@@ -21,12 +21,6 @@ class CertificateService
     {
         session_start();
 
-
-        echo "-------------------";
-        print_r($_SESSION[$cookie]);
-        echo "-------------------";
-
-
         if (empty($cookie)) {
 
             return false;

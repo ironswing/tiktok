@@ -11,8 +11,16 @@ class TestController extends Controller
     {
         $is_login = $certificateService->isUserLogin($request);
 
+        session_start();
+
+        $cookie = $request->input("cookie");
+
         return [
-            "data"=>['is_login' => $is_login ? $is_login : 0],
+            "data" => [
+                'is_login' => $is_login ? $is_login : 0,
+                'cookie' => $cookie,
+                'is_index_exist' => isset($_SESSION[$cookie])?1:0
+            ],
         ];
     }
 }

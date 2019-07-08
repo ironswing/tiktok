@@ -63,9 +63,18 @@ class Video extends Model
         return true;
     }
 
+    /**
+     * 判断视频是否存在(根据id)
+     * @param $id
+     * @return bool
+     */
+    public function isIdExist($id)
+    {
+        return !empty($this->newQuery()->where(["id" => $id, "status" => 1])->first()->toArray());
+    }
+
     public function getThisVideoDetail($id)
     {
-
         return $this->newQuery()->where(['id' => $id, 'status' => 1])->get();
     }
 
