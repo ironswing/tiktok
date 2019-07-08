@@ -18,7 +18,16 @@ class Video extends Model
 {
     protected $table = 'videos';
 
-    protected $hidden = ["id", "user_id", "status", "updated_at"];
+    protected $hidden = ["status"];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 
     public function getThisUserAllVideos($id)
     {
