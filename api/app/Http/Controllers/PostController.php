@@ -22,8 +22,6 @@ class PostController extends Controller
         $poster = $request->input("poster");
         $cookie = $request->input("cookie");
 
-        $certificateService->verifyLogin($request);
-
         if (empty($title) || empty($video_url) || empty($cookie)) {
 
             throw new \Exception("填写不完整哦~");
@@ -34,6 +32,8 @@ class PostController extends Controller
 
             throw new \Exception("视频已丢失~");
         }
+
+        $certificateService->verifyLogin($request);
 
         $data = [
 
@@ -49,6 +49,13 @@ class PostController extends Controller
         ];
     }
 
+    /**
+     * 删除发布的
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @return array
+     * @throws \Exception
+     */
     public function delete(Request $request, CertificateService $certificateService)
     {
 

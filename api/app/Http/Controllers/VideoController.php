@@ -29,15 +29,9 @@ class VideoController extends Controller
     {
         $uploadService = new UploadService("video");
 
-        try {
+        $data = $uploadService->handle();
 
-            $data = $uploadService->handle();
-        } catch (Exception $e) {
-
-            return response()->customization([], $e->getMessage(), 400);
-        }
-
-        return response()->customization($data);
+        return ["data"=>$data];
     }
 
     /**
@@ -47,7 +41,6 @@ class VideoController extends Controller
      */
     public function like($id)
     {
-
         if (!Auth::check()) {
 
 
