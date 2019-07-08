@@ -89,17 +89,20 @@ class Video extends Model
 
     public function likeThisVideo($id, $user_id)
     {
+        $record = $this->newQuery()->where(['id' => $id, 'user_id' => $user_id])->first()->toArray();
+        if (isset($record[0])) {
 
-        $record = $this->newQuery()->where(['id' => $id, 'user_id' => $user_id])->get();
+            $record = $record[0];
+        }
 
-        if (1 == $record['status']) {
-
-            DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 0]);
-            DB::table("videos")->where(['id' => $record['id']])->decrement("thumbs");
-        } else {
+        if (empty($record) || 0 == $record['status']) {
 
             DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 1]);
             DB::table("videos")->where(['id' => $record['id']])->increment("thumbs");
+        } else {
+
+            DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 0]);
+            DB::table("videos")->where(['id' => $record['id']])->decrement("thumbs");
         }
     }
 
