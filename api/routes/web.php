@@ -84,3 +84,10 @@ Route::get('/user/{id}/follow', 'UserController@follow');
 Route::get('/user/is_login','UserController@isLogin');
 
 
+/*----------------------------------------------------------------
+| 测试相关接口
+|----------------------------------------------------------------*/
+
+// 测试 cookie
+Route::get('/test/test_cookie','TestController@testCookie');
+

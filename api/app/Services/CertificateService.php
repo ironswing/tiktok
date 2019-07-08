@@ -17,7 +17,7 @@ class CertificateService
      * @param $cookie
      * @return bool
      */
-    public function isSessionExist($cookie)
+    private function isSessionExist($cookie)
     {
         session_start();
 
