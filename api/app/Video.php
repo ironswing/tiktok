@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\TimeService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -87,22 +88,35 @@ class Video extends Model
         return $this->newQuery()->where(['id' => $id, 'status' => 1])->get();
     }
 
-    public function likeThisVideo($id, $user_id)
+    public function likeThisVideo($video_id, $user_id)
     {
-        $record = collect($this->newQuery()->where(['id' => $id, 'user_id' => $user_id])->first())->toArray();
+        $record = collect($this->newQuery()->where(['user_id' => $user_id, 'video_id' => $video_id])->first())->toArray();
         if (isset($record[0])) {
 
             $record = $record[0];
         }
 
-        if (empty($record) || 0 == $record['status']) {
+        $timeService = new TimeService();
 
-            DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 1]);
-            DB::table("videos")->where(['id' => $record['id']])->increment("thumbs");
-        } else {
+        if (empty($record)) {
+
+            $data = [
+                'user_id' => $user_id, 'video_id' => $video_id,
+                "created_time" => $timeService->getDatetime(),
+                "updated" => $timeService->getDatetime()
+            ];
+            DB::table("thumbs")->newQuery()->insert($data);
+            return;
+        }
+
+        if (1 == $record['status']) {
 
             DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 0]);
             DB::table("videos")->where(['id' => $record['id']])->decrement("thumbs");
+        } else {
+
+            DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 1]);
+            DB::table("videos")->where(['id' => $record['id']])->increment("thumbs");
         }
     }
 
