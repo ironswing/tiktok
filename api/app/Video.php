@@ -90,7 +90,7 @@ class Video extends Model
     public function likeThisVideo($id, $user_id)
     {
 
-        $record = $this->newQuery()->where(['user_id' => $user_id, 'video_id' => $id])->get();
+        $record = $this->newQuery()->where(['id' => $id, 'user_id' => $user_id])->get();
 
         if (1 == $record['status']) {
 
