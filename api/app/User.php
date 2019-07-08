@@ -88,7 +88,7 @@ class User extends Authenticatable
             DB::table("followers")->where($cond)->update(['status' => 1]);
         }
 
-        return !($record['status'] == 1);
+        return $record['status'] == 1 ? 0 : 1;
     }
 
 }
