@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\CertificateService;
+use App\Services\TimeService;
 use App\Video;
 use Illuminate\Http\Request;
 use \Exception;
@@ -13,10 +14,11 @@ class PostController extends Controller
      * 发布
      * @param Request $request
      * @param CertificateService $certificateService
-     * @return mixed
+     * @param TimeService $timeService
+     * @return array
      * @throws Exception
      */
-    public function post(Request $request, CertificateService $certificateService)
+    public function post(Request $request, CertificateService $certificateService, TimeService $timeService)
     {
         $title = $request->input("title");
         $video_url = $request->input("video_url");
@@ -41,6 +43,8 @@ class PostController extends Controller
             "user_id" => $user_id,
             "title" => $title,
             "path" => $video_url,
+            'created_at'=>$timeService->getDatetime(),
+            'updated_at'=>$timeService->getDatetime()
         ];
         if (!is_null($poster) && !empty($poster)) {
 

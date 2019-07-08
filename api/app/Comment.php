@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\TimeService;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -69,10 +70,16 @@ class Comment extends Model
      */
     public function addMyComment($video_id, $user_id, $content){
 
+        $timeService = new TimeService();
+
         $data = [
+
             "video_id" => $video_id,
             "user_id" => $user_id,
-            "content" => $content
+            "content" => $content,
+
+            "created_at" =>$timeService->getDatetime(),
+            "updated_at" =>$timeService->getDatetime(),
         ];
 
         return $this->newQuery()->insertGetId($data);

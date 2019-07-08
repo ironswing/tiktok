@@ -22,17 +22,18 @@ class CommentController extends Controller
     {
         $user_id = $certificateService->verifyLogin($request);
 
+        // video_id 参数 和 content 参数
         $video_id = $request->input("video_id");
         $content = trim($request->input("content"));
+
+        if (empty($video_id) || empty($content)) {
+
+            throw new Exception("填写不完整！");
+        }
 
         if (!(new Video())->isIdExist($video_id)) {
 
             throw new Exception("视频不存在");
-        }
-
-        if (empty($content)) {
-
-            throw new Exception("评论内容不能为空");
         }
 
         $id = (new Comment())->addMyComment($video_id, $user_id, $content);

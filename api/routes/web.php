@@ -47,9 +47,6 @@ Route::get('/video/{id}/detail', 'VideoController@getDetail');
 // 视频点赞接口
 Route::get('/video/{$id}/like', 'VideoController@like');
 
-// 获取某条评论的回复
-Route::get('/comment/{id}/replies', 'CommentController@getReplies');
-
 // 视频删除接口
 Route::get('/video/{id}/delete', 'VideoController@delete');
 
@@ -82,6 +79,19 @@ Route::get('/user/{id}/follow', 'UserController@follow');
 
 // 用户是否已登录
 Route::get('/user/is_login','UserController@isLogin');
+
+
+
+
+/*----------------------------------------------------------------
+| 评论相关接口
+|----------------------------------------------------------------*/
+
+// 获取某条评论的回复
+Route::get('/comment/{id}/replies', 'CommentController@getReplies');
+
+// 评论接口
+Route::post('/comment/add', 'CommentController@add');
 
 
 /*----------------------------------------------------------------
