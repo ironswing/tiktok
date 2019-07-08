@@ -49,9 +49,13 @@ class UploadService
 
         $uploadFileDirWeb .= date("Ymd/", time());
         $this->UPLOAD_FILE_DIR = $uploadFileDirWeb;
-        if(!File::exists($uploadFileDirWeb)) {
 
-            File::makeDirectory($uploadFileDirWeb, $mode = 0777, true, true);
+        $storage_path = app_path() . "/../storage/app/public/" . $uploadFileDirWeb;
+
+        if (!File::exists($storage_path)) {
+
+            File::makeDirectory($storage_path, $mode = 0777, true, true);
+            chmod($storage_path, 0777);
         }
     }
 
