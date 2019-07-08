@@ -22,7 +22,7 @@ class PostController extends Controller
             return response()->customization([], "用户未登录", 400);
         }
 
-        if (empty($title) || empty($video_url) || empty($poster) || empty($cookie)) {
+        if (empty($title) || empty($video_url) || empty($cookie)) {
 
             return response()->customization([], "填写不完整哦~", 400);
         }
