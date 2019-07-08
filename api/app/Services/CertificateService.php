@@ -19,6 +19,8 @@ class CertificateService
      */
     public function isSessionExist($cookie)
     {
+        session_start();
+
         if (empty($cookie)) {
 
             return false;

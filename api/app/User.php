@@ -71,8 +71,4 @@ class User extends Authenticatable
         return $follower->status;
     }
 
-    public function isLogin(){
-
-    }
-
 }
