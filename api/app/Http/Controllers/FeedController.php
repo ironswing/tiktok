@@ -12,6 +12,8 @@ class FeedController extends Controller
     {
         $feeds = (new Video())->getFeeds();
 
-        return response()->customization($feeds);
+        return [
+            "data" => $feeds,
+        ];
     }
 }

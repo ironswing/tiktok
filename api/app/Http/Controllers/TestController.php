@@ -11,6 +11,8 @@ class TestController extends Controller
     {
         $is_login = $certificateService->isUserLogin($request);
 
-        return response()->customization(['is_login' => $is_login ? $is_login : 0]);
+        return [
+            "data"=>['is_login' => $is_login ? $is_login : 0],
+        ];
     }
 }

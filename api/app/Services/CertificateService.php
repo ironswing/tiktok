@@ -78,4 +78,21 @@ class CertificateService
     {
         return md5(md5(time() . microtime() . mt_rand(-99999, 99999)));
     }
+
+    /**
+     * 验证登录
+     * @param Request $request
+     * @return bool
+     * @throws Exception
+     */
+    public function verifyLogin(Request $request){
+
+        $is_login = $this->isUserLogin($request);
+        if (false === $is_login) {
+
+            throw new \Exception("用户未登录");
+        }
+
+        return $is_login;
+    }
 }

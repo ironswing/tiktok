@@ -19,7 +19,8 @@ class UserController extends Controller
     /**
      * 获取用户的基本资料信息
      * @param $id
-     * @return mixed
+     * @return array
+     * @throws \Exception
      */
     public function getProfile($id)
     {
@@ -27,10 +28,10 @@ class UserController extends Controller
         $user = (new User())->newQuery()->where("id", $id)->first();
         if (!(new CertificateService())->isUserExist(($user))) {
 
-            return response()->customization([], "用户不存在~", 400);
+            throw new \Exception("用户不存在~");
         }
 
-        return response()->customization($user);
+        return ["data" => $user];
     }
 
     /**
@@ -44,7 +45,7 @@ class UserController extends Controller
 
         $followers = (new Follower())->getFollowers($id);
 
-        return response()->customization($followers);
+        return ["data" => $followers];
     }
 
     /**
@@ -58,7 +59,7 @@ class UserController extends Controller
 
         $followings = (new Follower())->getFollowings($id);
 
-        return response()->customization($followings);
+        return ["data" => $followings];
     }
 
     /**
@@ -73,7 +74,7 @@ class UserController extends Controller
 
         $feeds = (new Video())->getThisUserAllVideos($id);
 
-        return response()->customization($feeds);
+        return ["data" => $feeds];
     }
 
     /**
@@ -88,26 +89,28 @@ class UserController extends Controller
 
         $comments = (new Comment())->getThisUserComments($id);
 
-        return response()->customization($comments);
+        return ["data" => $comments];
     }
 
     /**
      * (取)关注用户
      * @param $id
-     * @return Array
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @return mixed
+     * @throws \Exception
      */
-    public function follow($id)
+    public function follow($id, Request $request, CertificateService $certificateService)
     {
         $id = intval($id);
 
-        if (!Auth::check()) {
-
-            return response()->customization([], "请先登录~", 400);
-        }
+        $certificateService->verifyLogin($request);
 
         $status = (new User())->newQuery()->followUser($id);
 
-        return response()->customization([], $status === 1 ? "已关注" : "已取消关注");
+        return [
+            "msg" => $status === 1 ? "已关注" : "已取消关注"
+        ];
     }
 
     /**
@@ -115,6 +118,7 @@ class UserController extends Controller
      * @param Request $request
      * @param CertificateService $certificateService
      * @return mixed
+     * @throws \Exception
      */
     public function isLogin(Request $request, CertificateService $certificateService)
     {
@@ -122,16 +126,17 @@ class UserController extends Controller
 
         if (false !== $is_login) {
 
-            return response()->customization(["id" => $is_login]);
+            return ["data" => ["id" => $is_login]];
         }
 
-        return response()->customization([], "用户未登录", 400);
+        throw new \Exception("用户未登录");
     }
 
     /**
      * 登录
      * @param Request $request
      * @return mixed
+     * @throws \Exception
      */
     public function login(Request $request)
     {
@@ -140,14 +145,14 @@ class UserController extends Controller
 
         if (empty($name) || empty($password)) {
 
-            return response()->customization([], "参数不能为空哦~", 400);
+            throw new \Exception("参数不能为空哦~");
         }
 
         // 匹配是否存在这个用户
         $user = (new User())->newQuery()->where(["name" => $name, "password" => $password])->get()->toArray();
         if (empty($user)) {
 
-            return response()->customization([], "用户名或密码错误", 400);
+            throw new \Exception("用户名或密码错误");
         }
         if (isset($user[0])) {
 
@@ -159,13 +164,14 @@ class UserController extends Controller
         $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
         $_SESSION[$cookie] = $user_id;
 
-        return response()->customization(['id' => $user_id, 'cookie' => $cookie]);
+        return ["data" => ['id' => $user_id, 'cookie' => $cookie]];
     }
 
     /**
      * 注册
      * @param Request $request
      * @return mixed
+     * @throws \Exception
      */
     public function register(Request $request)
     {
@@ -176,19 +182,19 @@ class UserController extends Controller
 
         if (empty($name) || empty($email) || empty($email) || empty($password) || empty($confirm_password)) {
 
-            return response()->customization([], "参数不能为空哦~", 400);
+            throw new \Exception("参数不能为空哦~");
         }
 
         if ($confirm_password !== $password) {
 
-            return response()->customization([], "两次密码不一致", 400);
+            throw new \Exception("两次输入密码不一致");
         }
 
         // 判断邮箱是否已存在
         $user = (new User())->newQuery()->where(["email" => $email])->get()->toArray();
         if (!empty($user)) {
 
-            return response()->customization([], "邮箱已存在", 400);
+            throw new \Exception("邮箱已存在");
         }
 
         $user = [
@@ -199,7 +205,7 @@ class UserController extends Controller
         ];
         $user_id = (new User())->newQuery()->insertGetId($user);
 
-        return response()->customization(['id' => $user_id]);
+        return ["data" => ['id' => $user_id]];
     }
 
     /**
@@ -231,11 +237,9 @@ class UserController extends Controller
 
         if ($confirm_password !== $password) {
 
-            return response()->customization([], "两次密码不一致", 400);
+            throw new \Exception("两次输入密码不一致");
         }
 
         (new User())->newQuery()->where(["email" => $email])->update(["password" => $password]);
-
-        return response()->customization([]);
     }
 }

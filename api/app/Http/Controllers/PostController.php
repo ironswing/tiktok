@@ -13,6 +13,7 @@ class PostController extends Controller
      * @param Request $request
      * @param CertificateService $certificateService
      * @return mixed
+     * @throws \Exception
      */
     public function post(Request $request, CertificateService $certificateService)
     {
@@ -21,21 +22,17 @@ class PostController extends Controller
         $poster = $request->input("poster");
         $cookie = $request->input("cookie");
 
-        $is_login = $certificateService->isUserLogin($request);
-        if (false === $is_login) {
-
-            return response()->customization([], "用户未登录", 400);
-        }
+        $certificateService->verifyLogin($request);
 
         if (empty($title) || empty($video_url) || empty($cookie)) {
 
-            return response()->customization([], "填写不完整哦~", 400);
+            throw new \Exception("填写不完整哦~");
         }
 
         // 检查视频是否存在
-        if(! (new Video())->isPathExist( $video_url ) ){
+        if (!(new Video())->isPathExist($video_url)) {
 
-            return response()->customization([], "视频已丢失~", 400);
+            throw new \Exception("视频已丢失~");
         }
 
         $data = [
@@ -46,10 +43,29 @@ class PostController extends Controller
         ];
         $id = (new Video())->newQuery()->insertGetId($data);
 
-        return response()->customization(['id' => $id], "发布成功~", 400);
+        return [
+            "data" => ['id' => $id],
+            "msg" => "发布成功~"
+        ];
     }
 
-    public function delete(){
+    public function delete(Request $request, CertificateService $certificateService)
+    {
 
+        $id = $request->input("id");
+
+        $user_id = $certificateService->verifyLogin($request);
+
+        $video = new Video();
+
+        if (!$video->isThisVideoBelongToMe($id, $user_id)) {
+
+            throw new \Exception("抱歉！您没有权限删除！");
+        }
+
+        return [
+            "data" => ["id" => $id],
+            "msg" => "删除成功！"
+        ];
     }
 }

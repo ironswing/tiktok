@@ -82,4 +82,21 @@ class Video extends Model
             DB::table("thumbs")->where(['id' => $record['id']])->update(['status' => 1]);
         }
     }
+
+    /**
+     * 这个视频是否是属于我的
+     * @param $id
+     * @param $user_id
+     * @return bool
+     */
+    public function isThisVideoBelongToMe($id, $user_id)
+    {
+        $video = (new Video())->newQuery()->where(['id' => $id])->first();
+        if (isset($video[0])) {
+
+            $video = $video[0];
+        }
+
+        return intval($video['user_id']) === intval($user_id);
+    }
 }
