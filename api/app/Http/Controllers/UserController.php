@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PasswordReset as PasswordResetMailable;
+use \Exception;
 
 class UserController extends Controller
 {
@@ -20,7 +21,7 @@ class UserController extends Controller
      * 获取用户的基本资料信息
      * @param $id
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getProfile($id)
     {
@@ -28,7 +29,7 @@ class UserController extends Controller
         $user = (new User())->newQuery()->where("id", $id)->first();
         if (!(new CertificateService())->isUserExist(($user))) {
 
-            throw new \Exception("用户不存在~");
+            throw new Exception("用户不存在~");
         }
 
         return ["data" => $user];
@@ -98,7 +99,7 @@ class UserController extends Controller
      * @param Request $request
      * @param CertificateService $certificateService
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function follow($id, Request $request, CertificateService $certificateService)
     {
@@ -118,7 +119,7 @@ class UserController extends Controller
      * @param Request $request
      * @param CertificateService $certificateService
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function isLogin(Request $request, CertificateService $certificateService)
     {
@@ -129,14 +130,14 @@ class UserController extends Controller
             return ["data" => ["id" => $is_login]];
         }
 
-        throw new \Exception("用户未登录");
+        throw new Exception("用户未登录");
     }
 
     /**
      * 登录
      * @param Request $request
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function login(Request $request)
     {
@@ -145,14 +146,14 @@ class UserController extends Controller
 
         if (empty($name) || empty($password)) {
 
-            throw new \Exception("参数不能为空哦~");
+            throw new Exception("参数不能为空哦~");
         }
 
         // 匹配是否存在这个用户
         $user = (new User())->newQuery()->where(["name" => $name, "password" => $password])->get()->toArray();
         if (empty($user)) {
 
-            throw new \Exception("用户名或密码错误");
+            throw new Exception("用户名或密码错误");
         }
         if (isset($user[0])) {
 
@@ -171,7 +172,7 @@ class UserController extends Controller
      * 注册
      * @param Request $request
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function register(Request $request)
     {
@@ -182,19 +183,19 @@ class UserController extends Controller
 
         if (empty($name) || empty($email) || empty($email) || empty($password) || empty($confirm_password)) {
 
-            throw new \Exception("参数不能为空哦~");
+            throw new Exception("参数不能为空哦~");
         }
 
         if ($confirm_password !== $password) {
 
-            throw new \Exception("两次输入密码不一致");
+            throw new Exception("两次输入密码不一致");
         }
 
         // 判断邮箱是否已存在
         $user = (new User())->newQuery()->where(["email" => $email])->get()->toArray();
         if (!empty($user)) {
 
-            throw new \Exception("邮箱已存在");
+            throw new Exception("邮箱已存在");
         }
 
         $user = [
@@ -231,7 +232,7 @@ class UserController extends Controller
     /**
      * 重置密码
      * @param Request $request
-     * @throws \Exception
+     * @throws Exception
      */
     public function resetPassword(Request $request)
     {
@@ -242,7 +243,7 @@ class UserController extends Controller
 
         if ($confirm_password !== $password) {
 
-            throw new \Exception("两次输入密码不一致");
+            throw new Exception("两次输入密码不一致");
         }
 
         (new User())->newQuery()->where(["email" => $email])->update(["password" => $password]);

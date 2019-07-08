@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Services\CertificateService;
 use App\Services\UploadService;
 use App\Video;
 use \Exception;
@@ -13,12 +14,11 @@ class VideoController extends Controller
 {
     public function getComments($id)
     {
-
         $id = intval($id);
 
         $comments = (new Comment())->getThisVideoComments($id);
 
-        return response()->customization($comments);
+        return ["data" => $comments];
     }
 
     /**
@@ -31,29 +31,28 @@ class VideoController extends Controller
 
         $data = $uploadService->handle();
 
-        return ["data"=>$data];
+        return ["data" => $data];
     }
 
     /**
      * 为视频点赞
      * @param $id
-     * @return mixed
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @throws Exception
      */
-    public function like($id)
+    public function like($id, Request $request, CertificateService $certificateService)
     {
-        if (!Auth::check()) {
+        $user_id = $certificateService->verifyLogin($request);
 
-
-            return response()->customization([], "请先登录", 400);
-        }
-
-        (new Video())->likeThisVideo($id, Auth::id());
+        (new Video())->likeThisVideo($id, $user_id);
     }
 
     /**
      * 获取视频详情
      * @param $id
-     * @return mixed
+     * @return array
+     * @throws Exception
      */
     public function getDetail($id)
     {
@@ -62,9 +61,9 @@ class VideoController extends Controller
 
         if (empty($data)) {
 
-            return response()->customization([], "视频不存在", 400);
+            throw new Exception("视频不存在");
         }
 
-        return response()->customization($data);
+        return ["data" => $data];
     }
 }

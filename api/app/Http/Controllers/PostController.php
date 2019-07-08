@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\CertificateService;
 use App\Video;
 use Illuminate\Http\Request;
+use \Exception;
 
 class PostController extends Controller
 {
@@ -13,7 +14,7 @@ class PostController extends Controller
      * @param Request $request
      * @param CertificateService $certificateService
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function post(Request $request, CertificateService $certificateService)
     {
@@ -24,13 +25,13 @@ class PostController extends Controller
 
         if (empty($title) || empty($video_url) || empty($cookie)) {
 
-            throw new \Exception("填写不完整哦~");
+            throw new Exception("填写不完整哦~");
         }
 
         // 检查视频是否存在
         if (!(new Video())->isPathExist($video_url)) {
 
-            throw new \Exception("视频已丢失~");
+            throw new Exception("视频已丢失~");
         }
 
         $certificateService->verifyLogin($request);
@@ -54,7 +55,7 @@ class PostController extends Controller
      * @param Request $request
      * @param CertificateService $certificateService
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete(Request $request, CertificateService $certificateService)
     {
@@ -67,7 +68,7 @@ class PostController extends Controller
 
         if (!$video->isThisVideoBelongToMe($id, $user_id)) {
 
-            throw new \Exception("抱歉！您没有权限删除！");
+            throw new Exception("抱歉！您没有权限删除！");
         }
 
         return [
