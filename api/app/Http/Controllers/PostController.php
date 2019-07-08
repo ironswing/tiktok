@@ -34,10 +34,11 @@ class PostController extends Controller
             throw new Exception("视频已丢失~");
         }
 
-        $certificateService->verifyLogin($request);
+        $user_id = $certificateService->verifyLogin($request);
 
         $data = [
 
+            "user_id" => $user_id,
             "title" => $title,
             "path" => $video_url,
         ];
