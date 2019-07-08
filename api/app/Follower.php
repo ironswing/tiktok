@@ -8,7 +8,7 @@ class Follower extends Model
 {
     protected $table = 'followers';
 
-    protected $visible = ['following_id', 'follower_id', 'name', 'signature', 'avatar', 'follow_time'];
+    protected $visible = ['following_id', 'follower_id', 'name', 'signature', 'avatar', 'follow_time', 'status'];
 
     public function getFollowers($id)
     {
