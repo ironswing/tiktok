@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 /**
  * App\Video
@@ -41,6 +42,25 @@ class Video extends Model
         });
 
         return $feeds;
+    }
+
+    /**
+     * 判断视频是否存在(根据路径)
+     * @param $path
+     * @return bool
+     */
+    public function isPathExist($path)
+    {
+        $storage_path = app_path() . "/../storage/app/public/";
+
+        $path = $storage_path . $path;
+
+        if (!File::exists($path)) {
+
+            return false;
+        }
+
+        return true;
     }
 
     public function getThisVideoDetail($id)

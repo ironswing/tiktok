@@ -27,6 +27,11 @@ class PostController extends Controller
             return response()->customization([], "填写不完整哦~", 400);
         }
 
+        // 检查视频是否存在
+        if(! (new Video())->isPathExist( $video_url ) ){
+
+            return response()->customization([], "视频已丢失~", 400);
+        }
 
         $data = [
 

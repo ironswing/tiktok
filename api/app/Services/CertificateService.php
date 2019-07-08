@@ -59,11 +59,21 @@ class CertificateService
      * @param Request $request
      * @return bool
      */
-    public function isUserLogin(Request $request){
+    public function isUserLogin(Request $request)
+    {
 
         $cookie = $request->input("cookie");
         $is_login = $this->isSessionExist($cookie);
 
         return $is_login;
+    }
+
+    /**
+     * 生成token
+     * @return string
+     */
+    public function generateToken()
+    {
+        return md5(md5(time() . microtime() . mt_rand(-99999, 99999)));
     }
 }

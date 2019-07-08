@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Follower;
+use App\PasswordReset;
 use App\Services\CertificateService;
 use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordReset as PasswordResetMailable;
 
 class UserController extends Controller
 {
@@ -202,10 +204,21 @@ class UserController extends Controller
     /**
      * 忘记密码接口
      * @param Request $request
+     * @param CertificateService $certificateService
      */
-    public function forgetPassword(Request $request)
+    public function forgetPassword(Request $request, CertificateService $certificateService)
     {
+        $email = $request->input("email");
+        $token = $certificateService->generateToken();
 
+        $data = [
+            'email' => $email,
+            'token' => $token,
+        ];
+        (new PasswordReset())->newQuery()->updateOrInsert(['email' => $email], $data);
+
+        // 发邮件
+        Mail::to($request->user())->send((new PasswordResetMailable()));
     }
 
     public function resetPassword(Request $request)
