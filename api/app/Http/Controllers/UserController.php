@@ -156,6 +156,11 @@ class UserController extends Controller
         $name = $request->input("name");
         $password = $request->input("password");
 
+        if (empty($name) || empty($password)) {
+
+            return response()->customization([], "参数不能为空哦~", 400);
+        }
+
         // 匹配是否存在这个用户
         $user = (new User())->newQuery()->where(["name" => $name, "password" => $password])->get()->toArray();
         if (empty($user)) {
@@ -186,7 +191,7 @@ class UserController extends Controller
         $password = $request->input("password");
         $confirm_password = $request->input("confirm_password");
 
-        if( empty( $name ) || empty($email) || empty($email) || empty($password) || empty($confirm_password) ){
+        if (empty($name) || empty($email) || empty($email) || empty($password) || empty($confirm_password)) {
 
             return response()->customization([], "参数不能为空哦~", 400);
         }
