@@ -60,7 +60,7 @@ class User extends Authenticatable
     public function followUser($user_id, $my_id)
     {
 
-        $record = collect($this->newQuery()->where(["user_id" => $user_id, "follower_id" => $my_id])->first())->toArray();
+        $record = collect((new Follower())->newQuery()->where(["user_id" => $user_id, "follower_id" => $my_id])->first())->toArray();
         if (isset($record[0])) {
 
             $record = $record[0];
