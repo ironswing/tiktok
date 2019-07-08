@@ -90,7 +90,7 @@ class Video extends Model
 
     public function likeThisVideo($video_id, $user_id)
     {
-        $record = collect($this->newQuery()->where(['user_id' => $user_id, 'video_id' => $video_id])->first())->toArray();
+        $record = collect((new Thumb())->newQuery()->where(['user_id' => $user_id, 'video_id' => $video_id])->first())->toArray();
         if (isset($record[0])) {
 
             $record = $record[0];
