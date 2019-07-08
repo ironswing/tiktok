@@ -168,7 +168,7 @@ class UserController extends Controller
         $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
         $_SESSION[$cookie] = $user_id;
 
-        return ["data" => ['id' => $user_id, 'cookie' => $cookie]];
+        return ["data" => ['id' => $user_id, 'cookie' => $cookie, 'session_id'=>session_id()]];
     }
 
     /**
