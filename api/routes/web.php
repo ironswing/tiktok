@@ -45,7 +45,7 @@ Route::get('/video/{id}/comments', 'VideoController@getComments');
 Route::get('/video/{id}/detail', 'VideoController@getDetail');
 
 // 视频点赞接口
-Route::post('/video/{$id}/like', 'VideoController@like');
+Route::post('/video/{id}/like', 'VideoController@like');
 
 // 视频删除接口
 Route::get('/video/{id}/delete', 'VideoController@delete');
