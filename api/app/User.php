@@ -76,7 +76,7 @@ class User extends Authenticatable
                 "updated_at" => $timeService->getDatetime()
             ];
             DB::table("followers")->insert($data);
-            return 0;
+            return 1;
         }
 
         $cond = ["user_id" => $user_id, "follower_id" => $my_id];
@@ -87,6 +87,8 @@ class User extends Authenticatable
 
             DB::table("followers")->where($cond)->update(['status' => 1]);
         }
+
+        return $record['status'];
     }
 
 }
