@@ -103,11 +103,11 @@ class UserController extends Controller
      */
     public function follow($id, Request $request, CertificateService $certificateService)
     {
-        $id = intval($id);
+        $user_id = intval($id);
 
-        $certificateService->verifyLogin($request);
+        $my_id = $certificateService->verifyLogin($request);
 
-        $status = (new User())->newQuery()->followUser($id);
+        $status = (new User())->newQuery()->followUser($user_id, $my_id);
 
         return [
             "msg" => $status === 1 ? "已关注" : "已取消关注"

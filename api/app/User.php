@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Services\TimeService;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 /**
  * App\User
@@ -35,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','email_verified_at','created_at','updated_at'
+        'password', 'remember_token', 'email_verified_at', 'created_at', 'updated_at'
     ];
 
     /**
@@ -49,26 +52,41 @@ class User extends Authenticatable
 
 
     /**
-     * 关注某个用户
-     * @param $id
-     * @return int
+     * 关注(取消关注)某个用户
+     * @param $user_id
+     * @param $my_id
+     * @return bool|int|mixed
      */
-    public function followUser($id){
+    public function followUser($user_id, $my_id)
+    {
 
-        $follower = $this->where(["user_id"=>$id, "follower_id"=> Auth::id()])->first();
-        if(!$follower){
-            $follower = new Follower();
-            $follower->status = 1;
-            $follower->save();
+        $record = collect($this->newQuery()->where(["user_id" => $user_id, "follower_id" => $my_id])->first())->toArray();
+        if (isset($record[0])) {
 
-            return 1;
-        }else{
-
-            $follower->status = !$follower->status;
-            $follower->save();
+            $record = $record[0];
         }
 
-        return $follower->status;
+        $timeService = new TimeService();
+
+        if (empty($record)) {
+
+            $data = [
+                'user_id' => $user_id, 'follower_id' => $my_id,
+                "created_at" => $timeService->getDatetime(),
+                "updated_at" => $timeService->getDatetime()
+            ];
+            DB::table("followers")->insert($data);
+            return 0;
+        }
+
+        $cond = ["user_id" => $user_id, "follower_id" => $my_id];
+        if (1 == $record['status']) {
+
+            DB::table("followers")->where($cond)->update(['status' => 0]);
+        } else {
+
+            DB::table("followers")->where($cond)->update(['status' => 1]);
+        }
     }
 
 }
