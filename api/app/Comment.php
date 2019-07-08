@@ -90,7 +90,7 @@ class Comment extends Model
      * @param $id
      * @return bool|void|null
      */
-    public function delete($id){
+    public function deleteMyComment($id){
 
     }
 }
