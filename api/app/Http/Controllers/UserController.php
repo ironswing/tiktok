@@ -42,9 +42,9 @@ class UserController extends Controller
      */
     public function getFollowers($id)
     {
-        $id = intval($id);
+        $user_id = intval($id);
 
-        $followers = (new Follower())->getFollowers($id);
+        $followers = (new Follower())->getFollowers($user_id);
 
         return ["data" => $followers];
     }

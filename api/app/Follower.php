@@ -12,7 +12,7 @@ class Follower extends Model
 
     public function getFollowers($id)
     {
-        $followers = $this->newQuery()->where(['user_id' => $id, 'status' => 1])
+        $followers = $this->newQuery()->where(['user_id' => $id, 'followers.status' => 1])
             ->join("users", "follower_id", "users.id")
             ->get();
 
