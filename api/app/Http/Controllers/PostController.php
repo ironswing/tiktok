@@ -23,9 +23,8 @@ class PostController extends Controller
         $title = $request->input("title");
         $video_url = $request->input("video_url");
         $poster = $request->input("poster");
-        $cookie = $request->input("cookie");
 
-        if (empty($title) || empty($video_url) || empty($cookie)) {
+        if (empty($title) || empty($video_url)) {
 
             throw new Exception("填写不完整哦~");
         }
