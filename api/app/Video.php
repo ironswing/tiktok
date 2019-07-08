@@ -102,8 +102,8 @@ class Video extends Model
 
             $data = [
                 'user_id' => $user_id, 'video_id' => $video_id,
-                "created_time" => $timeService->getDatetime(),
-                "updated_time" => $timeService->getDatetime()
+                "created_at" => $timeService->getDatetime(),
+                "updated_at" => $timeService->getDatetime()
             ];
             DB::table("thumbs")->insert($data);
             return;
