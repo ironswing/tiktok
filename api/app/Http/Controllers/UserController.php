@@ -228,6 +228,11 @@ class UserController extends Controller
         Mail::to($request->user())->send((new PasswordResetMailable()));
     }
 
+    /**
+     * 重置密码
+     * @param Request $request
+     * @throws \Exception
+     */
     public function resetPassword(Request $request)
     {
 

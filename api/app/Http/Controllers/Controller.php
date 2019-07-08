@@ -25,6 +25,11 @@ class Controller extends BaseController
             return response()->customization([], $exception->getMessage(), $code);
         }
 
+        if(is_null($data)){
+
+            $data = [];
+        }
+
         $data['data'] = isset($data['data']) ? $data['data'] : [];
         $data['msg'] = isset($data['msg']) ? $data['msg'] : "成功";
 
