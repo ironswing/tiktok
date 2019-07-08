@@ -105,7 +105,7 @@ class Video extends Model
                 "created_time" => $timeService->getDatetime(),
                 "updated_time" => $timeService->getDatetime()
             ];
-            DB::table("thumbs")->newQuery()->insert($data);
+            DB::table("thumbs")->insert($data);
             return;
         }
 
