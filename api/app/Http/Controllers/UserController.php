@@ -186,6 +186,11 @@ class UserController extends Controller
         $password = $request->input("password");
         $confirm_password = $request->input("confirm_password");
 
+        if( empty( $name ) || empty($email) || empty($email) || empty($password) || empty($confirm_password) ){
+
+            return response()->customization([], "参数不能为空哦~", 400);
+        }
+
         if ($confirm_password !== $password) {
 
             return response()->customization([], "两次密码不一致", 400);
