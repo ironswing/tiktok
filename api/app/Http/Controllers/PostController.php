@@ -71,6 +71,8 @@ class PostController extends Controller
             throw new Exception("抱歉！您没有权限删除！");
         }
 
+        $video->newQuery()->where(["id" => $id])->update(["status" => 0]);
+
         return [
             "data" => ["id" => $id],
             "msg" => "删除成功！"
