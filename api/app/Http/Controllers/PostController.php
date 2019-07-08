@@ -8,7 +8,12 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-
+    /**
+     * 发布
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @return mixed
+     */
     public function post(Request $request, CertificateService $certificateService)
     {
         $title = $request->input("title");
@@ -42,5 +47,9 @@ class PostController extends Controller
         $id = (new Video())->newQuery()->insertGetId($data);
 
         return response()->customization(['id' => $id], "发布成功~", 400);
+    }
+
+    public function delete(){
+
     }
 }

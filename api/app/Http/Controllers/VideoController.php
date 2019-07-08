@@ -57,6 +57,11 @@ class VideoController extends Controller
         (new Video())->likeThisVideo($id, Auth::id());
     }
 
+    /**
+     * 获取视频详情
+     * @param $id
+     * @return mixed
+     */
     public function getDetail($id)
     {
 
@@ -68,13 +73,5 @@ class VideoController extends Controller
         }
 
         return response()->customization($data);
-    }
-
-    /**
-     * 删除视频接口
-     */
-    public function delete()
-    {
-
     }
 }
