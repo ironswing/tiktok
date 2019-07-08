@@ -20,7 +20,14 @@ class Controller extends BaseController
 
         } catch (\Exception $exception) {
 
-            $code = $exception->getCode() ? $exception->getCode() : 400;
+            $codes = [];
+
+            $code = $exception->getCode();
+
+            if (!in_array($code, $codes)) {
+
+                $code = 400;
+            }
 
             return response()->customization([], $exception->getMessage(), $code);
         }

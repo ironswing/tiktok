@@ -39,9 +39,13 @@ class PostController extends Controller
         $data = [
 
             "title" => $title,
-            "video_url" => $video_url,
-            "poster" => $poster,
+            "path" => $video_url,
         ];
+        if (!is_null($poster) && !empty($poster)) {
+
+            $data['poster'] = $poster;
+        }
+
         $id = (new Video())->newQuery()->insertGetId($data);
 
         return [
