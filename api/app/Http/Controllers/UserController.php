@@ -107,7 +107,7 @@ class UserController extends Controller
 
         $my_id = $certificateService->verifyLogin($request);
 
-        $status = (new User())->newQuery()->followUser($user_id, $my_id);
+        $status = (new User())->followUser($user_id, $my_id);
 
         return [
             "msg" => $status === 1 ? "已关注" : "已取消关注"
