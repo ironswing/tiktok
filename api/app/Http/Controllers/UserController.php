@@ -50,16 +50,30 @@ class UserController extends Controller
     /**
      * 获取用户的基本资料信息
      * @param $id
+     * @param Request $request
+     * @param CertificateService $certificateService
      * @return array
      * @throws Exception
      */
-    public function getProfile($id)
+    public function getProfile($id, Request $request, CertificateService $certificateService)
     {
         $id = intval($id);
         $user = (new User())->newQuery()->where("id", $id)->first();
         if (!(new CertificateService())->isUserExist(($user))) {
 
             throw new Exception("用户不存在~");
+        }
+
+
+        // 获取关注状态
+        $user_id = $id;
+        $my_id = $certificateService->verifyLogin($request, false);
+        if ($user_id < 1) {
+
+            $data['is_follow'] = 0;
+        } else {
+
+            $data['is_follow'] = ((new User())->isFollow($user_id, $my_id)) ? 1 : 0;
         }
 
         return ["data" => $user];
