@@ -70,10 +70,10 @@ class UserController extends Controller
         $my_id = $certificateService->verifyLogin($request, false);
         if ($user_id < 1) {
 
-            $data['is_follow'] = 0;
+            $user['is_follow'] = 0;
         } else {
 
-            $data['is_follow'] = ((new User())->isFollow($user_id, $my_id)) ? 1 : 0;
+            $user['is_follow'] = ((new User())->isFollow($user_id, $my_id)) ? 1 : 0;
         }
 
         return ["data" => $user];
