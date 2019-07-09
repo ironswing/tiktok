@@ -137,6 +137,12 @@ class Video extends Model
         return intval($video['user_id']) === intval($user_id);
     }
 
+    /**
+     * 是否给此视频点过赞
+     * @param $video_id
+     * @param $user_id
+     * @return bool
+     */
     public function isLikeThisVideo($video_id, $user_id)
     {
         $record = collect(DB::table("thumbs")->where(["user_id" => $user_id, "video_id" => $video_id])->first())->toArray();
