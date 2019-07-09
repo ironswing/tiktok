@@ -14,41 +14,51 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Auth::routes();
+// Auth::routes();
 
 
 /*----------------------------------------------------------------
-| 打开APP, 开始刷视频 | Feed相关接口
+| APP相关接口
 |----------------------------------------------------------------*/
 
 // 获取APP的Feed流
 Route::redirect('/', '/feeds');
 Route::redirect('/home', '/feeds');
-
-// 注册接口
-Route::post('/register', 'HomeController@register');
+Route::get('/feeds', 'FeedController@getFeeds');
 
 // 登录接口
-Route::post('/login', 'HomeController@login');
+Route::post('/login','UserController@login');
 
-// 视频点赞接口
-Route::get('/video/{$id}/like', 'VideoController@like');
+// 注册接口
+Route::post('/register','UserController@register');
+
+// 发布接口
+Route::post('/post', 'PostController@post');
 
 
 /*----------------------------------------------------------------
-| 打开某一个视频 | 视频相关接口
+| 视频相关接口
 |----------------------------------------------------------------*/
 
 // 获取视频下的所有评论
 Route::get('/video/{id}/comments', 'VideoController@getComments');
 Route::get('/video/{id}/detail', 'VideoController@getDetail');
 
-// 获取某条评论的回复
-Route::get('/comment/{id}/replies', 'CommentController@getReplies');
+// 视频点赞接口
+Route::post('/video/{id}/like', 'VideoController@like');
+
+// 视频删除接口
+Route::get('/video/{id}/delete', 'VideoController@delete');
+
+// 视频上传接口
+Route::post('/video/upload', 'VideoController@upload');
+
+// 图片上传接口
+Route::post('/image/upload', 'ImageController@upload');
 
 
 /*----------------------------------------------------------------
-| 打开作者的首页 | 用户相关接口
+| 用户相关接口
 |----------------------------------------------------------------*/
 
 // 用户资料
@@ -67,20 +77,29 @@ Route::get('/user/{id}/feeds', 'UserController@getFeeds');
 Route::get('/user/{id}/comments', 'UserController@getComments');
 
 // (取)关注接口
-Route::get('/user/{id}/follow', 'UserController@follow');
+Route::post('/user/{id}/follow', 'UserController@follow');
+
+// 用户是否已登录
+Route::get('/user/is_login','UserController@isLogin');
+
+
 
 
 /*----------------------------------------------------------------
-| 个人的操作 | 上传发布相关接口
+| 评论相关接口
 |----------------------------------------------------------------*/
 
-// 发布接口
-Route::post('/post', 'PostController@post');
+// 获取某条评论的回复
+Route::get('/comment/{id}/replies', 'CommentController@getReplies');
 
-// 视频删除接口
-Route::get('/video/{id}/delete', 'VideoController@delete');
-
-
+// 评论接口
+Route::post('/comment/add', 'CommentController@add');
 
 
+/*----------------------------------------------------------------
+| 测试相关接口
+|----------------------------------------------------------------*/
+
+// 测试 cookie
+Route::get('/test/test_cookie','TestController@testCookie');
 

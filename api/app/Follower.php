@@ -8,11 +8,11 @@ class Follower extends Model
 {
     protected $table = 'followers';
 
-    protected $visible = ['following_id', 'follower_id', 'name', 'signature', 'avatar', 'follow_time'];
+    protected $visible = ['following_id', 'follower_id', 'name', 'signature', 'avatar', 'follow_time', 'status'];
 
     public function getFollowers($id)
     {
-        $followers = $this->newQuery()->where(['user_id' => $id, 'status' => 1])
+        $followers = $this->newQuery()->where(['user_id' => $id, 'followers.status' => 1])
             ->join("users", "follower_id", "users.id")
             ->get();
 
@@ -25,7 +25,7 @@ class Follower extends Model
 
     public function getFollowings($id)
     {
-        $followers = $this->newQuery()->where(['follower_id' => $id, 'status' => 1])
+        $followers = $this->newQuery()->where(['follower_id' => $id, 'followers.status' => 1])
             ->join("users", "followers.user_id", "users.id")
             ->get();
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use \Exception;
+use Illuminate\Support\Facades\File;
 
 /**
  * 上传服务
@@ -46,8 +47,16 @@ class UploadService
             $uploadFileDirWeb = "/videos/";
         }
 
-        $uploadFileDirWeb .= date("Ymd", time());
+        $uploadFileDirWeb .= date("Ymd/", time());
         $this->UPLOAD_FILE_DIR = $uploadFileDirWeb;
+
+        $storage_path = app_path() . "/../storage/app/public/" . $uploadFileDirWeb;
+
+        if (!File::exists($storage_path)) {
+
+            File::makeDirectory($storage_path, $mode = 0777, true, true);
+            chmod($storage_path, 0777);
+        }
     }
 
     // 检查上传文件的类型
@@ -150,7 +159,7 @@ class UploadService
             // 不支持的文件类型
             if (!in_array($file_type[$i], $this->FILE_TYPE_SUPPORT[$this->UPLOAD_FILE_TYPE], true)) {
 
-                throw new Exception($this->UPLOAD_FILE_TYPE_CHINESE . "的类型错误(第" . ($i + 1) . "个)");
+                throw new Exception($this->UPLOAD_FILE_TYPE_CHINESE . "的类型错误(第" . ($i + 1) . "个)，它的类型是: " . $file_type[$i]);
             }
 
             $type = explode("/", $file_type[$i])[1];
@@ -163,7 +172,7 @@ class UploadService
         }
 
         // 依次移动文件
-        $storage_path = app_path() . "../storage/app/public/";
+        $storage_path = app_path() . "/../storage/app/public/";
         for ($i = 0; $i <= $count; ++$i) {
 
             move_uploaded_file($file_tmpname[$i], $storage_path . $this->UPLOAD_FILE_DIR . $file_name[$i]);

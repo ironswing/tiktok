@@ -16,12 +16,4 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function login(){
-
-    }
-
-
-    public function register(){
-
-    }
 }

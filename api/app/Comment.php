@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\TimeService;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -61,10 +62,27 @@ class Comment extends Model
     }
 
     /**
-     * 添加一条评论
+     * 添加一条我的评论
+     * @param $video_id
+     * @param $user_id
+     * @param $content
+     * @return int
      */
-    public function add(){
+    public function addMyComment($video_id, $user_id, $content){
 
+        $timeService = new TimeService();
+
+        $data = [
+
+            "video_id" => $video_id,
+            "user_id" => $user_id,
+            "content" => $content,
+
+            "created_at" =>$timeService->getDatetime(),
+            "updated_at" =>$timeService->getDatetime(),
+        ];
+
+        return $this->newQuery()->insertGetId($data);
     }
 
     /**
@@ -72,7 +90,7 @@ class Comment extends Model
      * @param $id
      * @return bool|void|null
      */
-    public function delete($id){
+    public function deleteMyComment($id){
 
     }
 }

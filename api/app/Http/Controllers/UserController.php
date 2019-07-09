@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Follower;
+use App\PasswordReset;
+use App\Services\CertificateService;
 use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Expr\Array_;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordReset as PasswordResetMailable;
+use \Exception;
 
 class UserController extends Controller
 {
@@ -17,18 +20,19 @@ class UserController extends Controller
     /**
      * 获取用户的基本资料信息
      * @param $id
-     * @return mixed
+     * @return array
+     * @throws Exception
      */
     public function getProfile($id)
     {
         $id = intval($id);
-        $user = (User::where("id", $id)->first());
-        if (!$this->isUserExist($user)) {
+        $user = (new User())->newQuery()->where("id", $id)->first();
+        if (!(new CertificateService())->isUserExist(($user))) {
 
-            return response()->customization([], "用户不存在~", 400);
+            throw new Exception("用户不存在~");
         }
 
-        return response()->customization($user);
+        return ["data" => $user];
     }
 
     /**
@@ -38,11 +42,11 @@ class UserController extends Controller
      */
     public function getFollowers($id)
     {
-        $id = intval($id);
+        $user_id = intval($id);
 
-        $followers = (new Follower())->getFollowers($id);
+        $followers = (new Follower())->getFollowers($user_id);
 
-        return response()->customization($followers);
+        return ["data" => $followers];
     }
 
     /**
@@ -52,11 +56,11 @@ class UserController extends Controller
      */
     public function getFollowings($id)
     {
-        $id = intval($id);
+        $user_id = intval($id);
 
-        $followings = (new Follower())->getFollowings($id);
+        $followings = (new Follower())->getFollowings($user_id);
 
-        return response()->customization($followings);
+        return ["data" => $followings];
     }
 
     /**
@@ -71,7 +75,7 @@ class UserController extends Controller
 
         $feeds = (new Video())->getThisUserAllVideos($id);
 
-        return response()->customization($feeds);
+        return ["data" => $feeds];
     }
 
     /**
@@ -86,43 +90,165 @@ class UserController extends Controller
 
         $comments = (new Comment())->getThisUserComments($id);
 
-        return response()->customization($comments);
+        return ["data" => $comments];
     }
 
     /**
      * (取)关注用户
      * @param $id
-     * @return Array
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @return mixed
+     * @throws Exception
      */
-    public function follow($id)
+    public function follow($id, Request $request, CertificateService $certificateService)
     {
-        $id = intval($id);
+        $user_id = intval($id);
 
-        if (!Auth::check()) {
+        $my_id = $certificateService->verifyLogin($request);
 
-            return response()->customization([], "请先登录~", 400);
-        }
+        $status = (new User())->followUser($user_id, $my_id);
 
-        $status = (new User())->followUser($id);
-
-        return response()->customization([], $status === 1 ? "已关注" : "已取消关注");
+        return [
+            "msg" => $status === 1 ? "已关注" : "已取消关注"
+        ];
     }
 
     /**
-     * 用户是否存在
-     * @param $user
-     * @return bool
+     * 判断用户是否登录
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @return mixed
+     * @throws Exception
      */
-    public function isUserExist($user)
+    public function isLogin(Request $request, CertificateService $certificateService)
     {
+        $is_login = $certificateService->isUserLogin($request);
 
-        if (is_null($user) || empty($user)) {
+        if (false !== $is_login) {
 
-            return false;
+            return ["data" => ["id" => $is_login]];
         }
 
-        // 还需要判断用户是否被封禁之类的
+        throw new Exception("用户未登录");
+    }
 
-        return true;
+    /**
+     * 登录
+     * @param Request $request
+     * @return mixed
+     * @throws Exception
+     */
+    public function login(Request $request)
+    {
+        $name = $request->input("name");
+        $password = $request->input("password");
+
+        if (empty($name) || empty($password)) {
+
+            throw new Exception("参数不能为空哦~");
+        }
+
+        // 匹配是否存在这个用户
+        $user = (new User())->newQuery()->where(["name" => $name, "password" => $password])->get()->toArray();
+        if (empty($user)) {
+
+            throw new Exception("用户名或密码错误");
+        }
+        if (isset($user[0])) {
+
+            $user = $user[0];
+        }
+
+        if(!isset($_SESSION)){
+
+            session_start();
+        }
+        $user_id = $user['id'];
+        $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
+        $_SESSION[$cookie] = $user_id;
+
+        return ["data" => ['id' => $user_id, 'cookie' => $cookie, 'session_id'=>session_id()]];
+    }
+
+    /**
+     * 注册
+     * @param Request $request
+     * @return mixed
+     * @throws Exception
+     */
+    public function register(Request $request)
+    {
+        $name = $request->input("name");
+        $email = $request->input("email");
+        $password = $request->input("password");
+        $confirm_password = $request->input("confirm_password");
+
+        if (empty($name) || empty($email) || empty($email) || empty($password) || empty($confirm_password)) {
+
+            throw new Exception("参数不能为空哦~");
+        }
+
+        if ($confirm_password !== $password) {
+
+            throw new Exception("两次输入密码不一致");
+        }
+
+        // 判断邮箱是否已存在
+        $user = (new User())->newQuery()->where(["email" => $email])->get()->toArray();
+        if (!empty($user)) {
+
+            throw new Exception("邮箱已存在");
+        }
+
+        $user = [
+
+            "name" => $name,
+            "email" => $email,
+            "password" => $password,
+        ];
+        $user_id = (new User())->newQuery()->insertGetId($user);
+
+        return ["data" => ['id' => $user_id]];
+    }
+
+    /**
+     * 忘记密码接口
+     * @param Request $request
+     * @param CertificateService $certificateService
+     */
+    public function forgetPassword(Request $request, CertificateService $certificateService)
+    {
+        $email = $request->input("email");
+        $token = $certificateService->generateToken();
+
+        $data = [
+            'email' => $email,
+            'token' => $token,
+        ];
+        (new PasswordReset())->newQuery()->updateOrInsert(['email' => $email], $data);
+
+        // 发邮件
+        Mail::to($request->user())->send((new PasswordResetMailable()));
+    }
+
+    /**
+     * 重置密码
+     * @param Request $request
+     * @throws Exception
+     */
+    public function resetPassword(Request $request)
+    {
+
+        $email = $request->input("email");
+        $password = $request->input("password");
+        $confirm_password = $request->input("confirm_password");
+
+        if ($confirm_password !== $password) {
+
+            throw new Exception("两次输入密码不一致");
+        }
+
+        (new User())->newQuery()->where(["email" => $email])->update(["password" => $password]);
     }
 }

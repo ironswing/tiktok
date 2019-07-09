@@ -31,7 +31,8 @@ class ResponseMacroServiceProvider extends ServiceProvider
             $data['data'] = $value;
             $data['code'] = $code;
             $data['msg'] = $msg;
-            return $data;
+
+            return response()->json($data, $code, [], JSON_UNESCAPED_UNICODE);
         });
     }
 }

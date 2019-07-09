@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Services\CertificateService;
 use App\Services\UploadService;
 use App\Video;
 use \Exception;
@@ -11,14 +12,23 @@ use Illuminate\Support\Facades\Auth;
 
 class VideoController extends Controller
 {
+    /**
+     * 获取视频的下面评论
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
     public function getComments($id)
     {
-
         $id = intval($id);
 
-        $comments = (new Comment())->getThisVideoComments($id);
+        // 判断此视频是否存在
+        if( !(new Video())->isIdExist($id) ){
+            throw new Exception("视频不存在~");
+        }
 
-        return response()->customization($comments);
+        $comments = (new Comment())->getThisVideoComments($id);
+        return ["data" => $comments];
     }
 
     /**
@@ -29,39 +39,41 @@ class VideoController extends Controller
     {
         $uploadService = new UploadService("video");
 
-        try {
+        $data = $uploadService->handle();
 
-            $data = $uploadService->handle();
-        } catch (Exception $e) {
-
-            return response()->customization([], $e->getMessage(), 400);
-        }
-
-        return response()->customization($data);
+        return ["data" => $data];
     }
 
     /**
      * 为视频点赞
      * @param $id
-     * @return mixed
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @throws Exception
      */
-    public function like($id)
+    public function like($id, Request $request, CertificateService $certificateService)
     {
+        $user_id = $certificateService->verifyLogin($request);
 
-        if (!Auth::check()) {
-
-
-            return response()->customization([], "请先登录", 400);
-        }
-
-        (new Video())->likeThisVideo($id, Auth::id());
+        (new Video())->likeThisVideo($id, $user_id);
     }
 
     /**
-     * 删除视频接口
+     * 获取视频详情
+     * @param $id
+     * @return array
+     * @throws Exception
      */
-    public function delete()
+    public function getDetail($id)
     {
 
+        $data = (new Video())->getThisVideoDetail($id)->toArray();
+
+        if (empty($data)) {
+
+            throw new Exception("视频不存在");
+        }
+
+        return ["data" => $data];
     }
 }
