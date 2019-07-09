@@ -85,7 +85,7 @@ class Video extends Model
 
     public function getThisVideoDetail($id)
     {
-        return $this->newQuery()->where(['id' => $id, 'status' => 1])->get();
+        return $this->newQuery()->where(['id' => $id, 'status' => 1])->first();
     }
 
     public function likeThisVideo($video_id, $user_id)
@@ -135,5 +135,28 @@ class Video extends Model
         }
 
         return intval($video['user_id']) === intval($user_id);
+    }
+
+    /**
+     * 是否给此视频点过赞
+     * @param $video_id
+     * @param $user_id
+     * @return bool
+     */
+    public function isLikeThisVideo($video_id, $user_id)
+    {
+        $record = collect(DB::table("thumbs")->where(["user_id" => $user_id, "video_id" => $video_id])->first())->toArray();
+
+        if(isset($record[0])){
+
+            $record = $record[0];
+        }
+
+        if(empty($record)){
+
+            return false;
+        }
+
+        return intval($record['status']) === 1;
     }
 }

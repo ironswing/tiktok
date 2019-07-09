@@ -23,7 +23,7 @@ class VideoController extends Controller
         $id = intval($id);
 
         // 判断此视频是否存在
-        if( !(new Video())->isIdExist($id) ){
+        if (!(new Video())->isIdExist($id)) {
             throw new Exception("视频不存在~");
         }
 
@@ -61,17 +61,28 @@ class VideoController extends Controller
     /**
      * 获取视频详情
      * @param $id
+     * @param Request $request
+     * @param CertificateService $certificateService
      * @return array
      * @throws Exception
      */
-    public function getDetail($id)
+    public function getDetail($id, Request $request, CertificateService $certificateService)
     {
 
-        $data = (new Video())->getThisVideoDetail($id)->toArray();
-
+        $data = collect((new Video())->getThisVideoDetail($id))->toArray();
         if (empty($data)) {
 
             throw new Exception("视频不存在");
+        }
+
+        // 获取用户的点赞状态
+        $user_id = $certificateService->verifyLogin($request, false);
+        if ($user_id < 1) {
+
+            $data['is_thumb'] = 0;
+        } else {
+
+            $data['is_thumb'] = ((new Video())->isLikeThisVideo($id, $user_id)) ? 1 : 0;
         }
 
         return ["data" => $data];

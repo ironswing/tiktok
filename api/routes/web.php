@@ -82,6 +82,9 @@ Route::post('/user/{id}/follow', 'UserController@follow');
 // 用户是否已登录
 Route::get('/user/is_login','UserController@isLogin');
 
+// 修改资料信息
+Route::post('/user/profile/edit', 'UserController@editProfile');
+
 
 
 

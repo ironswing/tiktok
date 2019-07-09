@@ -50,6 +50,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function editProfile($user_id, $data){
+
+        $this->newQuery()->where(["id"=>$user_id])->update($data);
+    }
 
     /**
      * 关注(取消关注)某个用户
@@ -59,7 +63,6 @@ class User extends Authenticatable
      */
     public function followUser($user_id, $my_id)
     {
-
         $record = collect((new Follower())->newQuery()->where(["user_id" => $user_id, "follower_id" => $my_id])->first())->toArray();
         if (isset($record[0])) {
 
@@ -91,4 +94,19 @@ class User extends Authenticatable
         return $record['status'] == 1 ? 0 : 1;
     }
 
+    public function isFollow($user_id, $my_id)
+    {
+        $record = collect((new Follower())->newQuery()->where(["user_id" => $user_id, "follower_id" => $my_id])->first())->toArray();
+        if (isset($record[0])) {
+
+            $record = $record[0];
+        }
+
+        if(empty($record)){
+
+            return false;
+        }
+
+        return intval($record['status']) === 1;
+    }
 }

@@ -19,7 +19,7 @@ class CertificateService
      */
     private function isSessionExist($cookie)
     {
-        if(!isset($_SESSION)){
+        if (!isset($_SESSION)) {
 
             session_start();
         }
@@ -85,14 +85,20 @@ class CertificateService
     /**
      * 验证登录
      * @param Request $request
+     * @param bool $throw_error
      * @return bool
      * @throws Exception
      */
-    public function verifyLogin(Request $request){
+    public function verifyLogin(Request $request, $throw_error = true)
+    {
 
         $is_login = $this->isUserLogin($request);
         if (false === $is_login) {
 
+            if (!$throw_error) {
+
+                return 0;
+            }
             throw new \Exception("用户未登录");
         }
 

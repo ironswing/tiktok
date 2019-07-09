@@ -26,7 +26,7 @@ class Comment extends Model
      */
     public function getThisVideoComments($id)
     {
-        $comments = collect($this->newQuery()->where(['video_id' => $id, 'status' => 1])
+        $comments = collect($this->newQuery()->where(['video_id' => $id, 'status' => 1])->orderByDesc("id")
             ->paginate(10));
 
         $comments['data'] = collect($comments['data'])->map(function ($item) {

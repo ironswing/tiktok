@@ -18,18 +18,62 @@ class UserController extends Controller
 {
 
     /**
+     * 编辑资料
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @throws Exception
+     */
+    public function editProfile(Request $request, CertificateService $certificateService)
+    {
+        $name = $request->input("name");
+        $email = $request->input("email");
+        $signature = $request->input("signature");
+        $avatar = $request->input("avatar");
+
+        if (empty($name) || empty($email) || empty($signature) || empty($avatar)) {
+
+            throw new Exception("填写不完整~");
+        }
+
+        $user_id = $certificateService->verifyLogin($request);
+
+        $data = [
+
+            "name" => $name,
+            "email" => $email,
+            "signature" => $signature,
+            "avatar" => $avatar,
+        ];
+        (new User())->editProfile($user_id, $data);
+    }
+
+    /**
      * 获取用户的基本资料信息
      * @param $id
+     * @param Request $request
+     * @param CertificateService $certificateService
      * @return array
      * @throws Exception
      */
-    public function getProfile($id)
+    public function getProfile($id, Request $request, CertificateService $certificateService)
     {
         $id = intval($id);
         $user = (new User())->newQuery()->where("id", $id)->first();
         if (!(new CertificateService())->isUserExist(($user))) {
 
             throw new Exception("用户不存在~");
+        }
+
+
+        // 获取关注状态
+        $user_id = $id;
+        $my_id = $certificateService->verifyLogin($request, false);
+        if ($user_id < 1) {
+
+            $user['is_follow'] = 0;
+        } else {
+
+            $user['is_follow'] = ((new User())->isFollow($user_id, $my_id)) ? 1 : 0;
         }
 
         return ["data" => $user];
@@ -160,7 +204,7 @@ class UserController extends Controller
             $user = $user[0];
         }
 
-        if(!isset($_SESSION)){
+        if (!isset($_SESSION)) {
 
             session_start();
         }
@@ -168,7 +212,7 @@ class UserController extends Controller
         $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
         $_SESSION[$cookie] = $user_id;
 
-        return ["data" => ['id' => $user_id, 'cookie' => $cookie, 'session_id'=>session_id()]];
+        return ["data" => ['id' => $user_id, 'cookie' => $cookie, 'session_id' => session_id()]];
     }
 
     /**
