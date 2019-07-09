@@ -53,6 +53,8 @@ Route::get('/video/{id}/delete', 'VideoController@delete');
 // 视频上传接口
 Route::post('/video/upload', 'VideoController@upload');
 
+// 图片上传接口
+Route::post('/image/upload', 'ImageController@upload');
 
 
 /*----------------------------------------------------------------
