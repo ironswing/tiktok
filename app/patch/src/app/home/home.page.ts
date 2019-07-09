@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {VgAPI} from 'videogular2/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
@@ -8,11 +8,19 @@ import {HttpClient} from '@angular/common/http';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+    inner;
     like = false;
     isComment = false;
     public api; VgAPI;
     public cur = 1;
+    public curPlayerItem: any;
+    public playId = 1;
+    public commentContext;
+    public remoteVideoSourceArr = [];
+    public bfscrolltop;
+    @ViewChild('slidesRef')
+    public slidesRef;
     // public vm: vgMedia;
     public sourceArr = [
         {id: 1, src: 'assets/video/fb8736e3432fb86610874b358e9603dd.mp4', poster: 'assets/shapes.svg'},
@@ -27,13 +35,47 @@ export class HomePage {
         pagination: {},
         direction: 'vertical'
     };
+
+
+    ngOnInit(): void {
+        console.log(this.slidesRef);
+    }
+
+    // id: 104
+    // path: "/videos/20190708/399325740a57bad8ddbe24263002fea7.mp4"
+    // poster: "default.poster.jpg"
+    // shoot_time: "2019-07-08 23:16:27"
+    // thumbs: 0
+    // title: "测试2"
+
   constructor(private router: Router, private http: HttpClient) {
       this.http.get(ROOT_URL + 'feeds').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
-              console.log(res['data']);
+              // console.log(res['data']);
+              let token = res['data']['csrf_token'];
+              res['data']['data'].forEach(item => {
+                  // console.log(item);
+                  item['playId'] = this.playId;
+                  this.playId++;
+                  this.remoteVideoSourceArr.push(item);
+              });
+
+              console.log(this.remoteVideoSourceArr);
+
+              console.log(token);
+              localStorage.setItem('csxfToken', token);
           }
       });
+
+      // this.http.get(ROOT_URL + 'login', {responseType: 'text'}).subscribe(res => {
+      //     console.log(res);
+      //     this.inner = res;
+      //     console.log(res['error'])
+      //     if (res['code'] === 200) {
+      //         console.log(res['data']);
+      //     }
+      // });
   }
   player() {
       // let options: StreamingVideoOptions = {
@@ -50,7 +92,6 @@ export class HomePage {
 
       api.play();
         this.api = api;
-
         this.api.getDefaultMedia().subscriptions.ended.subscribe(
             () => {
                 // Set the video to the beginning
@@ -64,8 +105,9 @@ export class HomePage {
       console.log('start');
       this.api.play();
     }
-    tplay() {
-      console.log('test play');
+    curPlay(item) {
+      console.log('test play', item);
+      this.curPlayerItem = item;
     }
 
     sldnxt(e) {
@@ -75,6 +117,7 @@ export class HomePage {
     }
 
     sldpre(e) {
+        console.log(e);
         this.cur--;
         console.log('cur' + this.cur);
         // this.api.play();
@@ -94,6 +137,11 @@ export class HomePage {
 
     hiddenComment() {
       this.isComment = false;
+    }
+
+    sendComment() {
+        console.log(this.commentContext);
+        this.http.post()
     }
 
     goIndex() {
@@ -116,4 +164,5 @@ export class HomePage {
             console.log(res);
         });
     }
+
 }

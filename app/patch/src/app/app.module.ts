@@ -14,7 +14,10 @@ import {PlayerPageModule} from './player/player.module';
 import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { VideoEditor } from '@ionic-native/video-editor/ngx';
+import {AnHttpGuard} from './an-http.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +37,9 @@ import { HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
       FileTransfer,
       FilePath,
       File,
+      AppMinimize,
+      VideoEditor,
+      { provide: HTTP_INTERCEPTORS, useClass: AnHttpGuard, multi: true},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

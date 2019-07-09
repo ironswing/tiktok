@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
+import {HttpClient} from '@angular/common/http';
+import {LoadingController} from '@ionic/angular';
+import { VideoEditor } from '@ionic-native/video-editor/ngx';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -11,11 +15,25 @@ import {FilePath} from '@ionic-native/file-path/ngx';
   styleUrls: ['./create.page.scss'],
 })
 export class CreatePage implements OnInit {
+    items: any[] = [];
   public path;
+  public videoSource;
+  public imageSource;
+  public title;
+  public progresss = 0;
+  public testSrc;
 
   constructor( private camera: Camera, private imagePicker: ImagePicker, private transfer: FileTransfer,
                private file: File,
-               private filePath: FilePath) { }
+               private filePath: FilePath,
+               private http: HttpClient,
+               private loadingCtrl: LoadingController,
+               private videoEditor: VideoEditor,
+               private router: Router) {
+      for (let i = 0; i < 1000; i++) {
+          this.items.push('test' + 1);
+      }
+  }
 
   ngOnInit() {
   }
@@ -68,42 +86,137 @@ export class CreatePage implements OnInit {
             this.camera.MediaType.VIDEO, sourceType:
             this.camera.PictureSourceType.PHOTOLIBRARY }).then(res => {
             console.log(res);
-
-            this.file.checkFile('/storage/emulated/0/tencent/MicroMsg/WeiXin/', 'wx_camera_1561900960842.mp4').then(res => {
-                console.log(res);
-            }, err => {
-                console.log(err);
-            });
-
-            this.file.checkDir('/storage/emulated/0/tencent/MicroMsg/WeiXin/', 'wx_camera_1561900960842.mp4').then(res => {
-                console.log(res);
-            }, err => {
-                console.log(err);
-            });
-
-            // this.filePath.resolveNativePath(res)
-            //     .then(filePath => console.log(filePath))
-            //     .catch(err => console.log(err));
             this.upload(res);
+
+            // this.videoEditor.transcodeVideo({
+            //     fileUri: 'file://' + res,
+            //     outputFileName: 'output.mp4',
+            //     outputFileType: this.videoEditor.OutputFileType.MPEG4
+            // })
+            //     .then((fileUri: string) => console.log('video transcode success', fileUri))
+            //     .catch((error: any) => console.log('video transcode error', error));
+
+            this.videoEditor.createThumbnail({
+                fileUri: 'file://' + res,
+                outputFileName: 'temp'
+            })
+                .then((fileUri: string) => {
+                    console.log('video createThumbnail success', fileUri)
+                    const fileTransfer: FileTransferObject = this.transfer.create();
+                    let options: FileUploadOptions = {
+                        fileKey: 'file',
+                        fileName: 'test.jpg',
+                        mimeType: 'image/jpeg',
+                        headers: {}
+                    };
+
+                    fileTransfer.upload(fileUri , 'http://tiktok.tiantianquan.xyz/image/upload', options)
+                        .then((data) => {
+                            console.log(data);
+                            if(data['responseCode'] === 200){
+                                console.log(data['response']);
+                                let res = JSON.parse(data['response']);
+                                console.log(res);
+                                if (res['code'] === 200) {
+                                    this.imageSource = res['data']['img'][0]['url'];
+                                    console.log(this.imageSource);
+                                }
+                            }
+                            // success
+                        }, (err) => {
+                            console.log(err);
+                            console.log(err.body);
+                            // error
+                        });
+                })
+                .catch((error: any) => console.log('video createThumbnail error', error));
+
+        });
+    }
+
+    selectPoster() {
+        this.camera.getPicture({destinationType: this.camera.DestinationType.DATA_URL, mediaType:
+            this.camera.MediaType.PICTURE, sourceType:
+            this.camera.PictureSourceType.PHOTOLIBRARY,
+            encodingType: this.camera.EncodingType.JPEG}).then(res => {
+            console.log(res);
+            // this.upload(res);
+            this.testSrc = res;
+
+            var file = this.convertBase64UrlToBlob(res);
+            var fd = new FormData();
+            fd.append('file', file , "image.png");
+
         });
     }
     upload(path) {
         const fileTransfer: FileTransferObject = this.transfer.create();
 
+        console.log(path)
+
         let options: FileUploadOptions = {
             fileKey: 'file',
-            fileName: 'name.jpg',
+            fileName: 'test.mp4',
+            mimeType: 'video/mp4',
             headers: {}
-        }
+        };
 
-        fileTransfer.upload(path, 'http://tiktok.tiantianquan.xyz/video/upload', options)
+        let now = 0;
+
+        fileTransfer.onProgress(progess  => {
+            if (progess.lengthComputable) {
+                now = progess.total / progess.loaded * 100;
+            }
+        })
+
+        fileTransfer.upload(path , 'http://tiktok.tiantianquan.xyz/video/upload', options)
             .then((data) => {
                 console.log(data);
+                if(data['responseCode'] === 200){
+                    console.log(data['response']);
+                    let res = JSON.parse(data['response']);
+                    console.log(res);
+                    if (res['code'] === 200) {
+                        this.videoSource = res['data']['video'][0]['url'];
+                        console.log(this.videoSource);
+                    }
+                }
                 // success
             }, (err) => {
                 console.log(err);
                 console.log(err.body);
                 // error
             });
+
+        let timer = setInterval(() => {
+            // loading.setContent('上传中 ' + Math.floor(now) + '%');
+            this.progresss = Math.floor(now);
+            console.log(now);
+            if (now >= 99) {
+                clearInterval(timer);
+            }
+        }, 500);
+    }
+
+    publish() {
+        let params = {
+            title: this.title,
+            video_url: this.videoSource,
+            poster: this.imageSource,
+            cookie: localStorage.getItem('anshi_cookie')
+        };
+        console.log(params);
+        this.http.post(ROOT_URL + 'post', params).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                this.router.navigate(['/home']);
+            }
+        });
+    }
+
+    tcookie() {
+        this.http.get(ROOT_URL + 'test/test_cookie', {params: {cookie: localStorage.getItem('anshi_cookie')}}).subscribe(res => {
+            console.log(res);
+        });
     }
 }

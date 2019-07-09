@@ -13,7 +13,12 @@
           <img src="assets/shapes.svg" alt="" style="width: 50px;height: 50px;border-radius: 50%">
         </div>
         <div>
-          <div>安石</div>
+          <ion-text *ngIf="userProfile">{{userProfile['name']}}</ion-text>
+          <div>
+            <div>账号</div>
+            <ion-text*ngIf="userProfile">{{userProfile['email']}}</ion-text>
+          </div>
+          <!--<div>安石</div>-->
           <div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>
         </div>
       </div>
@@ -44,6 +49,12 @@
       </ion-segment>
 
     </div>
+
+    <ion-virtual-scroll [items]="videoArr" approxItemHeight="50px" style="height: 600px">
+      <ion-item *virtualItem="let item" style="height: 50px">
+        {{ item }}
+      </ion-item>
+    </ion-virtual-scroll>
 
     <div *ngFor="let item of videoArr" (click)="testParams(item)">
       <div style="position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">
