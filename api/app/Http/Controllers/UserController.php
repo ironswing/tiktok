@@ -30,6 +30,11 @@ class UserController extends Controller
         $signature = $request->input("signature");
         $avatar = $request->input("avatar");
 
+        if (empty($name) || empty($email) || empty($signature) || empty($avatar)) {
+
+            throw new Exception("填写不完整~");
+        }
+
         $user_id = $certificateService->verifyLogin($request);
 
         $data = [
