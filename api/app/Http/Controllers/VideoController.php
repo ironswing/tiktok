@@ -76,7 +76,7 @@ class VideoController extends Controller
         }
 
         // 获取用户的点赞状态
-        $user_id = $certificateService->verifyLogin($request);
+        $user_id = $certificateService->verifyLogin($request, false);
         if ($user_id < 1) {
 
             $data['is_thumb'] = 0;
