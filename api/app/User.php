@@ -50,6 +50,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function editProfile($user_id, $data){
+
+        $this->newQuery()->where(["id"=>$user_id])->update($data);
+    }
 
     /**
      * 关注(取消关注)某个用户

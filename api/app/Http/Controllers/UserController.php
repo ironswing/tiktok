@@ -18,6 +18,31 @@ class UserController extends Controller
 {
 
     /**
+     * 编辑资料
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @throws Exception
+     */
+    public function editProfile(Request $request, CertificateService $certificateService)
+    {
+        $name = $request->input("name");
+        $email = $request->input("email");
+        $signature = $request->input("signature");
+        $avatar = $request->input("avatar");
+
+        $user_id = $certificateService->verifyLogin($request);
+
+        $data = [
+
+            "name" => $name,
+            "email" => $email,
+            "signature" => $signature,
+            "avatar" => $avatar,
+        ];
+        (new User())->editProfile($user_id, $data);
+    }
+
+    /**
      * 获取用户的基本资料信息
      * @param $id
      * @return array
@@ -160,7 +185,7 @@ class UserController extends Controller
             $user = $user[0];
         }
 
-        if(!isset($_SESSION)){
+        if (!isset($_SESSION)) {
 
             session_start();
         }
@@ -168,7 +193,7 @@ class UserController extends Controller
         $cookie = md5(time() . $name . $password . mt_rand(-9999, 9999));
         $_SESSION[$cookie] = $user_id;
 
-        return ["data" => ['id' => $user_id, 'cookie' => $cookie, 'session_id'=>session_id()]];
+        return ["data" => ['id' => $user_id, 'cookie' => $cookie, 'session_id' => session_id()]];
     }
 
     /**
