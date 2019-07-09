@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {VgAPI} from 'videogular2/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomePage implements OnInit {
     public curPlayerItem: any;
     public playId = 1;
     public commentContext;
+    public commentList;
     public remoteVideoSourceArr = [];
     public bfscrolltop;
     @ViewChild('slidesRef')
@@ -39,6 +41,7 @@ export class HomePage implements OnInit {
 
     ngOnInit(): void {
         console.log(this.slidesRef);
+        // /video/{id}/comments
     }
 
     // id: 104
@@ -48,7 +51,7 @@ export class HomePage implements OnInit {
     // thumbs: 0
     // title: "测试2"
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, public toastController: ToastController) {
       this.http.get(ROOT_URL + 'feeds').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
@@ -87,10 +90,11 @@ export class HomePage implements OnInit {
       // this.streamingMedia.playVideo('https://ttq.tiantianquan.xyz/sqnu/assets/test.mp4', options);
   }
 
-    onPlayerReady(api: VgAPI) {
+    onPlayerReady(api: VgAPI, item) {
       console.log('ready!!!');
-
-      api.play();
+        this.curPlayerItem = item;
+        this.updateLike();
+        api.play();
         this.api = api;
         this.api.getDefaultMedia().subscriptions.ended.subscribe(
             () => {
@@ -107,7 +111,14 @@ export class HomePage implements OnInit {
     }
     curPlay(item) {
       console.log('test play', item);
-      this.curPlayerItem = item;
+      // this.curPlayerItem = item;
+      // this.updateLike();
+      // this.http.get(ROOT_URL + `video/${this.curPlayerItem['id']}/detail`).subscribe(res => {
+      //     console.log(res);
+      //     if (res['code'] === 200) {
+      //         this.like = res['data']['is_thumb'] == 1 ? true : false;
+      //     }
+      // });
     }
 
     sldnxt(e) {
@@ -128,11 +139,33 @@ export class HomePage implements OnInit {
     }
 
     isLike() {
-        this.like = !this.like;
+        this.http.post(ROOT_URL + `video/${this.curPlayerItem['id']}/like`, {cookie: localStorage.getItem('anshi_cookie')}).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                // this.like = res['data']['is_thumb'] == 1 ? true : false;
+
+                this.updateLike();
+            }
+        });
     }
 
-    showComment() {
+    showComment(item) {
         this.isComment = true;
+        this.loadComment();
+        // this.http.get(ROOT_URL + `/video/${item.id}/comments`).subscribe(res => {
+        //     console.log(res);
+        //     if (res['code'] === 200){
+        //         this.commentList = res['data']['data'];
+        //     }
+        // });
+    }
+    loadComment() {
+        this.http.get(ROOT_URL + `/video/${this.curPlayerItem.id}/comments`).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                this.commentList = res['data']['data'];
+            }
+        });
     }
 
     hiddenComment() {
@@ -141,7 +174,22 @@ export class HomePage implements OnInit {
 
     sendComment() {
         console.log(this.commentContext);
-        this.http.post()
+        let params = {
+            video_id: this.curPlayerItem['id'],
+            content: this.commentContext,
+            cookie: localStorage.getItem('anshi_cookie')
+        }
+        this.http.post(ROOT_URL + 'comment/add', params).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200){
+                this.loadComment();
+            }
+        }, (err) => {
+            console.log(err);
+            this.presentToast(err['error']['msg']).then(r => {
+                console.log(r);
+            });
+        });
     }
 
     goIndex() {
@@ -153,16 +201,66 @@ export class HomePage implements OnInit {
 
     goPublish() {
         this.api.pause();
-        this.router.navigate(['/create']).then(res => {
-            console.log(res);
-        });
+
+        if (localStorage.getItem('anshi_id') && localStorage.getItem('anshi_id') !== '') {
+            this.router.navigate(['/create']).then(res => {
+                console.log(res);
+            });
+        }else {
+            this.router.navigate(['/login']).then(res => {
+                console.log(res);
+            });
+        }
+
     }
 
     goMine() {
         this.api.pause();
-        this.router.navigate(['/mine']).then(res => {
+        if (localStorage.getItem('anshi_id') && localStorage.getItem('anshi_id') !== '') {
+            this.router.navigate(['/mine']).then(res => {
+                console.log(res);
+            });
+        }else {
+            this.router.navigate(['/login']).then(res => {
+                console.log(res);
+            });
+        }
+    }
+
+    goUserProfile(com){
+        console.log(com);
+        let uid = com['user_id'];
+        console.log(uid === localStorage.getItem('anshi_id'));
+        if (uid === localStorage.getItem('anshi_id')) {
+            this.router.navigate(['/mine'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res, 'mine');
+            });
+        } else {
+            this.router.navigate(['/user-profile'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res, 'user');
+            });
+        }
+    }
+
+    updateLike() {
+        this.http.get(ROOT_URL + `video/${this.curPlayerItem['id']}/detail?cookie=${localStorage.getItem('anshi_cookie')}`, ).subscribe(res => {
             console.log(res);
+            if (res['code'] === 200) {
+                this.like = res['data']['is_thumb'] == 1 ? true : false;
+            }
+        }, (err) => {
+            console.log(err);
+            this.presentToast(err['error']['msg']).then(r => {
+                console.log(r);
+            });
         });
     }
 
+    async presentToast(msg) {
+        const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000
+        });
+        toast.present();
+    }
 }

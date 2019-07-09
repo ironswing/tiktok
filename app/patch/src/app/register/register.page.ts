@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterPage implements OnInit {
     public password: any;
     public confirmPassword: any;
 
-    constructor( private http: HttpClient, private router: Router) { }
+    constructor( private http: HttpClient, private router: Router, public toastController: ToastController) { }
 
     ngOnInit() {
     }
@@ -40,8 +41,22 @@ export class RegisterPage implements OnInit {
                 });
             }
             else {
+                this.presentToast(res['msg']);
             }
+        }, (err) => {
+            console.log(err);
+            this.presentToast(err['error']['msg']).then(r => {
+                console.log(r);
+            });
         });
 
+    }
+
+    async presentToast(msg) {
+        const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000
+        });
+        toast.present();
     }
 }

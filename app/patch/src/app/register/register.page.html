@@ -1,65 +1,65 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>注册</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding style="background-color: #FFFFFF;">
-  <div style="padding: 1rem">
+    <div style="padding: 1rem">
 
-    <div style="width: 100%; text-align: center;margin:1.5rem 0 4.5rem;">
-      <img src="assets/shapes.svg" alt="" style="height: 6rem">
+        <!--<div style="width: 100%; text-align: center;margin:1.5rem 0 4.5rem;">-->
+        <!--<img src="assets/shapes.svg" alt="" style="height: 6rem">-->
+        <!--</div>-->
+
+        <div>
+
+            <ion-item>
+                <ion-label position="floating">用户名</ion-label>
+                <ion-input type="password" [(ngModel)]="name" name="name"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">邮箱</ion-label>
+                <ion-input type="password" [(ngModel)]="email" name="email"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">密码</ion-label>
+                <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">确认密码</ion-label>
+                <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword"></ion-input>
+            </ion-item>
+
+
+            <ion-button style="margin-top: 2rem;" expand="block" (click)="register()">注册</ion-button>
+
+            <!--<div class="lists row">-->
+            <!--<span>用户名：</span>-->
+            <!--<input type="text" placeholder="请输入用户名" [(ngModel)]="name" name="name">-->
+            <!--</div>-->
+
+            <!--<div class="lists row">-->
+            <!--<span>邮箱：</span>-->
+            <!--<input type="text" placeholder="请输入邮箱" [(ngModel)]="email" name="email">-->
+            <!--</div>-->
+
+            <!--<div class="lists row">-->
+            <!--<span>密码：</span>-->
+            <!--<input type="password" placeholder="请输入密码" [(ngModel)]="password" name="password">-->
+            <!--</div>-->
+            <!--<div class="lists row">-->
+            <!--<span>确认密码：</span>-->
+            <!--<input type="password" placeholder="请输入确认密码" [(ngModel)]="confirmPassword" name="confirmPassword">-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="go forget"><span (tap)="forgetPass()">忘记密码？</span></div>-->
+
+            <!--<button class="login-b" (click)="register()">注册</button>-->
+
+        </div>
     </div>
-
-    <div>
-
-      <ion-item>
-        <ion-label position="floating">用户名</ion-label>
-        <ion-input  type="password" [(ngModel)]="name" name="name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">邮箱</ion-label>
-        <ion-input  type="password" [(ngModel)]="email" name="email"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">密码</ion-label>
-        <ion-input  type="password" [(ngModel)]="password" name="password"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">确认密码</ion-label>
-        <ion-input  type="password" [(ngModel)]="confirmPassword" name="confirmPassword"></ion-input>
-      </ion-item>
-
-
-      <ion-button (click)="register()">注册</ion-button>
-
-      <div class="lists row">
-        <span>用户名：</span>
-        <input type="text" placeholder="请输入用户名" [(ngModel)]="name" name="name">
-      </div>
-
-      <div class="lists row">
-        <span>邮箱：</span>
-        <input type="text" placeholder="请输入邮箱" [(ngModel)]="email" name="email">
-      </div>
-
-      <div class="lists row">
-        <span>密码：</span>
-        <input type="password" placeholder="请输入密码" [(ngModel)]="password" name="password">
-      </div>
-      <div class="lists row">
-        <span>确认密码：</span>
-        <input type="password" placeholder="请输入确认密码" [(ngModel)]="confirmPassword" name="confirmPassword">
-      </div>
-    </div>
-
-    <!--<div class="go forget"><span (tap)="forgetPass()">忘记密码？</span></div>-->
-
-    <button class="login-b" (click)="register()">注册</button>
-
-  </div>
-
 </ion-content>

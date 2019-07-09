@@ -11,7 +11,11 @@ import {HttpClient} from '@angular/common/http';
 })
 export class MinePage implements OnInit {
     userProfile: any;
-
+    // 我的關注
+    followerArr: [];
+    // 關注我的
+    followingArr: [];
+    segmentValue = 'fans';
     videoArr = [
         {
             id: 1,
@@ -33,7 +37,6 @@ export class MinePage implements OnInit {
         }
     ];
     data = [];
-
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(
@@ -54,12 +57,16 @@ export class MinePage implements OnInit {
           console.log(res);
           if (res['code'] === 200) {
               // this.userProfile = res['data'];
+              this.followerArr = res['data'];
+              console.log(this.followerArr);
           }
       });
 
       this.http.get(baseUrl + '/followings').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
+              this.followingArr = res['data'];
+              console.log(this.followingArr);
               // this.userProfile = res['data'];
           }
       });
@@ -119,7 +126,20 @@ export class MinePage implements OnInit {
     }
 
     segmentChanged(ev: any) {
-        console.log('Segment changed', ev);
+      this.segmentValue = ev.detail.value;
+      console.log(this.segmentValue, 'Segment changed', ev);
+      console.log(this.segmentValue == 'following');
     }
 
+    goUserProfile(com){
+        console.log(com);
+        let uid = com['id'];
+        if (uid === localStorage.getItem('anshi_id')) {
+            console.log('not click me');
+        } else {
+            this.router.navigate(['/user-profile'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res);
+            });
+        }
+    }
 }

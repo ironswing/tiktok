@@ -27,7 +27,7 @@ export class AnHttpGuard implements HttpInterceptor  {
             url: url
             // headers: ''
         });
-        console.log(newReq);
+        // console.log(newReq);
         return next.handle(newReq);
     }
 }

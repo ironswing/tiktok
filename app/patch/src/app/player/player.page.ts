@@ -12,6 +12,7 @@ export class PlayerPage implements OnInit {
 
     public like = true;
     public api; VgAPI;
+    isComment = false;
     cur = 1;
     vid = 'test';
 
