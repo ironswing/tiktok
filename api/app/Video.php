@@ -146,6 +146,9 @@ class Video extends Model
     public function isLikeThisVideo($video_id, $user_id)
     {
         $record = collect(DB::table("thumbs")->where(["user_id" => $user_id, "video_id" => $video_id])->first())->toArray();
+
+        print_r($record);
+
         if(isset($record[0])){
 
             $record = $record[0];
