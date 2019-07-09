@@ -6,16 +6,38 @@
 
 <ion-content>
 
+    <div>
+
+        <ion-item>
+            <ion-label position="floating">标题</ion-label>
+            <ion-input  type="text" [(ngModel)]="title" name="title"></ion-input>
+        </ion-item>
+
+    </div>
+
+    <div>
+        <ion-progress-bar value="{{progresss}}"></ion-progress-bar>
+    </div>
+
   <div style="display: flex">
-    <button ion-button (click)="openCamera()">打开摄像头</button>
+    <!--<button ion-button (click)="openCamera()">打开摄像头</button>-->
 
-    <button ion-button (click)="recordVideo()">录像</button>
+    <!--<button ion-button (click)="recordVideo()">录像</button>-->
 
-    <button ion-button (click)="selectVideo()">选择视频</button>
+    <ion-button (click)="selectVideo()">选择视频</ion-button>
+
+  </div>
+
+  <div *ngIf="imageSource">
+    <img style="object-fit: cover;width: 8rem;height: 10rem" src="{{'http://tiktok.tiantianquan.xyz/storage' + imageSource}}" alt="">
   </div>
 
 
-  <!--<div>-->
-    <!--<img [src]="path" />-->
-  <!--</div>-->
+  <ion-button (click)="publish()">发布</ion-button>
+
+    <!--<ion-virtual-scroll [items]="items" approxItemHeight="50px" style="height: 600px">-->
+        <!--<ion-item *virtualItem="let item" style="height: 50px">-->
+            <!--{{ item }}-->
+        <!--</ion-item>-->
+    <!--</ion-virtual-scroll>-->
 </ion-content>

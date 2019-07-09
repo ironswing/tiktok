@@ -6,8 +6,12 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
+      <ion-item>
+        <ion-button [routerLink]="['/login']">login</ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button [routerLink]="['/register']">register</ion-button>
+      </ion-item>
       <ion-item>Menu Item</ion-item>
       <ion-item>Menu Item</ion-item>
       <ion-item>Menu Item</ion-item>
@@ -15,22 +19,22 @@
   </ion-content>
 </ion-menu>
 
-<ion-menu side="start" menuId="custom" class="my-custom-menu">
-  <ion-header>
-    <ion-toolbar color="tertiary">
-      <ion-title>Custom Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
+<!--<ion-menu side="start" menuId="custom" class="my-custom-menu">-->
+  <!--<ion-header>-->
+    <!--<ion-toolbar color="tertiary">-->
+      <!--<ion-title>Custom Menu</ion-title>-->
+    <!--</ion-toolbar>-->
+  <!--</ion-header>-->
+  <!--<ion-content>-->
+    <!--<ion-list>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+    <!--</ion-list>-->
+  <!--</ion-content>-->
+<!--</ion-menu>-->
 
 <ion-menu side="end" type="push">
   <ion-header>
@@ -53,11 +57,13 @@
 
   <ion-content>
 
-    <ion-slides pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
+    <!--<div *ngIf="inner" [innerHTML]="inner"></div>-->
 
-      <ion-slide *ngFor="let item of sourceArr">
+    <ion-slides #slidesRef *ngIf="remoteVideoSourceArr" pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
 
-        <div *ngIf="cur == item.id">
+      <ion-slide *ngFor="let item of remoteVideoSourceArr">
+
+        <div *ngIf="cur == item.playId">
           <div style="width: 100vw;height: 100vh;">
             <vg-player (onPlayerReady)="onPlayerReady($event)" >
               <vg-overlay-play></vg-overlay-play>
@@ -72,15 +78,19 @@
               <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
               <!--<vg-fullscreen></vg-fullscreen>-->
               <!--</vg-controls>-->
-              <video #media (play)="tplay()" [vgMedia]="media" src="{{item.src}}" poster="{{item.poster}}" autoplay></video>
+              <video #media (play)="curPlay(item)" [vgMedia]="media" src="{{'http://tiktok.tiantianquan.xyz/storage' + item.path}}" poster="{{'http://tiktok.tiantianquan.xyz/storage' + item.poster}}" autoplay></video>
             </vg-player>
+          </div>
+
+          <div style="position: absolute;z-index: 99;bottom: 5rem;left: 0">
+            <ion-text style="color: white;margin: 1rem;">{{item['title']}}</ion-text>
           </div>
 
           <div style="position: absolute;z-index: 999;top: 25rem;right: 0">
             <div style="display: flex;flex-direction: column;margin-right: 1rem">
               <div>
-                <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
-                <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
+                <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike(item)"></ion-icon>
+                <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike(item)"></ion-icon>
               </div>
 
               <div style="margin-top: 0.5rem;">
@@ -99,6 +109,11 @@
       <div style="width: 100vw;display: flex;justify-content: flex-end">
         <ion-icon name="close" style="color: black;font-size: 1.5rem;margin: 1rem" (click)="hiddenComment()" ></ion-icon>
       </div>
+      <ion-item>
+        <!--<ion-label position="floating">评论</ion-label>-->
+        <ion-input  type="text" [(ngModel)]="commentContext" name="commentContext" [placeholder]="'写下你的评论吧'"></ion-input>
+        <ion-button (click)="sendComment()">发布</ion-button>
+      </ion-item>
       <ion-list style="height: 65vh;overflow: scroll">
         <ion-item>123</ion-item>
         <ion-item>123</ion-item>
@@ -136,6 +151,8 @@
         <div (click)="goIndex()" style="color: white">首页</div>
 
         <ion-icon name="add-circle-outline" (click)="goPublish()" style="color: white;font-size: 3rem;"></ion-icon>
+
+        <!--<ion-button ></ion-button>-->
 
         <div (click)="goMine()" style="color: white">我的</div>
 

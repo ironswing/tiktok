@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonInfiniteScroll, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {PlayerPage} from '../player/player.page';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-mine',
@@ -9,6 +10,7 @@ import {PlayerPage} from '../player/player.page';
   styleUrls: ['./mine.page.scss'],
 })
 export class MinePage implements OnInit {
+    userProfile: any;
 
     videoArr = [
         {
@@ -34,9 +36,33 @@ export class MinePage implements OnInit {
 
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor(private router: Router, public modalController: ModalController) { }
+  constructor(
+      private router: Router,
+      private http: HttpClient,
+      private modalController: ModalController) { }
 
   ngOnInit() {
+      const baseUrl = ROOT_URL + 'user/' + localStorage.getItem('anshi_id');
+      this.http.get(baseUrl + '/profile').subscribe(res => {
+          console.log(res);
+          if (res['code'] === 200) {
+              this.userProfile = res['data'];
+          }
+      });
+
+      this.http.get(baseUrl + '/followers').subscribe(res => {
+          console.log(res);
+          if (res['code'] === 200) {
+              // this.userProfile = res['data'];
+          }
+      });
+
+      this.http.get(baseUrl + '/followings').subscribe(res => {
+          console.log(res);
+          if (res['code'] === 200) {
+              // this.userProfile = res['data'];
+          }
+      });
   }
 
     loadData(event) {
