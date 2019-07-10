@@ -63,11 +63,6 @@ export class HomePage implements OnInit {
                   this.playId++;
                   this.remoteVideoSourceArr.push(item);
               });
-
-              console.log(this.remoteVideoSourceArr);
-
-              console.log(token);
-              localStorage.setItem('csxfToken', token);
           }
       });
 
@@ -135,7 +130,20 @@ export class HomePage implements OnInit {
     }
 
     appendSlide() {
-      this.cur = 2;
+      // this.cur = 2;
+        this.http.get(ROOT_URL + 'feeds').subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                // console.log(res['data']);
+                let token = res['data']['csrf_token'];
+                res['data']['data'].forEach(item => {
+                    // console.log(item);
+                    item['playId'] = this.playId;
+                    this.playId++;
+                    this.remoteVideoSourceArr.push(item);
+                });
+            }
+        });
     }
 
     isLike() {
@@ -262,5 +270,36 @@ export class HomePage implements OnInit {
             duration: 2000
         });
         toast.present();
+    }
+
+    reFreshSlides() {
+        console.log('refresh!');
+        this.playId = 1;
+        this.remoteVideoSourceArr = [];
+        this.http.get(ROOT_URL + 'feeds').subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                // console.log(res['data']);
+                let token = res['data']['csrf_token'];
+                res['data']['data'].forEach(item => {
+                    // console.log(item);
+                    item['playId'] = this.playId;
+                    this.playId++;
+                    this.remoteVideoSourceArr.push(item);
+                });
+            }
+        });
+    }
+
+    prevTestTheFirst(e) {
+        // console.log('tou');
+        // console.log(e);
+        // if (this.cur === 1) {
+        //     console.log('the first slide prevStart!');
+        // }
+    }
+
+    consoleEvent(e) {
+        // console.log(e);
     }
 }

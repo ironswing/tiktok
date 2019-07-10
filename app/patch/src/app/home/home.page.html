@@ -61,7 +61,15 @@
 
     <!--<div *ngIf="inner" [innerHTML]="inner"></div>-->
 
-    <ion-slides #slidesRef *ngIf="remoteVideoSourceArr" pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
+    <ion-slides #slidesRef *ngIf="remoteVideoSourceArr" pager="true" [options]="slideOpts" style="height: 100vh"
+                (ionSlideNextEnd)="sldnxt($event)"
+                (ionSlidePrevEnd)="sldpre($event)"
+                (ionSlideReachStart)="reFreshSlides()"
+                (ionSlideReachEnd)="appendSlide()"
+                (ionSlideTransitionStart)="prevTestTheFirst($event)"
+                (ionSlideTouchStart)="consoleEvent($event)"
+                (ionSlideTouchEnd)="consoleEvent($event)"
+    >
 
       <ion-slide *ngFor="let item of remoteVideoSourceArr">
 

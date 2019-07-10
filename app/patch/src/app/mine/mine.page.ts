@@ -15,6 +15,7 @@ export class MinePage implements OnInit {
     followerArr: [];
     // 關注我的
     followingArr: [];
+    feedArr: [];
     segmentValue = 'fans';
     videoArr = [
         {
@@ -62,12 +63,21 @@ export class MinePage implements OnInit {
           }
       });
 
-      this.http.get(baseUrl + '/followings').subscribe(res => {
+      this.http.get(baseUrl + '/feeds').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
-              this.followingArr = res['data'];
-              console.log(this.followingArr);
+              this.feedArr = res['data'];
+              console.log(this.feedArr);
               // this.userProfile = res['data'];
+          }
+      });
+
+      this.http.get(baseUrl + '/followers').subscribe(res => {
+          console.log(res);
+          if (res['code'] === 200) {
+              // this.userProfile = res['data'];
+              this.followerArr = res['data'];
+              console.log(this.followerArr);
           }
       });
   }
@@ -108,7 +118,7 @@ export class MinePage implements OnInit {
         });
     }
 
-    testParams(e) {
+    getCurPlayer(e) {
         console.log(e);
         // this.router.navigate(['/player']);
         this.presentModal(e);

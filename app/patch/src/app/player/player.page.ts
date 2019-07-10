@@ -16,7 +16,9 @@ export class PlayerPage implements OnInit {
     cur = 1;
     vid = 'test';
 
-    @Input() src: any;
+    @Input() path: any;
+
+    @Input() poster: any;
 
     public sourceArr = [];
 
@@ -31,13 +33,13 @@ export class PlayerPage implements OnInit {
 
   ngOnInit() {
       this.statusBar.overlaysWebView(true);
-      console.log(this.src);
+      console.log(this.path);
       this.sourceArr = [
-          {id: 1, src: this.src, poster: 'assets/shapes.svg'},
-          {id: 2, src: 'assets/video/fb8736e3432fb86610874b358e9603dd.mp4', poster: 'assets/shapes.svg'},
-          {id: 3, src: 'assets/video/test1.mp4', poster: 'assets/poster.jpg'},
-          {id: 4, src: 'assets/video/fb8736e3432fb86610874b358e9603dd.mp4', poster: 'assets/shapes.svg'}
-      ]
+          {id: 1, src: this.path, poster: this.poster},
+          // {id: 2, src: 'assets/video/fb8736e3432fb86610874b358e9603dd.mp4', poster: 'assets/shapes.svg'},
+          // {id: 3, src: 'assets/video/test1.mp4', poster: 'assets/poster.jpg'},
+          // {id: 4, src: 'assets/video/fb8736e3432fb86610874b358e9603dd.mp4', poster: 'assets/shapes.svg'}
+      ];
   }
 
   isLike() {

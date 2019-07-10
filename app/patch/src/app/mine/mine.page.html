@@ -35,22 +35,47 @@
 
                 <!-- Segment with secondary color -->
                 <ion-segment (ionChange)="segmentChanged($event)" color="secondary">
-                    <ion-segment-button value="fans" checked>
+                    <ion-segment-button value="publish" checked>
+                        <ion-label>我的发布</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="fans" >
                         <ion-label>粉丝</ion-label>
                     </ion-segment-button>
                     <ion-segment-button value="following">
                         <ion-label>关注的人</ion-label>
                     </ion-segment-button>
-                    <!--<ion-segment-button value="sat">-->
-                    <!--<ion-label>关注</ion-label>-->
-                    <!--</ion-segment-button>-->
                 </ion-segment>
+
+            </div>
+
+            <div *ngIf="segmentValue == 'publish'">
+                <!--<ion-virtual-scroll [items]="feedArr" approxItemHeight="50px" style="height: 600px">-->
+                    <!--<ion-item *virtualItem="let item" style="height: 100px">-->
+                        <!--&lt;!&ndash;<ion-text (click)="getCurPlayer(item)"> {{ item }} </ion-text>&ndash;&gt;-->
+                        <!--<ion-img [src]="'http://tiktok.tiantianquan.xyz/storage' + item.poster"></ion-img>-->
+                    <!--</ion-item>-->
+                <!--</ion-virtual-scroll>-->
+
+                <div *ngFor="let item of feedArr" (click)="getCurPlayer(item)">
+                    <div style="width: 100vw; position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">
+                        <ion-text style="color: white;">{{item.title}}</ion-text>
+                    </div>
+                    <img style="width: 100vw;height: 30vh;object-fit: cover" src="{{'http://tiktok.tiantianquan.xyz/storage' + item.poster}}" alt="">
+                </div>
+
+                <div *ngIf="feedArr && feedArr.length == 0" style="display: flex;justify-content: center;margin: 1rem">
+                    <ion-text>暂无更多内容...</ion-text>
+                </div>
 
             </div>
 
             <div *ngIf="segmentValue == 'fans'">
                 <ion-virtual-scroll [items]="followerArr" approxItemHeight="50px" style="height: 600px">
-                    <ion-item *virtualItem="let item" style="height: 50px">
+                    <ion-item *virtualItem="let item" style="height: 4rem">
+                        <ion-avatar>
+                            <img src="{{'http://tiktok.tiantianquan.xyz/storage/'+ item.avatar}}">
+                        </ion-avatar>
+                        <!--<ion-img style="width: 3rem;height: 3rem;border-radius: 50%;object-fit: cover" [src]=""></ion-img>-->
                         <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
                     </ion-item>
                 </ion-virtual-scroll>
@@ -65,6 +90,9 @@
             <div *ngIf="segmentValue == 'following'">
                 <ion-virtual-scroll [items]="followingArr" approxItemHeight="50px" style="height: 600px">
                     <ion-item *virtualItem="let item" style="height: 50px">
+                        <ion-avatar>
+                            <img src="{{'http://tiktok.tiantianquan.xyz/storage/'+ item.avatar}}">
+                        </ion-avatar>
                         <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
                     </ion-item>
                 </ion-virtual-scroll>
@@ -74,13 +102,6 @@
                 </div>
             </div>
 
-            <!---->
-            <!--<div *ngFor="let item of videoArr" (click)="testParams(item)">-->
-            <!--<div style="position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">-->
-            <!--<ion-text style="color: white;">{{item.title}}</ion-text>-->
-            <!--</div>-->
-            <!--<img style="width: 100vw;height: 30vh;object-fit: cover" src="{{item.poster}}" alt="">-->
-            <!--</div>-->
 
             <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
                 <ion-infinite-scroll-content
