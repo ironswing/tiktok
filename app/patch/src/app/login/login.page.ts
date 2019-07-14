@@ -66,6 +66,9 @@ export class LoginPage implements OnInit {
     }
 
     forgetPass() {
+        this.presentToast('请联系管理员 q: 1175902641').then(r => {
+            console.log(r);
+        });
     }
 
     goIndex() {

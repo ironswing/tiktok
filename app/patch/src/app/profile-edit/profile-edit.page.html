@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile-edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="padding: 1rem">
+
+    <!--<div style="width: 100%; text-align: center;margin:1.5rem 0 4.5rem;">-->
+    <!--<img src="assets/shapes.svg" alt="" style="height: 6rem">-->
+    <!--</div>-->
+
+    <div>
+
+      <ion-item>
+        <ion-label position="floating">用户名</ion-label>
+        <ion-input type="text" [(ngModel)]="name" name="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">邮箱</ion-label>
+        <ion-input type="text" [(ngModel)]="email" name="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">密码</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">确认密码</ion-label>
+        <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword"></ion-input>
+      </ion-item>
+
+      <div style="display: flex;flex-direction: row;justify-content: center;align-items: center; margin-top: 2rem">
+        <ion-checkbox [(ngModel)]="portocolStatu"></ion-checkbox><a (click)="goUserPortocol()">用户协议</a>
+      </div>
+
+
+
+      <ion-button style="margin-top: 2rem;" expand="block" (click)="register()">注册</ion-button>
+
+
+    </div>
+  </div>
+</ion-content>

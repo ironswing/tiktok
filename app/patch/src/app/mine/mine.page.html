@@ -11,8 +11,10 @@
                 <div style="display: flex;flex-direction: column">
 
                     <div style="display: flex; flex-direction: row;align-items: center">
-                        <div style="margin-right: 1rem;margin-left: 1rem">
-                            <img src="assets/shapes.svg" alt="" style="width: 4rem;height: 4rem;border-radius: 50%">
+                        <div style="margin-right: 1rem;margin-left: 1rem; display: flex; align-items: center">
+                            <img src="assets/shapes.svg" alt="" style="width: 5rem;height: 5rem;border-radius: 50%;">
+
+                            <ion-button expand="block" fill="outline" style="margin-left: 10rem">编辑信息</ion-button>
                         </div>
                         <ion-text style="font-size: 2rem;color: black;opacity: 0.9" *ngIf="userProfile">{{userProfile['name']}}</ion-text>
 
