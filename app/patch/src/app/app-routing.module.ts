@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'player', loadChildren: './player/player.module#PlayerPageModule' },
   { path: 'nav-bar', loadChildren: './nav-bar/nav-bar.module#NavBarPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'user-profile', loadChildren: './user-profile/user-profile.module#UserProfilePageModule' },
 ];
 
 @NgModule({

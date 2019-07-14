@@ -1,43 +1,58 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>create</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>视频发布</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <div>
+    <div style="margin-top: 1rem;margin-bottom: 1rem;">
 
         <ion-item>
-            <ion-label position="floating">标题</ion-label>
-            <ion-input  type="text" [(ngModel)]="title" name="title"></ion-input>
+            <ion-label>标题</ion-label>
+            <ion-textarea [(ngModel)]="title" rows="6" cols="20" placeholder="给您的视频添加一个有趣的标题吧！"></ion-textarea>
         </ion-item>
 
-    </div>
-
-    <div>
-        <ion-progress-bar value="{{progresss}}"></ion-progress-bar>
-    </div>
-
-  <div style="display: flex">
-    <!--<button ion-button (click)="openCamera()">打开摄像头</button>-->
-
-    <!--<button ion-button (click)="recordVideo()">录像</button>-->
-
-    <ion-button (click)="selectVideo()">选择视频</ion-button>
-
-  </div>
-
-  <div *ngIf="imageSource">
-    <img style="object-fit: cover;width: 8rem;height: 10rem" src="{{'http://tiktok.tiantianquan.xyz/storage' + imageSource}}" alt="">
-  </div>
-
-
-  <ion-button (click)="publish()">发布</ion-button>
-
-    <!--<ion-virtual-scroll [items]="items" approxItemHeight="50px" style="height: 600px">-->
-        <!--<ion-item *virtualItem="let item" style="height: 50px">-->
-            <!--{{ item }}-->
+        <!--<ion-item>-->
+            <!--<ion-label>預覽圖</ion-label>-->
+        <!--预览图 给您的视频添加一个有趣的标题吧！-->
+            <!--<img style="object-fit: cover;width: 8rem;height: 10rem" src="assets/shapes.svg">-->
         <!--</ion-item>-->
-    <!--</ion-virtual-scroll>-->
+
+        <ion-item>
+            <ion-label>预览图</ion-label>
+            <img *ngIf="!imageSource" style="object-fit: cover;width: 8rem;height: 10rem" src="assets/shapes.svg">
+            <div *ngIf="imageSource">
+                <img style="object-fit: cover;width: 8rem;height: 10rem"
+                     src="{{'http://tiktok.tiantianquan.xyz/storage' + imageSource}}" alt="">
+            </div>
+        </ion-item>
+    </div>
+
+    <div *ngIf="upLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!--<div>-->
+        <!--<ion-progress-bar value="{{progresss}}"></ion-progress-bar>-->
+    <!--</div>-->
+
+    <div style="display: flex">
+        <!--<button ion-button (click)="openCamera()">打开摄像头</button>-->
+
+        <!--<button ion-button (click)="recordVideo()">录像</button>-->
+
+        <ion-button (click)="selectVideo()">
+            选择视频
+            <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+        </ion-button>
+
+    </div>
+
+
+    <ion-button style="margin-top: 2rem;" expand="block" (click)="publish()">发布</ion-button>
+
 </ion-content>
+
+<!--ionSlideTransitionEnd	Emitted when the slide transition has ended.-->
+<!--ionSlideTransitionStart-->

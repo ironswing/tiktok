@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
+    <name>an tiktok</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.43.99:8102" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -91,7 +91,5 @@
     <plugin name="cordova-plugin-exoplayer" spec="2.5.4" />
     <allow-navigation href="http://192.168.43.99:8100" sessionid="665731ca" />
     <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
-    <allow-navigation href="http://192.168.43.99:8101" sessionid="07cc065e" />
-    <allow-navigation href="http://192.168.43.99:8102" sessionid="bcd896ca" />
     <engine name="android" spec="7.1.4" />
 </widget>

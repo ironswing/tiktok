@@ -1,20 +1,22 @@
 <ion-menu side="start" menuId="first">
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Start Menu</ion-title>
+      <ion-title>菜单</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
+      <!--登录 注册 首页-->
       <ion-item>
-        <ion-button [routerLink]="['/login']">login</ion-button>
+        <ion-button [routerLink]="['/home']">首页</ion-button>
       </ion-item>
       <ion-item>
-        <ion-button [routerLink]="['/register']">register</ion-button>
+        <ion-button [routerLink]="['/login']">登录</ion-button>
       </ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
+      <ion-item>
+        <ion-button [routerLink]="['/register']">注册</ion-button>
+      </ion-item>
+
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -36,22 +38,22 @@
   <!--</ion-content>-->
 <!--</ion-menu>-->
 
-<ion-menu side="end" type="push">
-  <ion-header>
-    <ion-toolbar color="danger">
-      <ion-title>End Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
+<!--<ion-menu side="end" type="push">-->
+  <!--<ion-header>-->
+    <!--<ion-toolbar color="danger">-->
+      <!--<ion-title>End Menu</ion-title>-->
+    <!--</ion-toolbar>-->
+  <!--</ion-header>-->
+  <!--<ion-content>-->
+    <!--<ion-list>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+      <!--<ion-item>Menu Item</ion-item>-->
+    <!--</ion-list>-->
+  <!--</ion-content>-->
+<!--</ion-menu>-->
 
 <ion-router-outlet main>
 
@@ -59,13 +61,21 @@
 
     <!--<div *ngIf="inner" [innerHTML]="inner"></div>-->
 
-    <ion-slides #slidesRef *ngIf="remoteVideoSourceArr" pager="true" [options]="slideOpts" style="height: 100vh" (ionSlideNextEnd)="sldnxt($event)" (ionSlidePrevEnd)="sldpre($event)">
+    <ion-slides #slidesRef *ngIf="remoteVideoSourceArr" pager="true" [options]="slideOpts" style="height: 100vh"
+                (ionSlideNextEnd)="sldnxt($event)"
+                (ionSlidePrevEnd)="sldpre($event)"
+                (ionSlideReachStart)="reFreshSlides()"
+                (ionSlideReachEnd)="appendSlide()"
+                (ionSlideTransitionStart)="prevTestTheFirst($event)"
+                (ionSlideTouchStart)="consoleEvent($event)"
+                (ionSlideTouchEnd)="consoleEvent($event)"
+    >
 
       <ion-slide *ngFor="let item of remoteVideoSourceArr">
 
         <div *ngIf="cur == item.playId">
           <div style="width: 100vw;height: 100vh;">
-            <vg-player (onPlayerReady)="onPlayerReady($event)" >
+            <vg-player (onPlayerReady)="onPlayerReady($event, item)" >
               <vg-overlay-play></vg-overlay-play>
               <vg-buffering></vg-buffering>
               <!--<vg-controls [vgAutohide]="true" [vgAutohideTime]="5">-->
@@ -94,7 +104,7 @@
               </div>
 
               <div style="margin-top: 0.5rem;">
-                <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
+                <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment(item)"></ion-icon>
               </div>
             </div>
           </div>
@@ -112,19 +122,13 @@
       <ion-item>
         <!--<ion-label position="floating">评论</ion-label>-->
         <ion-input  type="text" [(ngModel)]="commentContext" name="commentContext" [placeholder]="'写下你的评论吧'"></ion-input>
-        <ion-button (click)="sendComment()">发布</ion-button>
+        <ion-button shape="round" (click)="sendComment()">发布</ion-button>
       </ion-item>
-      <ion-list style="height: 65vh;overflow: scroll">
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
-        <ion-item>123</ion-item>
+      <ion-list *ngIf="commentList" style="height: 60vh;overflow: scroll">
+        <ion-item *ngFor="let comment of commentList">
+          <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment)">{{comment['user_profile']['name']}}</ion-text>
+          <ion-text style="color: #0cd1e8">{{comment['content']}}</ion-text>
+        </ion-item>
       </ion-list>
     </div>
 

@@ -1,16 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>登录</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding style="background-color: #FFFFFF;">
   <div style="padding: 1rem">
-
-    <div style="width: 100%; text-align: center;margin:1.5rem 0 4.5rem;">
-      <img src="assets/shapes.svg" alt="" style="height: 6rem">
-    </div>
 
     <div>
 
@@ -24,26 +20,13 @@
         <ion-input  type="password" [(ngModel)]="pass" name="pass"></ion-input>
       </ion-item>
 
-      <div class="go forget"><span (tap)="forgetPass()">忘记密码？</span></div>
-      <ion-button (click)="login()">登录</ion-button>
+      <div style="display: flex;justify-content: space-between;margin-top: 1rem">
+        <span (click)="forgetPass()" style="color: grey">忘记密码？</span>
+        <span (click)="goRegister()" style="color: #4c8dff">去註冊？</span>
+      </div>
+      <ion-button style="margin-top: 2rem;" expand="block" (click)="login()">登录</ion-button>
 
     </div>
-
-    <!--<div>-->
-      <!--<div class="lists row">-->
-        <!--<span>账号：</span>-->
-        <!--<input type="text" placeholder="请输入账号" [(ngModel)]="account" name="account">-->
-      <!--</div>-->
-      <!--<div class="lists row">-->
-        <!--<span>密码：</span>-->
-        <!--<input type="password" placeholder="请输入密码" [(ngModel)]="pass" name="pass">-->
-      <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="go forget"><span (tap)="forgetPass()">忘记密码？</span></div>-->
-
-    <!--<button class="login-b" (click)="login()">登录</button>-->
-
   </div>
 
 </ion-content>

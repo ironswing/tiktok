@@ -21,6 +21,7 @@ export class CreatePage implements OnInit {
   public imageSource;
   public title;
   public progresss = 0;
+  public upLoading = false;
   public testSrc;
 
   constructor( private camera: Camera, private imagePicker: ImagePicker, private transfer: FileTransfer,
@@ -133,22 +134,6 @@ export class CreatePage implements OnInit {
 
         });
     }
-
-    selectPoster() {
-        this.camera.getPicture({destinationType: this.camera.DestinationType.DATA_URL, mediaType:
-            this.camera.MediaType.PICTURE, sourceType:
-            this.camera.PictureSourceType.PHOTOLIBRARY,
-            encodingType: this.camera.EncodingType.JPEG}).then(res => {
-            console.log(res);
-            // this.upload(res);
-            this.testSrc = res;
-
-            var file = this.convertBase64UrlToBlob(res);
-            var fd = new FormData();
-            fd.append('file', file , "image.png");
-
-        });
-    }
     upload(path) {
         const fileTransfer: FileTransferObject = this.transfer.create();
 
@@ -167,7 +152,8 @@ export class CreatePage implements OnInit {
             if (progess.lengthComputable) {
                 now = progess.total / progess.loaded * 100;
             }
-        })
+        });
+        this.upLoading = true;
 
         fileTransfer.upload(path , 'http://tiktok.tiantianquan.xyz/video/upload', options)
             .then((data) => {
@@ -178,6 +164,7 @@ export class CreatePage implements OnInit {
                     console.log(res);
                     if (res['code'] === 200) {
                         this.videoSource = res['data']['video'][0]['url'];
+                        this.upLoading = false;
                         console.log(this.videoSource);
                     }
                 }

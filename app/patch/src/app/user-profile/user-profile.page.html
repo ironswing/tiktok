@@ -1,0 +1,123 @@
+<ion-content>
+
+  <!--<div>-->
+  <img src="assets/shapes.svg" alt="" style="width: 100vw;height: 20vh;">
+  <!--</div>-->
+  <div>
+
+    <div>
+      <div style="display: flex;flex-direction: column">
+
+        <!--<div style="display: flex; flex-direction: row; align-items: center">-->
+          <!--<div>-->
+            <!--<img src="assets/shapes.svg" alt="" style="width: 4rem;height: 4rem;border-radius: 50%">-->
+          <!--</div>-->
+          <!--<ion-text style="font-size: 2rem;" *ngIf="userProfile">{{userProfile['name']}}</ion-text>-->
+
+          <!--<ion-button  shape="round"  (click)="follow()">关注</ion-button>-->
+        <!--</div>-->
+
+        <div style="display: flex; flex-direction: row;align-items: center">
+          <div style="margin-right: 1rem;margin-left: 1rem">
+            <img src="assets/shapes.svg" alt="" style="width: 4rem;height: 4rem;border-radius: 50%">
+          </div>
+          <ion-text style="font-size: 2rem;color: black;opacity: 0.9" *ngIf="userProfile">{{userProfile['name']}}</ion-text>
+
+          <ion-button *ngIf="!isFollow" style="margin-left: 5rem"  shape="round"  (click)="follow()">关注</ion-button>
+          <ion-button *ngIf="isFollow" style="margin-left: 5rem"  shape="round"  (click)="follow()">取消关注</ion-button>
+        </div>
+
+        <div style="color: grey; margin-left: 1.5rem;margin-top: 1rem;">
+          <div style="margin: 0.5rem">账号</div>
+          <ion-text style="margin: 0.5rem" *ngIf="userProfile">{{userProfile['email']}}</ion-text>
+        </div>
+
+        <!--<div style="color: white">-->
+          <!--<div>账号</div>-->
+          <!--<ion-text *ngIf="userProfile">{{userProfile['email']}}</ion-text>-->
+        <!--</div>-->
+        <!--<div>安石</div>-->
+        <!--<div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>-->
+      </div>
+
+    </div>
+
+    <div>
+
+
+      <ion-segment (ionChange)="segmentChanged($event)" color="secondary">
+        <ion-segment-button value="fans" checked>
+          <ion-label>粉丝</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="following">
+          <ion-label>关注的人</ion-label>
+        </ion-segment-button>
+        <!--<ion-segment-button value="sat">-->
+        <!--<ion-label>关注</ion-label>-->
+        <!--</ion-segment-button>-->
+      </ion-segment>
+
+    </div>
+
+    <div *ngIf="segmentValue == 'fans'">
+      <ion-virtual-scroll [items]="followerArr" approxItemHeight="50px" style="height: 600px">
+        <ion-item *virtualItem="let item" style="height: 50px">
+          <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
+        </ion-item>
+      </ion-virtual-scroll>
+
+      <div *ngIf="followerArr && followerArr.length == 0" style="display: flex;justify-content: center;margin: 1rem">
+        <ion-text>暂无更多内容...</ion-text>
+      </div>
+    </div>
+
+
+    <div *ngIf="segmentValue == 'following'">
+      <ion-virtual-scroll [items]="followingArr" approxItemHeight="50px" style="height: 600px">
+        <ion-item *virtualItem="let item" style="height: 50px">
+          <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
+        </ion-item>
+      </ion-virtual-scroll>
+
+      <div *ngIf="followingArr && followingArr.length == 0" style="display: flex;justify-content: center;margin: 1rem">
+        <ion-text>暂无更多内容...</ion-text>
+      </div>
+    </div>
+
+    <!--<ion-virtual-scroll [items]="videoArr" approxItemHeight="50px" style="height: 600px">-->
+      <!--<ion-item *virtualItem="let item" style="height: 50px">-->
+        <!--{{ item }}-->
+      <!--</ion-item>-->
+    <!--</ion-virtual-scroll>-->
+
+    <!--<div *ngFor="let item of videoArr" (click)="testParams(item)">-->
+      <!--<div style="position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">-->
+        <!--<ion-text style="color: white;">{{item.title}}</ion-text>-->
+      <!--</div>-->
+      <!--<img style="width: 100vw;height: 30vh;object-fit: cover" src="{{item.poster}}" alt="">-->
+    <!--</div>-->
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </div>
+
+  <div style="position: fixed; bottom: 0;z-index: 99">
+
+    <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;background-color:black;opacity: 0.9;">
+
+      <div (click)="goIndex()" style="color: white">首页</div>
+
+      <ion-icon name="add-circle-outline" (click)="goPublish()" style="color: white;font-size: 3rem;"></ion-icon>
+
+      <div (click)="goMine()" style="color: white">我的</div>
+
+    </div>
+
+  </div>
+
+</ion-content>

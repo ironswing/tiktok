@@ -39,7 +39,7 @@
             <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
             <!--<vg-fullscreen></vg-fullscreen>-->
             <!--</vg-controls>-->
-            <video #media (play)="tplay()" [vgMedia]="media" src="{{item.src}}" poster="{{item.poster}}" autoplay></video>
+            <video #media (play)="tplay()" [vgMedia]="media" src="{{'http://tiktok.tiantianquan.xyz/storage' + item.src}}" poster="{{'http://tiktok.tiantianquan.xyz/storage' + item.poster}}" autoplay></video>
           </vg-player>
         </div>
 
