@@ -13,15 +13,15 @@
                     <div style="display: flex; flex-direction: row;align-items: center">
                         <div style="margin-right: 1rem;margin-left: 1rem; display: flex; align-items: center">
                             <img src="assets/shapes.svg" alt="" style="width: 5rem;height: 5rem;border-radius: 50%;">
-
-                            <ion-button expand="block" fill="outline" style="margin-left: 10rem">编辑信息</ion-button>
+                            <ion-text style="font-size: 2rem;color: black;opacity: 0.9;margin-left: 1rem" *ngIf="userProfile">{{userProfile['name']}}</ion-text>
+                            <ion-button expand="block" fill="outline" style="margin-left: 3rem">编辑信息</ion-button>
                         </div>
-                        <ion-text style="font-size: 2rem;color: black;opacity: 0.9" *ngIf="userProfile">{{userProfile['name']}}</ion-text>
+
 
                     </div>
 
                     <div style="color: grey; margin-left: 1.5rem;margin-top: 1rem;">
-                        <div style="margin: 0.5rem">账号</div>
+                        <div style="margin: 0.5rem">邮箱</div>
                         <ion-text style="margin: 0.5rem" *ngIf="userProfile">{{userProfile['email']}}</ion-text>
                     </div>
                     <!--<div>安石</div>-->

@@ -128,7 +128,7 @@
               <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
               <!--<vg-fullscreen></vg-fullscreen>-->
               <!--</vg-controls>-->
-              <video #media (play)="curPlay(item)" [vgMedia]="media" src="{{'http://tiktok.tiantianquan.xyz/storage' + item.path}}" poster="{{'http://tiktok.tiantianquan.xyz/storage' + item.poster}}" autoplay></video>
+              <video #media (play)="curPlay(item)" [vgMedia]="media" src="{{storageBaseUrl + item.path}}" poster="{{storageBaseUrl + item.poster}}" autoplay></video>
             </vg-player>
           </div>
 

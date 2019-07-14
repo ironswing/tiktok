@@ -24,6 +24,7 @@ export class RegisterPage implements OnInit {
     register() {
         if (!this.name || !this.email) {
             console.log('帐号/密码不能为空');
+            this.presentToast('帐号/密码不能为空').then();
             return;
         }
         const params = {
@@ -32,6 +33,7 @@ export class RegisterPage implements OnInit {
             password: this.password,
             confirm_password: this.confirmPassword
         };
+        console.log(params);
 
         this.http.post(ROOT_URL + 'register', params).subscribe(res => {
             console.log(res);

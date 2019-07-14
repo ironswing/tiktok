@@ -111,7 +111,7 @@ export class CreatePage implements OnInit {
                         headers: {}
                     };
 
-                    fileTransfer.upload(fileUri , 'http://tiktok.tiantianquan.xyz/image/upload', options)
+                    fileTransfer.upload(fileUri , ROOT_URL + '/image/upload', options)
                         .then((data) => {
                             console.log(data);
                             if(data['responseCode'] === 200){
@@ -155,7 +155,7 @@ export class CreatePage implements OnInit {
         });
         this.upLoading = true;
 
-        fileTransfer.upload(path , 'http://tiktok.tiantianquan.xyz/video/upload', options)
+        fileTransfer.upload(path , ROOT_URL + '/video/upload', options)
             .then((data) => {
                 console.log(data);
                 if(data['responseCode'] === 200){

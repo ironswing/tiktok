@@ -14,7 +14,7 @@ export class AnHttpGuard implements HttpInterceptor  {
 
         let url = req.url;
 
-        if (url.indexOf('login') === -1) {
+        if (url.indexOf('login') === -1 && url.indexOf('register') === -1) {
             if (url.indexOf('?') === -1) {
                 url = url + "?PHPSESSID=" + localStorage.getItem('session_id');
             } else {

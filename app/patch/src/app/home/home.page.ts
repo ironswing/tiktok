@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
     public commentList;
     public remoteVideoSourceArr = [];
     public bfscrolltop;
+    public storageBaseUrl = ROOT_URL + 'storage';
     @ViewChild('slidesRef')
     public slidesRef;
     // public vm: vgMedia;
