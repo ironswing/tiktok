@@ -4,6 +4,7 @@ namespace App\Services;
 
 use \Exception;
 use Illuminate\Http\Request;
+use App\User;
 
 /**
  * 用户凭证服务
@@ -15,7 +16,7 @@ class CertificateService
     /**
      * 是否存在Session
      * @param $cookie
-     * @return bool
+     * @return bool | integer
      */
     private function isSessionExist($cookie)
     {
@@ -40,18 +41,19 @@ class CertificateService
     /**
      * 用户是否存在
      * @param $user
+     * @param bool $throw_error
      * @return bool
+     * @throws Exception
      */
-    public function isUserExist($user)
+    public function isUserExist($user, $throw_error = true)
     {
-
-        if (is_null($user) || empty($user)) {
-
-            return false;
-        }
-
         // 还需要判断用户是否被封禁之类的
-        if (1 !== intval($user['status'])) {
+        if (is_null($user) || empty($user) || 1 !== intval($user['status'])) {
+
+            if ($throw_error) {
+
+                throw new \Exception("用户不存在");
+            }
 
             return false;
         }
@@ -91,7 +93,6 @@ class CertificateService
      */
     public function verifyLogin(Request $request, $throw_error = true)
     {
-
         $is_login = $this->isUserLogin($request);
         if (false === $is_login) {
 
@@ -101,6 +102,10 @@ class CertificateService
             }
             throw new \Exception("用户未登录");
         }
+
+        // 再验证一下这个用户是否存在
+        $user = (new User())->newQuery()->where("id", $is_login)->first();
+        $this->isUserExist($user);
 
         return $is_login;
     }

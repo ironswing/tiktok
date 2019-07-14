@@ -59,10 +59,7 @@ class UserController extends Controller
     {
         $id = intval($id);
         $user = (new User())->newQuery()->where("id", $id)->first();
-        if (!(new CertificateService())->isUserExist(($user))) {
-
-            throw new Exception("用户不存在~");
-        }
+        (new CertificateService())->isUserExist($user);
 
 
         // 获取关注状态
