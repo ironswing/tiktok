@@ -13,6 +13,7 @@ export class RegisterPage implements OnInit {
     public email: any;
     public password: any;
     public confirmPassword: any;
+    public portocolStatu = true;
 
     constructor( private http: HttpClient, private router: Router, public toastController: ToastController) { }
 
@@ -58,5 +59,11 @@ export class RegisterPage implements OnInit {
             duration: 2000
         });
         toast.present();
+    }
+
+    goUserPortocol() {
+        this.router.navigate(['/user-portocol']).then(res => {
+            console.log(res);
+        });
     }
 }

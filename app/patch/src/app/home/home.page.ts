@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {VgAPI} from 'videogular2/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {ToastController} from '@ionic/angular';
+import {MenuController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -51,7 +51,7 @@ export class HomePage implements OnInit {
     // thumbs: 0
     // title: "测试2"
 
-  constructor(private router: Router, private http: HttpClient, public toastController: ToastController) {
+  constructor(private router: Router, private http: HttpClient, public toastController: ToastController, private menu: MenuController) {
       this.http.get(ROOT_URL + 'feeds').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
@@ -301,5 +301,14 @@ export class HomePage implements OnInit {
 
     consoleEvent(e) {
         // console.log(e);
+    }
+
+    openFirst() {
+        this.menu.enable(true, 'first');
+        this.menu.open('first');
+    }
+
+    goSearch() {
+        console.log('功能暂未开放！');
     }
 }
