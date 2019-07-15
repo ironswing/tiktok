@@ -91,6 +91,6 @@
     <plugin name="cordova-plugin-exoplayer" spec="2.5.4" />
     <allow-navigation href="http://192.168.43.99:8100" sessionid="665731ca" />
     <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
-    <allow-navigation href="http://192.168.43.99:8101" sessionid="50f31acd" />
+    <allow-navigation href="http://192.168.43.99:8101" sessionid="4b78bfe8" />
     <engine name="android" spec="7.1.4" />
 </widget>

@@ -19,7 +19,7 @@ class Video extends Model
 {
     protected $table = 'videos';
 
-    protected $hidden = ["user_id", "status", "updated_at"];
+    protected $hidden = [ "status", "updated_at"];
 
     /**
      * The attributes that should be cast to native types.

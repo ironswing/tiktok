@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonInfiniteScroll, ModalController} from '@ionic/angular';
+import {IonInfiniteScroll, MenuController, ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {PlayerPage} from '../player/player.page';
 import {HttpClient} from '@angular/common/http';
@@ -17,6 +17,7 @@ export class MinePage implements OnInit {
     followingArr: [];
     feedArr: [];
     segmentValue = 'fans';
+    public storageBaseUrl = ROOT_URL + 'storage';
     videoArr = [
         {
             id: 1,
@@ -43,7 +44,8 @@ export class MinePage implements OnInit {
   constructor(
       private router: Router,
       private http: HttpClient,
-      private modalController: ModalController) { }
+      private modalController: ModalController,
+      private menu: MenuController) { }
 
   ngOnInit() {
       const baseUrl = ROOT_URL + 'user/' + localStorage.getItem('anshi_id');
@@ -72,12 +74,12 @@ export class MinePage implements OnInit {
           }
       });
 
-      this.http.get(baseUrl + '/followers').subscribe(res => {
+      this.http.get(baseUrl + '/followings').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
               // this.userProfile = res['data'];
-              this.followerArr = res['data'];
-              console.log(this.followerArr);
+              this.followingArr = res['data'];
+              console.log(this.followingArr);
           }
       });
   }
@@ -114,7 +116,7 @@ export class MinePage implements OnInit {
 
     goMine() {
         this.router.navigate(['/mine']).then(res => {
-            console.log(res);
+            console.log('mine');
         });
     }
 
@@ -137,8 +139,9 @@ export class MinePage implements OnInit {
 
     segmentChanged(ev: any) {
       this.segmentValue = ev.detail.value;
-      console.log(this.segmentValue, 'Segment changed', ev);
+      // console.log(this.segmentValue, 'Segment changed', ev);
       console.log(this.segmentValue == 'following');
+
     }
 
     goUserProfile(com){
@@ -151,5 +154,17 @@ export class MinePage implements OnInit {
                 console.log(res);
             });
         }
+    }
+
+    editUserProfile() {
+        this.router.navigate(['/profile-edit']
+        ).then(res => {
+            console.log(res);
+        });
+    }
+
+    openSecond() {
+        this.menu.enable(true, 'second');
+        this.menu.open('second');
     }
 }

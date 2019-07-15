@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
     public cur = 1;
     public curPlayerItem: any;
     public playId = 1;
+    public sourceUserProfile;
     public commentContext;
     public commentList;
     public remoteVideoSourceArr = [];
@@ -191,6 +192,7 @@ export class HomePage implements OnInit {
         this.http.post(ROOT_URL + 'comment/add', params).subscribe(res => {
             console.log(res);
             if (res['code'] === 200){
+                this.commentContext = '';
                 this.loadComment();
             }
         }, (err) => {
@@ -236,9 +238,9 @@ export class HomePage implements OnInit {
         }
     }
 
-    goUserProfile(com){
-        console.log(com);
-        let uid = com['user_id'];
+    goUserProfile(id) {
+        console.log(id);
+        let uid = id;
         console.log(uid === localStorage.getItem('anshi_id'));
         if (uid === localStorage.getItem('anshi_id')) {
             this.router.navigate(['/mine'], { queryParams: { uid: uid}}).then(res => {
@@ -256,6 +258,7 @@ export class HomePage implements OnInit {
             console.log(res);
             if (res['code'] === 200) {
                 this.like = res['data']['is_thumb'] == 1 ? true : false;
+                this.sourceUserProfile = res['data']['user_profile'];
             }
         }, (err) => {
             console.log(err);

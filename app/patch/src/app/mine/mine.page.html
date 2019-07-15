@@ -1,133 +1,173 @@
-<ion-content>
+<ion-menu side="end" menuId="second">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <ion-title>设置</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <!--登录 注册 首页-->
+            <ion-item>
+                <ion-button [routerLink]="['/home']">首页</ion-button>
+            </ion-item>
+            <ion-item>
+                <ion-button [routerLink]="['/login']">登录</ion-button>
+            </ion-item>
+            <ion-item>
+                <ion-button [routerLink]="['/register']">注册</ion-button>
+            </ion-item>
 
-    <div>
+        </ion-list>
+    </ion-content>
+</ion-menu>
 
-        <!--<div>-->
-        <img src="assets/shapes.svg" alt="" style="width: 100vw;height: 20vh;">
-        <!--</div>-->
+<ion-router-outlet main>
+
+    <ion-content>
+
+        <div style="position: fixed; top: 2rem; right: 1rem; z-index: 999">
+            <ion-icon style="font-size: 2rem;color: white" name="menu" (click)="openSecond()"></ion-icon>
+        </div>
+
         <div>
 
+            <!--<div>-->
+            <img src="assets/shapes.svg" alt="" style="width: 100vw;height: 20vh;">
+            <!--</div>-->
             <div>
-                <div style="display: flex;flex-direction: column">
 
-                    <div style="display: flex; flex-direction: row;align-items: center">
-                        <div style="margin-right: 1rem;margin-left: 1rem; display: flex; align-items: center">
-                            <img src="assets/shapes.svg" alt="" style="width: 5rem;height: 5rem;border-radius: 50%;">
-                            <ion-text style="font-size: 2rem;color: black;opacity: 0.9;margin-left: 1rem" *ngIf="userProfile">{{userProfile['name']}}</ion-text>
-                            <ion-button expand="block" fill="outline" style="margin-left: 3rem">编辑信息</ion-button>
+                <div>
+                    <div style="display: flex;flex-direction: column">
+
+                        <div style="display: flex; flex-direction: row;align-items: center">
+                            <div style="margin-right: 1rem;margin-left: 1rem; display: flex; align-items: center">
+                                <img src="assets/shapes.svg" alt=""
+                                     style="width: 5rem;height: 5rem;border-radius: 50%;">
+                                <ion-text style="font-size: 2rem;color: black;opacity: 0.9;margin-left: 1rem"
+                                          *ngIf="userProfile">{{userProfile['name']}}
+                                </ion-text>
+                                <ion-button (click)="editUserProfile(item)" expand="block" fill="outline"
+                                            style="margin-left: 3rem">编辑资料
+                                </ion-button>
+                            </div>
+
+
                         </div>
 
-
+                        <div style="color: grey; margin-left: 1.5rem;margin-top: 1rem;">
+                            <div style="margin: 0.5rem">邮箱</div>
+                            <ion-text style="margin: 0.5rem" *ngIf="userProfile">{{userProfile['email']}}</ion-text>
+                        </div>
+                        <!--<div>安石</div>-->
+                        <!--<div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>-->
                     </div>
 
-                    <div style="color: grey; margin-left: 1.5rem;margin-top: 1rem;">
-                        <div style="margin: 0.5rem">邮箱</div>
-                        <ion-text style="margin: 0.5rem" *ngIf="userProfile">{{userProfile['email']}}</ion-text>
-                    </div>
-                    <!--<div>安石</div>-->
-                    <!--<div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>-->
                 </div>
 
-            </div>
+                <ion-card>
 
-            <ion-card>
+                </ion-card>
+                <div>
 
-            </ion-card>
-            <div>
+                    <!-- Segment with secondary color -->
+                    <ion-segment (ionChange)="segmentChanged($event)" color="secondary">
+                        <ion-segment-button value="publish" checked>
+                            <ion-label>我的发布</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button value="fans">
+                            <ion-label>粉丝</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button value="following">
+                            <ion-label>关注的人</ion-label>
+                        </ion-segment-button>
+                    </ion-segment>
 
-                <!-- Segment with secondary color -->
-                <ion-segment (ionChange)="segmentChanged($event)" color="secondary">
-                    <ion-segment-button value="publish" checked>
-                        <ion-label>我的发布</ion-label>
-                    </ion-segment-button>
-                    <ion-segment-button value="fans" >
-                        <ion-label>粉丝</ion-label>
-                    </ion-segment-button>
-                    <ion-segment-button value="following">
-                        <ion-label>关注的人</ion-label>
-                    </ion-segment-button>
-                </ion-segment>
+                </div>
 
-            </div>
-
-            <div *ngIf="segmentValue == 'publish'">
-                <!--<ion-virtual-scroll [items]="feedArr" approxItemHeight="50px" style="height: 600px">-->
+                <div *ngIf="segmentValue == 'publish'">
+                    <!--<ion-virtual-scroll [items]="feedArr" approxItemHeight="50px" style="height: 600px">-->
                     <!--<ion-item *virtualItem="let item" style="height: 100px">-->
-                        <!--&lt;!&ndash;<ion-text (click)="getCurPlayer(item)"> {{ item }} </ion-text>&ndash;&gt;-->
-                        <!--<ion-img [src]="'http://tiktok.tiantianquan.xyz/storage' + item.poster"></ion-img>-->
+                    <!--&lt;!&ndash;<ion-text (click)="getCurPlayer(item)"> {{ item }} </ion-text>&ndash;&gt;-->
+                    <!--<ion-img [src]="'http://tiktok.tiantianquan.xyz/storage' + item.poster"></ion-img>-->
                     <!--</ion-item>-->
-                <!--</ion-virtual-scroll>-->
+                    <!--</ion-virtual-scroll>-->
 
-                <div *ngFor="let item of feedArr" (click)="getCurPlayer(item)">
-                    <div style="width: 100vw; position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">
-                        <ion-text style="color: white;">{{item.title}}</ion-text>
+                    <div *ngFor="let item of feedArr" (click)="getCurPlayer(item)">
+                        <div style="width: 100vw; position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">
+                            <ion-text style="color: white;">{{item.title}}</ion-text>
+                        </div>
+                        <img style="width: 100vw;height: 30vh;object-fit: cover" src="{{storageBaseUrl + item.poster}}"
+                             alt="">
                     </div>
-                    <img style="width: 100vw;height: 30vh;object-fit: cover" src="{{'http://tiktok.tiantianquan.xyz/storage' + item.poster}}" alt="">
+
+                    <div *ngIf="feedArr && feedArr.length == 0"
+                         style="display: flex;justify-content: center;margin: 1rem">
+                        <ion-text>暂无更多内容...</ion-text>
+                    </div>
+
                 </div>
 
-                <div *ngIf="feedArr && feedArr.length == 0" style="display: flex;justify-content: center;margin: 1rem">
-                    <ion-text>暂无更多内容...</ion-text>
+                <div *ngIf="segmentValue == 'fans'">
+                    <ion-virtual-scroll [items]="followerArr" approxItemHeight="50px" style="height: 600px">
+                        <ion-item *virtualItem="let item" style="height: 4rem">
+                            <ion-avatar>
+                                <img src="{{storageBaseUrl+ item.avatar}}">
+                            </ion-avatar>
+                            <!--<ion-img style="width: 3rem;height: 3rem;border-radius: 50%;object-fit: cover" [src]=""></ion-img>-->
+                            <ion-text (click)="goUserProfile(item)"> {{ item['name'] }}</ion-text>
+                        </ion-item>
+                    </ion-virtual-scroll>
+
+                    <div *ngIf="followerArr && followerArr.length == 0"
+                         style="display: flex;justify-content: center;margin: 1rem">
+                        <ion-text>暂无更多内容...</ion-text>
+                    </div>
+
                 </div>
+
+
+                <div *ngIf="segmentValue == 'following'">
+                    <ion-virtual-scroll [items]="followingArr" approxItemHeight="50px" style="height: 600px">
+                        <ion-item *virtualItem="let item" style="height: 50px">
+                            <ion-avatar>
+                                <img src="{{storageBaseUrl+ item.avatar}}">
+                            </ion-avatar>
+                            <ion-text (click)="goUserProfile(item)"> {{ item['name'] }}</ion-text>
+                        </ion-item>
+                    </ion-virtual-scroll>
+
+                    <div *ngIf="followingArr && followingArr.length == 0"
+                         style="display: flex;justify-content: center; margin: 1rem">
+                        <ion-text>暂无更多内容...</ion-text>
+                    </div>
+                </div>
+
+
+                <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+                    <ion-infinite-scroll-content
+                            loadingSpinner="bubbles"
+                            loadingText="Loading more data...">
+                    </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
 
             </div>
-
-            <div *ngIf="segmentValue == 'fans'">
-                <ion-virtual-scroll [items]="followerArr" approxItemHeight="50px" style="height: 600px">
-                    <ion-item *virtualItem="let item" style="height: 4rem">
-                        <ion-avatar>
-                            <img src="{{'http://tiktok.tiantianquan.xyz/storage/'+ item.avatar}}">
-                        </ion-avatar>
-                        <!--<ion-img style="width: 3rem;height: 3rem;border-radius: 50%;object-fit: cover" [src]=""></ion-img>-->
-                        <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
-                    </ion-item>
-                </ion-virtual-scroll>
-
-                <div *ngIf="followerArr && followerArr.length == 0" style="display: flex;justify-content: center;margin: 1rem">
-                    <ion-text>暂无更多内容...</ion-text>
-                </div>
-
-            </div>
-
-
-            <div *ngIf="segmentValue == 'following'">
-                <ion-virtual-scroll [items]="followingArr" approxItemHeight="50px" style="height: 600px">
-                    <ion-item *virtualItem="let item" style="height: 50px">
-                        <ion-avatar>
-                            <img src="{{'http://tiktok.tiantianquan.xyz/storage/'+ item.avatar}}">
-                        </ion-avatar>
-                        <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
-                    </ion-item>
-                </ion-virtual-scroll>
-
-                <div *ngIf="followingArr && followingArr.length == 0" style="display: flex;justify-content: center; margin: 1rem">
-                    <ion-text>暂无更多内容...</ion-text>
-                </div>
-            </div>
-
-
-            <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-                <ion-infinite-scroll-content
-                        loadingSpinner="bubbles"
-                        loadingText="Loading more data...">
-                </ion-infinite-scroll-content>
-            </ion-infinite-scroll>
-
-        </div>
-    </div>
-
-
-    <div style="position: fixed; bottom: 0;z-index: 99">
-
-        <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;background-color:black;opacity: 0.8;">
-
-            <div (click)="goIndex()" style="color: white">首页</div>
-
-            <ion-icon name="add-circle-outline" (click)="goPublish()" style="color: white;font-size: 3rem;"></ion-icon>
-
-            <div (click)="goMine()" style="color: white">我的</div>
-
         </div>
 
-    </div>
 
-</ion-content>
+        <div style="position: fixed; bottom: 0;z-index: 99">
+
+            <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;background-color:black;opacity: 0.8;">
+
+                <div (click)="goIndex()" style="color: white">首页</div>
+
+                <ion-icon name="add-circle-outline" (click)="goPublish()"
+                          style="color: white;font-size: 3rem;"></ion-icon>
+
+                <div (click)="goMine()" style="color: white">我的</div>
+
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-router-outlet>

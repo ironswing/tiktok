@@ -61,8 +61,14 @@
 
     <div *ngIf="segmentValue == 'fans'">
       <ion-virtual-scroll [items]="followerArr" approxItemHeight="50px" style="height: 600px">
+        <!--<ion-item *virtualItem="let item" style="height: 50px">-->
+          <!--<ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>-->
+        <!--</ion-item>-->
         <ion-item *virtualItem="let item" style="height: 50px">
-          <ion-text (click)="goUserProfile(item)"> {{ item['name'] }} </ion-text>
+          <ion-avatar slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+          <ion-label (click)="goUserProfile(item)">{{ item['name'] }}</ion-label>
         </ion-item>
       </ion-virtual-scroll>
 

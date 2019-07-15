@@ -6,6 +6,7 @@ use App\Comment;
 use App\Services\CertificateService;
 use App\Services\UploadService;
 use App\Video;
+use App\User;
 use \Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,8 @@ class VideoController extends Controller
 
             throw new Exception("视频不存在");
         }
+
+        $data['user_profile'] = User::where("id", $data['user_id'])->first();
 
         // 获取用户的点赞状态
         $user_id = $certificateService->verifyLogin($request, false);

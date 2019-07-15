@@ -1,27 +1,19 @@
 <ion-menu side="start" menuId="first">
   <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>菜单</ion-title>
-    </ion-toolbar>
+    <!--<ion-toolbar color="primary">-->
+      <!--<ion-title>菜单</ion-title>-->
+    <!--</ion-toolbar>-->
   </ion-header>
   <ion-content>
     <ion-list>
-      <!--登录 注册 首页-->
-      <ion-item>
-        <ion-button [routerLink]="['/home']">首页</ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-button [routerLink]="['/login']">登录</ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-button [routerLink]="['/register']">注册</ion-button>
-      </ion-item>
 
       <ion-item>
+          <ion-ripple-effect></ion-ripple-effect>
         <ion-label>排行榜</ion-label>
       </ion-item>
 
       <ion-item>
+          <ion-ripple-effect></ion-ripple-effect>
         <ion-label>我的支持</ion-label>
       </ion-item>
 
@@ -53,50 +45,16 @@
   </ion-content>
 </ion-menu>
 
-<!--<ion-menu side="start" menuId="custom" class="my-custom-menu">-->
-  <!--<ion-header>-->
-    <!--<ion-toolbar color="tertiary">-->
-      <!--<ion-title>Custom Menu</ion-title>-->
-    <!--</ion-toolbar>-->
-  <!--</ion-header>-->
-  <!--<ion-content>-->
-    <!--<ion-list>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-    <!--</ion-list>-->
-  <!--</ion-content>-->
-<!--</ion-menu>-->
-
-<!--<ion-menu side="end" type="push">-->
-  <!--<ion-header>-->
-    <!--<ion-toolbar color="danger">-->
-      <!--<ion-title>End Menu</ion-title>-->
-    <!--</ion-toolbar>-->
-  <!--</ion-header>-->
-  <!--<ion-content>-->
-    <!--<ion-list>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-      <!--<ion-item>Menu Item</ion-item>-->
-    <!--</ion-list>-->
-  <!--</ion-content>-->
-<!--</ion-menu>-->
-
 <ion-router-outlet main>
 
   <ion-content>
 
-    <div style="position: fixed; top: 1rem; left: 1rem; z-index: 999">
+    <div style="position: fixed; top: 2rem; left: 1rem; z-index: 999">
       <ion-icon style="font-size: 2rem;color: white" name="menu" (click)="openFirst()"></ion-icon>
     </div>
 
-    <div  style="position: fixed; top: 1rem; right: 1rem; z-index: 999">
-      <img src="assets/icon/search.svg" alt="" style="width: 2rem;height: 2rem" (click)="goSearch()">
+    <div  style="position: fixed; top: 2rem; right: 1rem; z-index: 999">
+      <img src="assets/icon/search.png" alt="" style="width: 2rem;height: 2rem" (click)="goSearch()">
     </div>
 
     <!--<div *ngIf="inner" [innerHTML]="inner"></div>-->
@@ -132,9 +90,14 @@
             </vg-player>
           </div>
 
-          <div style="position: absolute;z-index: 99;bottom: 5rem;left: 0">
-            <ion-label>{{'@' + item['name']}}</ion-label>
-            <ion-text style="color: white;margin: 1rem;">{{item['title']}}</ion-text>
+          <div style="position: absolute;z-index: 999;bottom: 5rem;left: 0;display: flex;flex-direction: column;align-items: flex-start;">
+              <div style="margin-left: 1rem">
+                  <ion-label style="color: white" *ngIf="sourceUserProfile" (click)="goUserProfile(item['user_id'])" >{{'@' + sourceUserProfile['name']}}</ion-label>
+              </div>
+
+              <div style="margin-left: 1rem;opacity: 0.9;margin-top: 0.5rem">
+                  <div style="color: white;">{{item['title']}}</div>
+              </div>
           </div>
 
           <div style="position: absolute;z-index: 999;top: 25rem;right: 0">
@@ -167,7 +130,10 @@
       </ion-item>
       <ion-list *ngIf="commentList" style="height: 60vh;overflow: scroll">
         <ion-item *ngFor="let comment of commentList">
-          <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment)">{{comment['user_profile']['name']}}</ion-text>
+          <ion-avatar>
+            <img src="{{(comment['user_profile']['avatar'] && comment['user_profile']['avatar'] == 'default.jpg' ? 'assets/shapes.svg' : storageBaseUrl + comment['user_profile']['avatar'])}}">
+          </ion-avatar>
+          <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment['user_id'])">{{comment['user_profile']['name']}}</ion-text>
           <ion-text style="color: #0cd1e8">{{comment['content']}}</ion-text>
         </ion-item>
       </ion-list>
