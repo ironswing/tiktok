@@ -241,8 +241,8 @@ export class HomePage implements OnInit {
     goUserProfile(id) {
         console.log(id);
         let uid = id;
-        console.log(uid === localStorage.getItem('anshi_id'));
-        if (uid === localStorage.getItem('anshi_id')) {
+        console.log(uid == localStorage.getItem('anshi_id'));
+        if (uid == localStorage.getItem('anshi_id')) {
             this.router.navigate(['/mine'], { queryParams: { uid: uid}}).then(res => {
                 console.log(res, 'mine');
             });

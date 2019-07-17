@@ -87,16 +87,29 @@ export class MinePage implements OnInit {
     loadData(event) {
 
         console.log('Done');
-        setTimeout(() => {
-            console.log('Done');
-            event.target.complete();
-            this.videoArr.push({
-                id: 1,
-                src: 'assets/video/test1.mp4',
-                poster: 'assets/shapes.svg',
-                title: '就是他爱科技那几家世纪东方自己是加 机票的风景  几点女警 家地方拿 奥别的那片'
-            });
-        }, 500);
+
+        const baseUrl = ROOT_URL + 'user/' + localStorage.getItem('anshi_id');
+
+        this.http.get(baseUrl + '/feeds').subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                this.feedArr = res['data'];
+                console.log(this.feedArr);
+                event.target.complete();
+
+                // this.userProfile = res['data'];
+            }
+        });
+        // setTimeout(() => {
+        //     console.log('Done');
+        //     event.target.complete();
+        //     this.videoArr.push({
+        //         id: 1,
+        //         src: 'assets/video/test1.mp4',
+        //         poster: 'assets/shapes.svg',
+        //         title: '就是他爱科技那几家世纪东方自己是加 机票的风景  几点女警 家地方拿 奥别的那片'
+        //     });
+        // }, 500);
     }
 
     toggleInfiniteScroll() {
@@ -144,11 +157,14 @@ export class MinePage implements OnInit {
 
     }
 
-    goUserProfile(com){
-        console.log(com);
-        let uid = com['id'];
-        if (uid === localStorage.getItem('anshi_id')) {
+    goUserProfile(id){
+        console.log(id);
+        let uid = id;
+        if (uid == localStorage.getItem('anshi_id')) {
             console.log('not click me');
+            this.router.navigate(['/mine'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res, 'mine');
+            });
         } else {
             this.router.navigate(['/user-profile'], { queryParams: { uid: uid}}).then(res => {
                 console.log(res);

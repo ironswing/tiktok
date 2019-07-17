@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ToastController} from '@ionic/angular';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {VgAPI} from 'videogular2/core';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-player',
@@ -13,12 +15,15 @@ export class PlayerPage implements OnInit {
     public like = true;
     public api; VgAPI;
     isComment = false;
+    public commentContext;
+    public commentList;
     cur = 1;
     vid = 'test';
-
+    public storageBaseUrl = ROOT_URL + 'storage';
+    public sourceUserProfile;
     @Input() path: any;
-
     @Input() poster: any;
+    @Input() id: any;
 
     public sourceArr = [];
 
@@ -29,7 +34,9 @@ export class PlayerPage implements OnInit {
         pagination: {},
         direction: 'vertical'
     };
-  constructor(private modalCtrl: ModalController, private statusBar: StatusBar) { }
+  constructor(private http: HttpClient, public toastController: ToastController,
+              private modalCtrl: ModalController, private statusBar: StatusBar,
+              private router: Router) { }
 
   ngOnInit() {
       this.statusBar.overlaysWebView(true);
@@ -40,14 +47,28 @@ export class PlayerPage implements OnInit {
           // {id: 3, src: 'assets/video/test1.mp4', poster: 'assets/poster.jpg'},
           // {id: 4, src: 'assets/video/fb8736e3432fb86610874b358e9603dd.mp4', poster: 'assets/shapes.svg'}
       ];
+      this.updateVideoData();
   }
 
-  isLike() {
-      this.like = !this.like;
-  }
+    isLike() {
+        this.http.post(ROOT_URL + `video/${this.id}/like`, {cookie: localStorage.getItem('anshi_cookie')}).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                // this.like = res['data']['is_thumb'] == 1 ? true : false;
+                this.updateVideoData();
+            }
+        });
+    }
 
-    showComment() {
-      console.log('well you can talk with us!');
+    showComment(item) {
+        this.isComment = true;
+        this.loadComment();
+        // this.http.get(ROOT_URL + `/video/${item.id}/comments`).subscribe(res => {
+        //     console.log(res);
+        //     if (res['code'] === 200){
+        //         this.commentList = res['data']['data'];
+        //     }
+        // });
     }
 
     dismiss() {
@@ -87,5 +108,74 @@ export class PlayerPage implements OnInit {
         this.cur--;
         console.log('cur' + this.cur);
         // this.api.play();
+    }
+    updateVideoData() {
+        this.http.get(ROOT_URL + `video/${this.id}/detail?cookie=${localStorage.getItem('anshi_cookie')}`, ).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                this.like = res['data']['is_thumb'] == 1 ? true : false;
+                this.sourceUserProfile = res['data']['user_profile'];
+            }
+        }, (err) => {
+            console.log(err);
+            this.presentToast(err['error']['msg']).then(r => {
+                console.log(r);
+            });
+        });
+    }
+    async presentToast(msg) {
+        const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000
+        });
+        toast.present();
+    }
+
+    goUserProfile(id) {
+        let uid = id;
+        console.log(uid === localStorage.getItem('anshi_id'));
+        if (uid === localStorage.getItem('anshi_id')) {
+            this.router.navigate(['/mine'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res, 'mine');
+            });
+        } else {
+            this.router.navigate(['/user-profile'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res, 'user');
+            });
+        }
+    }
+
+    hiddenComment() {
+        this.isComment = false;
+    }
+
+    sendComment() {
+        console.log(this.commentContext);
+        let params = {
+            video_id: this.id,
+            content: this.commentContext,
+            cookie: localStorage.getItem('anshi_cookie')
+        }
+        this.http.post(ROOT_URL + 'comment/add', params).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200){
+                this.commentContext = '';
+                this.loadComment();
+            }
+        }, (err) => {
+            console.log(err);
+            this.presentToast(err['error']['msg']).then(r => {
+                console.log(r);
+            });
+        });
+    }
+
+    loadComment() {
+        this.http.get(ROOT_URL + `/video/${this.id}/comments`).subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                this.commentList = res['data']['data'];
+            }
+        });
     }
 }

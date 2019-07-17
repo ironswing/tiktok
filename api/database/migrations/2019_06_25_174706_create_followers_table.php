@@ -22,7 +22,7 @@ class CreateFollowersTable extends Migration
                 $table->unsignedTinyInteger('status')->nullable(false)->default(1)->comment("关注的状态,1关注,2取关");
                 $table->timestamps();
 
-                $table->unique("user_id");
+//                $table->unique("user_id");
                 $table->unique(["user_id", "follower_id"]);
             });
         }

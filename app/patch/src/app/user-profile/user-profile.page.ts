@@ -18,8 +18,11 @@ export class UserProfilePage implements OnInit {
     followerArr: [];
     // 關注我的
     followingArr: [];
+
+    feedArr: [];
     segmentValue = 'fans';
     isFollow = false;
+    public storageBaseUrl = ROOT_URL + 'storage';
 
     videoArr = [
         {
@@ -93,6 +96,20 @@ export class UserProfilePage implements OnInit {
             if (res['code'] === 200) {
                 this.followingArr = res['data'];
                 console.log(this.followingArr);
+                // this.userProfile = res['data'];
+            }
+        }, (err) => {
+            console.log(err);
+            this.presentToast(err['error']['msg']).then(r => {
+                console.log(r);
+            });
+        });
+
+        this.http.get(baseUrl + '/feeds').subscribe(res => {
+            console.log(res);
+            if (res['code'] === 200) {
+                this.feedArr = res['data'];
+                console.log(this.feedArr);
                 // this.userProfile = res['data'];
             }
         }, (err) => {
@@ -177,16 +194,25 @@ export class UserProfilePage implements OnInit {
         })
     }
 
-    goUserProfile(com) {
-        console.log(com);
-        let uid = com['id'];
-        if (uid === this.uid) {
+    goUserProfile(id) {
+        console.log(id);
+        let uid = id;
+        if (uid == this.uid) {
             console.log('not click me');
+            this.router.navigate(['/mine'], { queryParams: { uid: uid}}).then(res => {
+                console.log(res, 'mine');
+            });
         } else {
             this.router.navigate(['/user-profile'], { queryParams: { uid: uid}}).then(res => {
                 console.log(res);
             });
         }
+    }
+
+    getCurPlayer(e) {
+        console.log(e);
+        // this.router.navigate(['/player']);
+        this.presentModal(e);
     }
 
     async presentToast(msg) {

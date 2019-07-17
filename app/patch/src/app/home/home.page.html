@@ -1,5 +1,6 @@
 <ion-menu side="start" menuId="first">
   <ion-header>
+    <div style="width: 1rem;height: 2rem"></div>
     <!--<ion-toolbar color="primary">-->
       <!--<ion-title>菜单</ion-title>-->
     <!--</ion-toolbar>-->
@@ -8,36 +9,44 @@
     <ion-list>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/rank.png">
           <ion-ripple-effect></ion-ripple-effect>
         <ion-label>排行榜</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/support.png">
           <ion-ripple-effect></ion-ripple-effect>
         <ion-label>我的支持</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/help.png">
         <ion-label>攻略论坛</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/tip.png">
         <ion-label>便签墙</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/market.png">
         <ion-label>兼职市场</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/pic.png">
         <ion-label>美颜模板</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/near.png">
         <ion-label>附近的人</ion-label>
       </ion-item>
 
       <ion-item>
+        <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/wlt.png">
         <ion-label>我的钱包</ion-label>
       </ion-item>
 
@@ -119,7 +128,6 @@
 
     <div *ngIf="isComment" style="position: absolute;bottom: 0;z-index: 300;height: 75vh;width: 100vw;background-color:#fff;transition: height 2s linear 0">
       <!--<button (click)="hiddenComment()">x</button>-->
-      <!--<ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>-->
       <div style="width: 100vw;display: flex;justify-content: flex-end">
         <ion-icon name="close" style="color: black;font-size: 1.5rem;margin: 1rem" (click)="hiddenComment()" ></ion-icon>
       </div>
@@ -133,7 +141,7 @@
           <ion-avatar>
             <img src="{{(comment['user_profile']['avatar'] && comment['user_profile']['avatar'] == 'default.jpg' ? 'assets/shapes.svg' : storageBaseUrl + comment['user_profile']['avatar'])}}">
           </ion-avatar>
-          <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment['user_id'])">{{comment['user_profile']['name']}}</ion-text>
+          <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment['user_id'])">{{comment['user_profile']['name']}}：</ion-text>
           <ion-text style="color: #0cd1e8">{{comment['content']}}</ion-text>
         </ion-item>
       </ion-list>

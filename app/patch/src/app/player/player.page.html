@@ -39,19 +39,19 @@
             <!--<vg-time-display [vgProperty]="'total'"></vg-time-display>-->
             <!--<vg-fullscreen></vg-fullscreen>-->
             <!--</vg-controls>-->
-            <video #media (play)="tplay()" [vgMedia]="media" src="{{'http://tiktok.tiantianquan.xyz/storage' + item.src}}" poster="{{'http://tiktok.tiantianquan.xyz/storage' + item.poster}}" autoplay></video>
+            <video #media (play)="tplay()" [vgMedia]="media" src="{{storageBaseUrl + item.src}}" poster="{{storageBaseUrl + item.poster}}" autoplay></video>
           </vg-player>
         </div>
 
         <div style="position: absolute;z-index: 999;top: 25rem;right: 0">
           <div style="display: flex;flex-direction: column;margin-right: 1rem">
             <div>
-              <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike()"></ion-icon>
-              <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike()"></ion-icon>
+              <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red" (click)="isLike(item)"></ion-icon>
+              <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white" (click)="isLike(item)"></ion-icon>
             </div>
 
             <div style="margin-top: 0.5rem;">
-              <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment()"></ion-icon>
+              <ion-icon name="quote" style="font-size: 3rem;color: white" (click)="showComment(item)"></ion-icon>
             </div>
           </div>
         </div>
@@ -62,21 +62,22 @@
 
   <div *ngIf="isComment" style="position: absolute;bottom: 0;z-index: 300;height: 75vh;width: 100vw;background-color:#fff;transition: height 2s linear 0">
     <!--<button (click)="hiddenComment()">x</button>-->
-    <!--<ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>-->
     <div style="width: 100vw;display: flex;justify-content: flex-end">
       <ion-icon name="close" style="color: black;font-size: 1.5rem;margin: 1rem" (click)="hiddenComment()" ></ion-icon>
     </div>
-    <ion-list style="height: 65vh;overflow: scroll">
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
-      <ion-item>123</ion-item>
+    <ion-item>
+      <!--<ion-label position="floating">评论</ion-label>-->
+      <ion-input  type="text" [(ngModel)]="commentContext" name="commentContext" [placeholder]="'写下你的评论吧'"></ion-input>
+      <ion-button shape="round" (click)="sendComment()">发布</ion-button>
+    </ion-item>
+    <ion-list *ngIf="commentList" style="height: 60vh;overflow: scroll">
+      <ion-item *ngFor="let comment of commentList">
+        <ion-avatar>
+          <img src="{{(comment['user_profile']['avatar'] && comment['user_profile']['avatar'] == 'default.jpg' ? 'assets/shapes.svg' : storageBaseUrl + comment['user_profile']['avatar'])}}">
+        </ion-avatar>
+        <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment['user_id'])">{{comment['user_profile']['name']}}：</ion-text>
+        <ion-text style="color: #0cd1e8">{{comment['content']}}</ion-text>
+      </ion-item>
     </ion-list>
   </div>
 
