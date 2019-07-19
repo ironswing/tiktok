@@ -24,7 +24,7 @@
               </ion-text>
 
               <ion-button *ngIf="!isFollow" style="margin-left: 3rem"  shape="round"  (click)="follow()">关注</ion-button>
-              <ion-button *ngIf="isFollow" style="margin-left: 3rem"  shape="round"  (click)="follow()">取消关注</ion-button>
+              <ion-button *ngIf="isFollow" style="margin-left: 2rem"  shape="round"  (click)="follow()">取消关注</ion-button>
             </div>
           </div>
 
@@ -164,7 +164,7 @@
           <ion-avatar>
             <img src="{{( item.avatar && item.avatar == 'default.jpg') ? 'assets/shapes.svg' : storageBaseUrl+ item.avatar}}">
           </ion-avatar>
-          <ion-text style="margin: 1rem" (click)="goUserProfile(item)"> {{ item['name'] }}
+          <ion-text style="margin: 1rem" (click)="goUserProfile(item['user_id'])"> {{ item['name'] }}
           </ion-text>
 
           <ion-icon name="arrow-dropright" style="margin-left: 10rem;"></ion-icon>

@@ -8,13 +8,13 @@
         <ion-list>
             <!--登录 注册 首页-->
             <!--<ion-item>-->
-            <ion-button expand="full" fill="outline" [routerLink]="['/home']">首页</ion-button>
+            <ion-button expand="full" fill="clear" [routerLink]="['/home']">首页</ion-button>
             <!--</ion-item>-->
             <!--<ion-item>-->
-            <ion-button expand="full" fill="outline" [routerLink]="['/login']">登录</ion-button>
+            <ion-button expand="full" fill="solid" [routerLink]="['/login']">登录</ion-button>
             <!--</ion-item>-->
             <!--<ion-item>-->
-            <ion-button expand="full" fill="outline" [routerLink]="['/register']">注册</ion-button>
+            <ion-button expand="block" fill="outline" [routerLink]="['/register']">注册</ion-button>
             <!--</ion-item>-->
 
         </ion-list>
@@ -166,7 +166,7 @@
                             <ion-avatar>
                                 <img src="{{( item.avatar && item.avatar == 'default.jpg') ? 'assets/shapes.svg' : storageBaseUrl+ item.avatar}}">
                             </ion-avatar>
-                            <ion-text style="margin: 1rem" (click)="goUserProfile(item)"> {{ item['name'] }}
+                            <ion-text style="margin: 1rem" (click)="goUserProfile(item['user_id'])"> {{ item['name'] }}
                             </ion-text>
 
                             <ion-icon name="arrow-dropright" style="margin-left: 10rem;"></ion-icon>

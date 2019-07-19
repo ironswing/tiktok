@@ -72,11 +72,23 @@
     </ion-item>
     <ion-list *ngIf="commentList" style="height: 60vh;overflow: scroll">
       <ion-item *ngFor="let comment of commentList">
-        <ion-avatar>
-          <img src="{{(comment['user_profile']['avatar'] && comment['user_profile']['avatar'] == 'default.jpg' ? 'assets/shapes.svg' : storageBaseUrl + comment['user_profile']['avatar'])}}">
-        </ion-avatar>
-        <ion-text style="margin: 0.5rem" (click)="goUserProfile(comment['user_id'])">{{comment['user_profile']['name']}}：</ion-text>
-        <ion-text style="color: #0cd1e8">{{comment['content']}}</ion-text>
+        <!--<ion-avatar>-->
+          <!--<img src="{{(comment['user_profile']['avatar'] && comment['user_profile']['avatar'] == 'default.jpg' ? 'assets/shapes.svg' : storageBaseUrl + comment['user_profile']['avatar'])}}">-->
+        <!--</ion-avatar>-->
+        <!--<ion-text style="margin: 0.5rem" (click)="goUserProfile(comment['user_id'])">{{comment['user_profile']['name']}}：</ion-text>-->
+        <!--<ion-text style="color: #0cd1e8">{{comment['content']}}</ion-text>-->
+
+        <div>
+          <div (click)="goUserProfile(comment['user_id'])" style="display: flex">
+            <!--<ion-avatar>-->
+            <img style="width: 2rem;height: 2rem;object-fit: cover;border-radius: 50%"
+                 src="{{(comment['user_profile']['avatar'] && comment['user_profile']['avatar'] == 'default.jpg' ? 'assets/shapes.svg' : storageBaseUrl + comment['user_profile']['avatar'])}}">
+            <!--</ion-avatar>-->
+            <ion-text style="margin: 0.5rem;color: gray">{{comment['user_profile']['name']}}：</ion-text>
+          </div>
+
+          <ion-text style="color: black">{{comment['content']}}</ion-text>
+        </div>
       </ion-item>
     </ion-list>
   </div>

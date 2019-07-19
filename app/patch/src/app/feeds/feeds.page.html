@@ -1,0 +1,129 @@
+<ion-menu side="start" menuId="third">
+    <ion-header>
+        <div style="width: 1rem;height: 2rem"></div>
+        <!--<ion-toolbar color="primary">-->
+        <!--<ion-title>菜单</ion-title>-->
+        <!--</ion-toolbar>-->
+    </ion-header>
+    <ion-content>
+        <ion-list>
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/rank.png">
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-label>排行榜</ion-label>
+                <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/rank.png">排行榜</ion-button>-->
+            </ion-item>
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/support.png">
+                <ion-ripple-effect></ion-ripple-effect>
+                <ion-label>我的支持</ion-label>
+                <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/support.png">我的支持</ion-button>-->
+            </ion-item>
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/help.png">
+                <ion-label>攻略论坛</ion-label>
+            </ion-item>
+            <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/support.png">我的支持</ion-button>-->
+
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/tip.png">
+                <ion-label>便签墙</ion-label>
+            </ion-item>
+            <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/tip.png">便签墙</ion-button>-->
+
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/market.png">
+                <ion-label>兼职市场</ion-label>
+            </ion-item>
+            <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/market.png">兼职市场</ion-button>-->
+
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/pic.png">
+                <ion-label>美颜模板</ion-label>
+            </ion-item>
+            <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/pic.png">美颜模板</ion-button>-->
+
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/near.png">
+                <ion-label>附近的人</ion-label>
+            </ion-item>
+            <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/near.png">附近的人</ion-button>-->
+
+
+            <ion-item (click)="noSupport()">
+                <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/wlt.png">
+                <ion-label>我的钱包</ion-label>
+            </ion-item>
+            <!--<ion-button style="color: black;display: flex;justify-content: flex-start" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/wlt.png">我的钱包</ion-button>-->
+
+
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-router-outlet main>
+
+    <ion-header>
+        <!--<ion-toolbar>-->
+            <!--<ion-title>no-support</ion-title>-->
+        <!--</ion-toolbar>-->
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button autoHide="false"></ion-menu-button>
+            </ion-buttons>
+            <ion-buttons slot="secondary">
+                <ion-button>
+                    <!--<ion-icon slot="icon-only" name="star"></ion-icon>-->
+                    <img src="assets/icon/search-dark.png" alt="" style="width: 2rem;height: 2rem" (click)="goSearch()">
+                </ion-button>
+            </ion-buttons>
+            <ion-title>热门挑战</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+
+        <!--<div style="position: fixed; top: 2rem; left: 1rem; z-index: 999">-->
+            <!--<ion-icon style="font-size: 2rem;color: white" name="menu" (click)="openThird()"></ion-icon>-->
+        <!--</div>-->
+
+        <!--<div style="position: fixed; top: 2rem; right: 1rem; z-index: 999">-->
+            <!--<img src="assets/icon/search.png" alt="" style="width: 2rem;height: 2rem" (click)="goSearch()">-->
+        <!--</div>-->
+
+        <div style="width: 100vw;display: flex;flex-wrap: wrap;justify-content: space-between; margin-top: 0.5rem;">
+            <div *ngFor="let item of remoteVideoSourceArr" (click)="getCurPlayer(item)">
+                <div style="width: 33vw">
+
+                    <img style="width: 8rem;height: 10rem;object-fit: cover;"
+                         src="{{storageBaseUrl + item.poster}}"
+                         alt="">
+                </div>
+            </div>
+        </div>
+
+        <div style="position: fixed; bottom: 0;z-index: 99">
+
+            <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;background-color:black;opacity: 0.8;">
+
+                <div (click)="goIndex()" style="color: white">首页</div>
+
+                <ion-icon name="add-circle-outline" (click)="goPublish()"
+                          style="color: white;font-size: 3rem;"></ion-icon>
+
+                <!--<ion-button ></ion-button>-->
+
+                <div (click)="goMine()" style="color: white">我的</div>
+
+            </div>
+
+        </div>
+    </ion-content>
+</ion-router-outlet>

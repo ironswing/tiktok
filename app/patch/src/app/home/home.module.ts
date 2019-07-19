@@ -26,6 +26,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+    entryComponents: [HomePage]
 })
 export class HomePageModule {}

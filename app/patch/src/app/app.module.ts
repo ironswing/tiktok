@@ -18,6 +18,7 @@ import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angul
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { VideoEditor } from '@ionic-native/video-editor/ngx';
 import {AnHttpGuard} from './an-http.guard';
+import {HomePageModule} from './home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,8 @@ import {AnHttpGuard} from './an-http.guard';
       BrowserModule,
       IonicModule.forRoot(),
       AppRoutingModule,
-      PlayerPageModule],
+      PlayerPageModule,
+      HomePageModule],
   providers: [
     StatusBar,
     SplashScreen,

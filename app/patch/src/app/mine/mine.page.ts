@@ -116,7 +116,7 @@ export class MinePage implements OnInit {
         this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
     }
     goIndex() {
-        this.router.navigate(['/home']).then(res => {
+        this.router.navigate(['/feeds']).then(res => {
             console.log(res);
         });
     }
