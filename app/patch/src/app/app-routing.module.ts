@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'profile-edit', loadChildren: './profile-edit/profile-edit.module#ProfileEditPageModule' },
   { path: 'user-portocol', loadChildren: './user-portocol/user-portocol.module#UserPortocolPageModule' },
   { path: 'no-support', loadChildren: './no-support/no-support.module#NoSupportPageModule' },
-  { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsPageModule' },
+  { path: 'feeds', loadChildren: './feeds/feeds.module#FeedsPageModule' },  { path: 'welcome', loadChildren: './welcome/welcome.module#WelcomePageModule' },
+
 
 ];
 

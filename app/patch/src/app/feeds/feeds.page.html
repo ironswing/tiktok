@@ -100,9 +100,9 @@
 
         <div style="width: 100vw;display: flex;flex-wrap: wrap;justify-content: space-between; margin-top: 0.5rem;">
             <div *ngFor="let item of remoteVideoSourceArr" (click)="getCurPlayer(item)">
-                <div style="width: 33vw">
+                <div style="width: 33vw; display: flex;justify-content: center;align-items: center">
 
-                    <img style="width: 8rem;height: 10rem;object-fit: cover;"
+                    <img style="width: 32vw;height: 22vh;object-fit: cover;margin-bottom: 1vw"
                          src="{{storageBaseUrl + item.poster}}"
                          alt="">
                 </div>

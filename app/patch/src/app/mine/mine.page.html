@@ -63,8 +63,11 @@
                                 <div style="margin: 0.5rem">邮箱</div>
                                 <ion-text style="margin: 0.5rem" *ngIf="userProfile">{{userProfile['email']}}</ion-text>
                             </div>
-                            <!--<div>安石</div>-->
-                            <!--<div>我帶著書和詩、去去尋找運放鋒利的乳汁</div>-->
+
+                            <div style="color: grey; margin-left: 1.5rem; margin-bottom: 1rem">
+                                <ion-text style="margin: 0.5rem" *ngIf="(userProfile && !userProfile['signature'])">您还没有个性签名赶快去编辑资料吧！</ion-text>
+                                <ion-text style="margin: 0.5rem" *ngIf="userProfile && userProfile['signature']">{{userProfile['signature']}}</ion-text>
+                            </div>
                         </div>
 
                     </div>
@@ -97,11 +100,18 @@
 
                     <div style="width: 100vw;display: flex;flex-wrap: wrap;justify-content: space-between">
                         <div *ngFor="let item of feedArr" (click)="getCurPlayer(item)">
-                            <div style="width: 33vw">
-                                <!--<div style="width: 100%; position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">-->
-                                <!--<ion-text style="color: white;">{{item.title}}</ion-text>-->
-                                <!--</div>-->
-                                <img style="width: 8rem;height: 10rem;object-fit: cover;"
+                            <!--<div style="width: 33vw">-->
+                                <!--&lt;!&ndash;<div style="width: 100%; position: absolute;padding: 0.5rem;background-color:grey;opacity: 0.5">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<ion-text style="color: white;">{{item.title}}</ion-text>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--<img style="width: 8rem;height: 10rem;object-fit: cover;"-->
+                                     <!--src="{{storageBaseUrl + item.poster}}"-->
+                                     <!--alt="">-->
+                            <!--</div>-->
+
+                            <div style="width: 33vw; display: flex;justify-content: center;align-items: center">
+
+                                <img style="width: 32vw;height: 22vh;object-fit: cover;margin-bottom: 1vw"
                                      src="{{storageBaseUrl + item.poster}}"
                                      alt="">
                             </div>
