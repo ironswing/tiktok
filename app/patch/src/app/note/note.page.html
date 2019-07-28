@@ -1,0 +1,47 @@
+<!--<ion-header>-->
+<!--<ion-toolbar>-->
+<!--<ion-title>便签墙</ion-title>-->
+<!--</ion-toolbar>-->
+<!--</ion-header>-->
+
+<ion-content>
+    <div style="position: fixed;top: 0;left: 0;z-index: 1">
+        <img style="width: 100vw;height: 100vh;object-fit: cover;" src="assets/note_ground.png">
+    </div>
+    <div style="position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;z-index: 99;" (click)="testPoint($event)">
+
+    </div>
+
+    <div *ngFor="let item of points">
+        <div style="position: absolute;z-index: 100"
+             [ngStyle]="{
+      left: item.offsetX,
+      top: item.offsetY
+      }" (click)="showDetal(item)">
+            <ion-card>
+                <div style="margin: 1rem">
+                    {{item['content']}}
+                </div>
+            </ion-card>
+
+        </div>
+    </div>
+
+    <div style="width: 100vw; height: 20vh; position: fixed;left: 0;z-index: 101;" [ngStyle]="{
+    top: textPosition }">
+        <ion-card>
+            <div style="background-color: wheat;">
+                <div>
+                    <ion-textarea #inputRef [required]="true"  rows="8" cols="20" [placeholder]="'输入便签内容吧'" [(ngModel)]="context"></ion-textarea>
+                </div>
+                <div style="display: flex;justify-content: flex-end">
+                    <ion-button shape="round" (click)="sendNote()">发布</ion-button>
+                </div>
+            </div>
+        </ion-card>
+    </div>
+
+    <!--<div *ngIf="edit" style="position: absolute; top: 20vh;left: 40vw">-->
+    <!--<ion-textarea #inputRef [placeholder]="'添加便签吧'" [ngModel]="context"></ion-textarea>-->
+    <!--</div>-->
+</ion-content>

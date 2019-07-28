@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, Input, OnInit, ViewChild} from '@angular/core';
 import {VgAPI} from 'videogular2/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
@@ -9,9 +9,10 @@ import {MenuController, ToastController} from '@ionic/angular';
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, DoCheck {
     inner;
     like = false;
+    thumbs = 10;
     isComment = false;
     public api;
     VgAPI;
@@ -103,66 +104,6 @@ export class HomePage implements OnInit {
                     });
             }
         });
-        // console.log(!(this.remoteVideoSourceArr.length > 0));
-        // console.log(this.remoteVideoSourceArr.length);
-        // console.log(!this.insertId);
-        // if (!this.insertId) {
-        //     this.http.get(ROOT_URL + 'feeds').subscribe(res => {
-        //         console.log(res);
-        //         if (res['code'] === 200) {
-        //             // console.log(res['data']);
-        //             let token = res['data']['csrf_token'];
-        //             res['data']['data'].forEach(item => {
-        //                 // console.log(item);
-        //                 item['playId'] = this.playId;
-        //                 this.playId++;
-        //                 this.remoteVideoSourceArr.push(item);
-        //             });
-        //         }
-        //     });
-        // }else {
-        //     // created_at: "2019-07-16 08:47:45"
-        //     // id: 5
-        //     // is_thumb: 0
-        //     // path: "/videos/20190716/95dcd2de2f049612d6c9c9ac62965c3b.mp4"
-        //     // poster: "/images/20190716/572d39322b7e2d09ec286297cb7f6dec.jpeg"
-        //     // thumbs: 0
-        //     // title: "test1"
-        //     // user_id: 1
-        //     console.log(this.insertId);
-        //     this.http.get(ROOT_URL + `video/${this.insertId}/detail?cookie=${localStorage.getItem('anshi_cookie')}`)
-        //         .subscribe(res => {
-        //         console.log(res);
-        //         if (res['code'] === 200) {
-        //             this.like = res['data']['is_thumb'] == 1 ? true : false;
-        //             this.sourceUserProfile = res['data']['user_profile'];
-        //             let tmp = res['data'];
-        //             tmp['playId'] = this.playId;
-        //             this.playId++;
-        //             this.remoteVideoSourceArr.push(tmp);
-        //
-        //             this.http.get(ROOT_URL + 'feeds').subscribe(_res => {
-        //                 console.log(_res);
-        //                 if (_res['code'] === 200) {
-        //                     // console.log(res['data']);
-        //                     _res['data']['data'].forEach(item => {
-        //                         // console.log(item);
-        //                         if (item['id'] !== tmp['id']) {
-        //                             item['playId'] = this.playId;
-        //                             this.playId++;
-        //                             this.remoteVideoSourceArr.push(item);
-        //                         }
-        //                     });
-        //                 }
-        //             });
-        //         }
-        //     }, (err) => {
-        //         console.log(err);
-        //         this.presentToast(err['error']['msg']).then(r => {
-        //             console.log(r);
-        //         });
-        //     });
-        // }
     }
 
     // id: 104
@@ -258,12 +199,13 @@ export class HomePage implements OnInit {
 
     isLike() {
         if (this.thumbTime) {
+            console.log(this.thumbTime);
             clearTimeout(this.thumbTime);
         }
         this.thumbTime = setTimeout(() => {
             console.log('reset');
             this.tipNumber = 0;
-        }, 1000);
+        }, 1500);
         this.tipNumber++;
         if (this.tipNumber === 2) {
             console.log('心动');
@@ -287,7 +229,7 @@ export class HomePage implements OnInit {
                 }
             });
         }
-        // console.log(this.tipNumber);
+        console.log(this.tipNumber);
     }
 
     showComment(item) {
@@ -391,6 +333,7 @@ export class HomePage implements OnInit {
             if (res['code'] === 200) {
                 this.like = res['data']['is_thumb'] == 1 ? true : false;
                 this.sourceUserProfile = res['data']['user_profile'];
+                this.thumbs = res['data']['thumbs'];
             }
         }, (err) => {
             console.log(err);
@@ -453,6 +396,12 @@ export class HomePage implements OnInit {
         this.presentToast('功能暂未开放！').then(() => {
             console.log('功能暂未开放！');
             this.menu.close('first');
+        });
+    }
+
+    goNote() {
+        this.router.navigate(['/note']).then( () => {
+            console.log('note');
         });
     }
 }

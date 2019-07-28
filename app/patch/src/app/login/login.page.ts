@@ -49,7 +49,8 @@ export class LoginPage implements OnInit {
                 localStorage.setItem('anshi_cookie', res['data']['cookie']);
                 localStorage.setItem('anshi_id', res['data']['id']);
                 localStorage.setItem('session_id',res['data']['session_id']);
-                this.goIndex();
+                // this.goIndex();
+                this.router.navigate(['/login-succeed']).then();
             }
             else {
                 this.presentToast(res['msg']).then(r => {

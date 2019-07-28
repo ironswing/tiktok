@@ -18,6 +18,29 @@ class UserController extends Controller
 {
 
     /**
+     * 编辑背景墙
+     * @param Request $request
+     * @param CertificateService $certificateService
+     * @throws Exception
+     */
+    public function updateBackground(Request $request, CertificateService $certificateService)
+    {
+        $background_image = $request->input("background_image");
+
+        if (empty($background_image)) {
+
+            throw new Exception("填写不完整~");
+        }
+
+        $user_id = $certificateService->verifyLogin($request);
+
+        $data = [
+            "background_image" => $background_image
+        ];
+        (new User())->editProfile($user_id, $data);
+    }
+
+    /**
      * 编辑资料
      * @param Request $request
      * @param CertificateService $certificateService

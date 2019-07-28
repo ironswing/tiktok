@@ -58,7 +58,7 @@ export class AppComponent {
           } catch (err) {
               console.log(err);
           }
-          if (this.url === '/home' || this.url === '/mine' || this.url === '/camera') {
+          if (this.url === '/feeds' || this.url === '/mine' || this.url === '/camera') {
 
               this.appMinimize.minimize().then(res => {
                   console.log(res);

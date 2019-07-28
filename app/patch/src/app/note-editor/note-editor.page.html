@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>便签详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="position: fixed;top: 1rem;z-index: 99">
+    <div style="display: flex;justify-content: flex-end;width: 100vw;">
+      <ion-icon name="close" style="color: white;font-size: 1.5rem;margin: 1rem" (click)="dismiss()" ></ion-icon>
+    </div>
+  </div>
+
+  <ion-card *ngIf="note">
+    <div style="margin: 3rem">{{note['content']}}</div>
+    <div style="display: flex;justify-content: flex-end">
+      <ion-button shape="round" (click)="deleteNote()">删除</ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>

@@ -26,6 +26,7 @@ class VerifyCsrfToken extends Middleware
         "/post",
         "/comment/add",
         "/user/*",
-        "/image/*"
+        "/image/*",
+        "/note/add"
     ];
 }

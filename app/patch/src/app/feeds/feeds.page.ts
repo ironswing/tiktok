@@ -21,6 +21,25 @@ export class FeedsPage implements OnInit {
   }
 
   ngOnInit() {
+
+      if (localStorage.getItem('anshi_id') && localStorage.getItem('anshi_id') !== '') {
+          console.log('test');
+          // this.router.navigate(['/mine']).then(res => {
+          //     console.log(res);
+          // });
+          // this.router.navigate(['/welcome']).then(res => {
+          //     console.log(res);
+          // });
+      }else {
+          if (localStorage.getItem('welcomeTime') && localStorage.getItem('welcomeTime') == '1') {
+              console.log('we');
+          }else {
+              localStorage.setItem('welcomeTime','1');
+              this.router.navigate(['/welcome']).then(res => {
+                  console.log(res);
+              });
+          }
+      }
       this.http.get(ROOT_URL + 'feeds').subscribe(res => {
           console.log(res);
           if (res['code'] === 200) {
@@ -108,5 +127,12 @@ export class FeedsPage implements OnInit {
             duration: 2000
         });
         toast.present();
+    }
+
+
+    goNote() {
+        this.router.navigate(['/note']).then( () => {
+            console.log('note');
+        });
     }
 }

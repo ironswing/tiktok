@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
                 $table->string('email', 225)->nullable(false)->default("")->unique();
                 $table->string('signature', 225)->nullable(false)->default("")->comment("个性签名");
                 $table->string('avatar', 225)->nullable(false)->default("default.jpg")->comment("头像");
+                $table->string('background_image', 225)->nullable(false)->default("default.jpg")->comment("背景墙");
                 $table->unsignedTinyInteger('status')->nullable(false)->default(1)->comment("状态,1:正常,0:删除,2:封禁");
 
                 $table->timestamps();

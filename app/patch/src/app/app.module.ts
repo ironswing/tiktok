@@ -19,6 +19,8 @@ import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { VideoEditor } from '@ionic-native/video-editor/ngx';
 import {AnHttpGuard} from './an-http.guard';
 import {HomePageModule} from './home/home.module';
+import {EditBackgoundPageModule} from './edit-backgound/edit-backgound.module';
+import {NoteEditorPageModule} from './note-editor/note-editor.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +31,9 @@ import {HomePageModule} from './home/home.module';
       IonicModule.forRoot(),
       AppRoutingModule,
       PlayerPageModule,
-      HomePageModule],
+      HomePageModule,
+      EditBackgoundPageModule,
+      NoteEditorPageModule],
   providers: [
     StatusBar,
     SplashScreen,

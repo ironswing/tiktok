@@ -29,7 +29,7 @@
             <!--<ion-button style="color: black;" expand="full" fill="clear" [routerLink]="['/home']"><img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/support.png">我的支持</ion-button>-->
 
 
-            <ion-item (click)="noSupport()">
+            <ion-item (click)="goNote()">
                 <img style="width: 2rem;margin-right: 0.5rem" src="assets/icon/tip.png">
                 <ion-label>便签墙</ion-label>
             </ion-item>
@@ -72,11 +72,11 @@
 
     <ion-content>
 
-        <div style="position: fixed; top: 2rem; left: 1rem; z-index: 999">
+        <div style="position: fixed; top: 1rem; left: 1rem; z-index: 999">
             <ion-icon style="font-size: 2rem;color: white" name="menu" (click)="openFirst()"></ion-icon>
         </div>
 
-        <div style="position: fixed; top: 2rem; right: 1rem; z-index: 999">
+        <div style="position: fixed; top: 1rem; right: 1rem; z-index: 999">
             <img src="assets/icon/search.png" alt="" style="width: 2rem;height: 2rem" (click)="goSearch()">
         </div>
 
@@ -173,35 +173,36 @@
                             <div style="color: white;">{{item['title']}}</div>
                         </div>
 
-                        <div style="margin-top: 1rem;margin-left: 1rem;display: flex">
-                            <!--<div style="border: white solid 0.1rem; color: grey; opacity: 0.8; border-radius: 25%;-->
-                            <!--display: flex;justify-content: center;align-items: center;margin-right: 1rem;">留下你的评论吧！</div>-->
+                        <div style="margin-top: 1rem;margin-left: 1rem;display: flex;align-items: center">
+                            <div style="border: white solid 0.1rem; color: grey; opacity: 0.8; border-radius: 5%;
+                            display: flex;justify-content: center;align-items: center;margin-right: 1rem;height: 1.8rem" (click)="showComment(item)">留下你的评论吧！</div>
 
-                            <ion-input style="border: white solid 0.2rem"></ion-input>
+                            <!--<ion-input style="border: white solid 0.2rem"></ion-input>-->
 
                             <div style="display: flex;align-items: baseline;margin-right: 0.5rem">
-                                <img src="assets/icon/credits.png" alt="" style="width: 2rem;height: 2rem">
-                                <div style="color: white;opacity: 0.8;">{{item['thumbs']}}</div>
+                                <img src="assets/icon/heart1.png" alt="" style="width: 2rem;height: 2rem">
+                                <div style="color: white;opacity: 0.8;">{{thumbs}}</div>
                             </div>
                             <div style="display: flex;align-items: baseline;margin-right: 0.5rem">
-                                <img src="assets/icon/message.png" alt="" style="width: 2rem;height: 2rem" (click)="showComment(item)">
-                                <div style="color: white;opacity: 0.8;">10</div>
+                                <img src="assets/icon/comment.png" alt="" style="width: 2rem;height: 2rem" (click)="showComment(item)">
+                                <!--<div style="color: white;opacity: 0.8;">10</div>-->
                             </div>
                             <div style="display: flex;align-items: baseline;margin-right: 0.5rem">
-                                <img src="assets/icon/link.png" alt="" style="width: 2rem;height: 2rem" (click)="noSupport()">
-                                <div style="color: white;opacity: 0.8;">10</div>
+                                <img src="assets/icon/share1.png" alt="" style="width: 2rem;height: 2rem" (click)="noSupport()">
+                                <!--<div style="color: white;opacity: 0.8;">10</div>-->
                             </div>
 
                         </div>
                     </div>
 
-                    <div style="position: absolute;z-index: 999;bottom: 7rem;right: 0">
+                    <div style="position: absolute;z-index: 999;bottom: 13rem;right: 0">
                         <div style="display: flex;flex-direction: column;margin-right: 1rem">
-                            <div>
-                                <ion-icon *ngIf="like" name="heart" style="font-size: 3rem;color: red"
+                            <div >
+                                <img style="height: 4rem;width: 4rem" *ngIf="!like" (click)="isLike(item)" src="assets/icon/heart2.png">
+                                <ion-icon class="heartBeat" *ngIf="like" name="heart" style="font-size: 4rem;color: red"
                                           (click)="isLike(item)"></ion-icon>
-                                <ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white"
-                                          (click)="isLike(item)"></ion-icon>
+                                <!--<ion-icon *ngIf="!like" name="heart" style="font-size: 3rem;color: white"-->
+                                          <!--(click)="isLike(item)"></ion-icon>-->
                             </div>
 
                             <!--<div style="margin-top: 0.5rem;">-->
@@ -263,9 +264,9 @@
 
         <!--<button  style="position: fixed; bottom: 100px;z-index: 99" (click)="startvideo($event)">last</button>-->
 
-        <div style="position: fixed; bottom: 5px;z-index: 99;border-top: 0.1rem solid white;">
+        <div style="position: fixed; bottom: 5px;z-index: 99;">
 
-            <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw;">
+            <div style="display: flex;justify-content: space-around;align-items: center; width: 100vw; border-top: 0.1rem solid white;">
 
                 <div (click)="goIndex()" style="color: white">首页</div>
 
@@ -280,12 +281,14 @@
 
         </div>
 
-        <div *ngIf="heartbeat" style="position: fixed;top: 15rem;left: 8rem;z-index: 99">
-            <div class="heartBeat" style="font-size: 3rem;color: red">心 动</div>
+        <div *ngIf="heartbeat" style="position: fixed;bottom: 8rem;right: 0;z-index: 99">
+            <!--<div class="heartBeat" style="font-size: 3rem;color: red">心 动</div>-->
+            <img style="width: 8rem" class="heartBeat" src="assets/beatheart.png">
         </div>
 
-        <div class="heartBeat" *ngIf="confession" style="position: fixed;top: 15rem;left: 8rem;z-index: 99">
-            <div style="font-size: 3rem;color: red">表 白</div>
+        <div class="heartBeat" *ngIf="confession" style="position: fixed;bottom: 8rem;right: 0; z-index: 99">
+            <!--<div style="font-size: 3rem;color: red">表 白</div>-->
+            <img style="width: 8rem" class="heartBeat" src="assets/confession.png">
         </div>
 
     </ion-content>

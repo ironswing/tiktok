@@ -85,7 +85,8 @@ Route::get('/user/is_login','UserController@isLogin');
 // 修改资料信息
 Route::post('/user/profile/edit', 'UserController@editProfile');
 
-
+// 更新背景墙
+Route::post('/user/background/edit', 'UserController@updateBackground');
 
 
 /*----------------------------------------------------------------
@@ -97,6 +98,17 @@ Route::get('/comment/{id}/replies', 'CommentController@getReplies');
 
 // 评论接口
 Route::post('/comment/add', 'CommentController@add');
+
+/*
+ * 便签
+ */
+Route::post('/note/add', 'NoteController@addNote');
+
+Route::get('/note/list', 'NoteController@getNotes');
+
+Route::get('/note/{id}/delete', 'NoteController@deleteNoteById');
+
+Route::get('/note/{id}/detail', 'NoteController@getDetail');
 
 
 /*----------------------------------------------------------------

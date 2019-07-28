@@ -14,6 +14,7 @@ export class RegisterPage implements OnInit {
     public password: any;
     public confirmPassword: any;
     public portocolStatu = true;
+    public loading = false;
 
     constructor( private http: HttpClient, private router: Router, public toastController: ToastController) { }
 
@@ -35,18 +36,24 @@ export class RegisterPage implements OnInit {
         };
         console.log(params);
 
+        this.loading = true;
         this.http.post(ROOT_URL + 'register', params).subscribe(res => {
             console.log(res);
             if (res['code'] === 200) {
                 console.log(res, '注册成功');
-                this.router.navigate(['/login']).then(res => {
-                    console.log(res);
-                });
+                setTimeout(() => {
+                    this.router.navigate(['/login']).then(res => {
+                        console.log(res);
+                    });
+                    this.loading = false;
+                }, 800);
             }
             else {
+                this.loading = false;
                 this.presentToast(res['msg']);
             }
         }, (err) => {
+            this.loading = false;
             console.log(err);
             this.presentToast(err['error']['msg']).then(r => {
                 console.log(r);

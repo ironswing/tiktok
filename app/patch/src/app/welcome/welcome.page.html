@@ -1,9 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>welcome</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--<ion-header>-->
+  <!--<ion-toolbar>-->
+    <!--<ion-title>welcome</ion-title>-->
+  <!--</ion-toolbar>-->
+<!--</ion-header>-->
 
 <ion-content>
+  <ion-slides #slidesRef pager="true" [options]="slideOpts"
+              (ionSlideReachEnd)="sldend()"
+              (ionSlideReachStart)="sldpre()"
+  >
+    <ion-slide>
+      <!--<img style="width: 100vw;height: 100vh;object-fit: cover" src="assets/lunch-a.jpg">-->
+      <div style="position: absolute; right: 2vw;top: 50vh;">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
 
+    </ion-slide>
+    <ion-slide>
+      <img style="width: 100vw;height: 100vh;object-fit: cover" src="assets/lunch1.png">
+    </ion-slide>
+    <ion-slide>
+      <!--<img style="width: 100vw;height: 100vh;object-fit: cover" src="assets/lunch-a.jpg">-->
+      <div style="position: absolute; left: 2vw;top: 50vh;">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
 </ion-content>

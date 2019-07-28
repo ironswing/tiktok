@@ -1,0 +1,20 @@
+
+<ion-content>
+  <ion-slides #slidesRef pager="true" [options]="slideOpts"
+              (ionSlideReachEnd)="sldend()"
+  >
+    <ion-slide>
+      <div style="position: absolute; right: 2vw;top: 50vh;">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <img style="width: 100vw;height: 100vh;object-fit: cover" src="assets/lunch3.png">
+    </ion-slide>
+    <ion-slide>
+      <div style="position: absolute; left: 2vw;top: 50vh;">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

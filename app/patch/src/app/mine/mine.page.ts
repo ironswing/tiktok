@@ -3,6 +3,8 @@ import {IonInfiniteScroll, MenuController, ModalController} from '@ionic/angular
 import {Router} from '@angular/router';
 import {PlayerPage} from '../player/player.page';
 import {HttpClient} from '@angular/common/http';
+import {NotePage} from '../note/note.page';
+import {EditBackgoundPage} from '../edit-backgound/edit-backgound.page';
 
 @Component({
   selector: 'app-mine',
@@ -10,6 +12,8 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./mine.page.scss'],
 })
 export class MinePage implements OnInit {
+
+    imgError = false;
     userProfile: any;
     // 我的關注
     followerArr: [];
@@ -133,6 +137,14 @@ export class MinePage implements OnInit {
         });
     }
 
+    logout() {
+      localStorage.setItem('anshi_id', '');
+      localStorage.setItem('welcomeTime', '');
+        this.router.navigate(['/feeds'], {queryParams: {statue: 1}}).then(res => {
+            console.log('welcome');
+        });
+    }
+
     getCurPlayer(e) {
         console.log(e);
         // this.router.navigate(['/player']);
@@ -182,5 +194,27 @@ export class MinePage implements OnInit {
     openSecond() {
         this.menu.enable(true, 'second');
         this.menu.open('second');
+    }
+
+    goEditBackground() {
+      this.presentEditBackgroundModal({path: this.userProfile['background_image']}).then(res => {
+          console.log(res);
+      });
+    }
+
+    async presentEditBackgroundModal(e) {
+        const modal = await this.modalController.create({
+            component: EditBackgoundPage,
+            componentProps: e,
+        });
+        await modal.present();
+        const { data } = await modal.onDidDismiss();
+        console.log(data);
+        // return await modal.present();
+    }
+
+    showDefaultSrc() {
+      console.log('image error');
+      this.imgError = true;
     }
 }

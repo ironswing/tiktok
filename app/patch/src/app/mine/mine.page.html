@@ -9,12 +9,16 @@
             <!--登录 注册 首页-->
             <!--<ion-item>-->
             <ion-button expand="full" fill="clear" [routerLink]="['/home']">首页</ion-button>
+
+            <!--<ion-button expand="full" fill="clear" [routerLink]="['/welcome']">欢迎页</ion-button>-->
             <!--</ion-item>-->
             <!--<ion-item>-->
             <ion-button expand="full" fill="solid" [routerLink]="['/login']">登录</ion-button>
             <!--</ion-item>-->
             <!--<ion-item>-->
             <ion-button expand="block" fill="outline" [routerLink]="['/register']">注册</ion-button>
+
+            <ion-button expand="full" fill="clear" (click)="logout()">退出登录</ion-button>
             <!--</ion-item>-->
 
         </ion-list>
@@ -32,7 +36,11 @@
         <div>
 
             <!--<div>-->
-            <img src="assets/user_background.png" alt="" style="width: 100vw;height: 20vh;">
+            <img *ngIf="!userProfile" src="assets/user_background.png" alt="" style="width: 100vw;height: 20vh;" (click)="goEditBackground()">
+            <img *ngIf="imgError" src="assets/user_background.png" alt="" style="width: 100vw;height: 20vh;" (click)="goEditBackground()">
+            <img *ngIf="userProfile"
+                 src="{{(userProfile['background_image'] && userProfile['background_image'] == 'default.jpg') ? 'assets/user_background.png' : storageBaseUrl+ userProfile['background_image']}}"
+                 alt="" style="width: 100vw;height: 20vh;" (click)="goEditBackground()" (error)="showDefaultSrc()">
             <!--</div>-->
             <div>
 
